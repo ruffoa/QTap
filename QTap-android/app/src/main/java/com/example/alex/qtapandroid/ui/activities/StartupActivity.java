@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid;
+package com.example.alex.qtapandroid.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +17,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.alex.qtapandroid.common.PrefManager;
+import com.example.alex.qtapandroid.R;
 
 public class StartupActivity extends AppCompatActivity {
 

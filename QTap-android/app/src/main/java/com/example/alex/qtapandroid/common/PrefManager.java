@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid;
+package com.example.alex.qtapandroid.common;
 
 /**
  * Created by Alex on 11/3/2016.

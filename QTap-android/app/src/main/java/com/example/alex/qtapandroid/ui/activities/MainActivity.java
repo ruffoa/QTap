@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid;
+package com.example.alex.qtapandroid.ui.activities;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import com.example.alex.qtapandroid.R;
 
 public class MainActivity extends AppCompatActivity {
 
