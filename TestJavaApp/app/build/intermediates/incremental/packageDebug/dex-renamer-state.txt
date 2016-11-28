@@ -1,7 +1,0 @@
-#Fri Nov 18 00:20:42 EST 2016
-base.0=D\:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_578f7c57bc64a640607476bbe75d3165bd40a4ce
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=D\:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_d1bc84160a744fd2d2e4ced4ddb8191e2fd53b32\\classes.dex
-base.1=D\:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_d1bc84160a744fd2d2e4ced4ddb8191e2fd53b32
-file.0=D\:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_578f7c57bc64a640607476bbe75d3165bd40a4ce\\classes.dex
