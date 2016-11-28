@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
+        "source": "D:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_check.png",
+        "source": "D:\\Development\\Queens\\IT_Team\\Test\\TestJavaApp\\app\\src\\main\\res\\mipmap-mdpi\\ic_check.png"
+    }
+]

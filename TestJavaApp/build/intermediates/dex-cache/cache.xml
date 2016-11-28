@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_31582cf4bc20c84cfaeed12a8aee2878aa88f2ae\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.2.1_0c5a0d879d329bc946ff3181ff003b362ae3d08e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.2.1_5c5a5e90a9ad76cfbbdf19ad78d4950b81468046.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_8240e7a8d3737f5251e482fc0453f5837a9b65f3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_0c5a0d879d329bc946ff3181ff003b362ae3d08e\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_7cfaf7031a3ab4332ad87b31299424d33e364c24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-24.2.1_31582cf4bc20c84cfaeed12a8aee2878aa88f2ae.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_7cfaf7031a3ab4332ad87b31299424d33e364c24\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5120b1b1eaad8aaa0b80ce9e960662924af5da68\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_5120b1b1eaad8aaa0b80ce9e960662924af5da68.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.2.1_b528e58396951b207da68481e85fa1949564740c.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_b528e58396951b207da68481e85fa1949564740c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_5c5a5e90a9ad76cfbbdf19ad78d4950b81468046\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_2fb6c2c78ef56cd64c6f179b7e7707d471f63f55\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidSDK\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_eeb17d55bc3c4231f2959f92658af670464c9ca0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-24.2.1_e686b02bdda41c0375e6a9d34086f6298e31201b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.2.1_8a67200b2f130e332204d6dd1649f15a913c002a.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e92aadd0697922316d1395c1887a23aebec640a">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-9.8.0_e041cc793f73fd60834adcf758b0b48e8d5cf060\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\AndroidSDK\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_eeb17d55bc3c4231f2959f92658af670464c9ca0\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_8240e7a8d3737f5251e482fc0453f5837a9b65f3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-24.2.1_1af3187c3c48fc9732280c003258e0d200c845bc.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_1af3187c3c48fc9732280c003258e0d200c845bc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-tasks-9.8.0_eeee33a8bc04b26b5b508c6e11416fdc7105e911\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-tasks-9.8.0_eeee33a8bc04b26b5b508c6e11416fdc7105e911.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_2fb6c2c78ef56cd64c6f179b7e7707d471f63f55.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_e686b02bdda41c0375e6a9d34086f6298e31201b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_8a67200b2f130e332204d6dd1649f15a913c002a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="122ec9237acd8a57d974b9d529987f1ee6ca5aea">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-maps-9.8.0_1ecbb0ebb188f01a3438561dd21b23cd86a3b5a6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_d9165e769eaffbc871f5f8e55de7b12c1d437c69\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-9.8.0_c85cdc1d82f014ee029f40e7d503aacd0d4b1993.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-9.8.0_c85cdc1d82f014ee029f40e7d503aacd0d4b1993\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="122ec9237acd8a57d974b9d529987f1ee6ca5aea">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-maps-9.8.0_1ecbb0ebb188f01a3438561dd21b23cd86a3b5a6.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_f28b35dd4cb100ff68db0ca70db91913318b7f3a\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e92aadd0697922316d1395c1887a23aebec640a">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-base-9.8.0_e041cc793f73fd60834adcf758b0b48e8d5cf060.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f94c78e29381d042d6f892f42e9690263939d6c5">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d1bc84160a744fd2d2e4ced4ddb8191e2fd53b32\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-24.2.1_f28b35dd4cb100ff68db0ca70db91913318b7f3a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-24.2.1_d9165e769eaffbc871f5f8e55de7b12c1d437c69.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_6bcf47eb5dd7786a626132a03e0f5e482e350de1\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-24.2.1_6bcf47eb5dd7786a626132a03e0f5e482e350de1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_efc59ab372b04a2df89cae56e0900412f7c7700a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\design\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\pre-dexed\debug\com.android.support-design-24.2.1_c900685ec4ed5cd831ba68a6f0f257271b7f4b6c.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_efc59ab372b04a2df89cae56e0900412f7c7700a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\exploded-aar\com.android.support\design\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-24.2.1_c900685ec4ed5cd831ba68a6f0f257271b7f4b6c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5daa0e0f1a7f3fe04246167cb15cae799980bb4">
+        <dex dex="D:\Development\Queens\IT_Team\Test\TestJavaApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_578f7c57bc64a640607476bbe75d3165bd40a4ce\classes.dex" />
+    </item>
+
+</items>
