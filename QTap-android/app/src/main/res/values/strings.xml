@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">QTap Test Build</string>
+    <!--strings related to names of views -->
+    <string name="app_name">QTap</string>
+    <string name="calendar_fragment">Schedule</string>
+    <string name="information_fragment">Information</string>
+    <string name="student_tools_fragment">Student Tools</string>
+    <string name="its_fragment">ITS</string>
+    <string name="engsoc_fragment">Eng Soc</string>
+    <string name="about_fragment">About</string>
 
     <string name="title_activity_welcome">Home Screen</string>
     <string name="next">NEXT</string>

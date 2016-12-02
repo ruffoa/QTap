@@ -3,6 +3,8 @@ package com.example.alex.qtapandroid.ui.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
+import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
+import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
+import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
+import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
+import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
 public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private boolean mIsViewAtHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,7 @@ public class MainTabActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        displayView(R.id.nav_schedule); //start at calendar view
     }
 
     @Override
@@ -49,8 +60,11 @@ public class MainTabActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        }
+        if (!mIsViewAtHome) { //if the current view is not the calendar fragment
+            displayView(R.id.nav_schedule); //display the calendar fragment
         } else {
-            super.onBackPressed();
+            moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
     }
 
@@ -79,25 +93,63 @@ public class MainTabActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        displayView(item.getItemId());
+        return true;
+    }
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+    private void displayView(int viewId) {
 
-        } else if (id == R.id.nav_slideshow) {
+        Fragment fragment = null;
+        String title = getString(R.string.app_name);
 
-        } else if (id == R.id.nav_manage) {
+        switch (viewId) {
+            case R.id.nav_schedule:
+                fragment = new CalendarFragment();
+                title = getString(R.string.calendar_fragment);
+                mIsViewAtHome = true;
+                break;
+            case R.id.nav_map:
+                //TODO: implement google maps api
+                break;
+            case R.id.nav_information:
+                fragment = new InformationFragment();
+                title = getString(R.string.information_fragment);
+                mIsViewAtHome = false;
+                break;
+            case R.id.nav_tools:
+                fragment = new StudentToolsFragment();
+                title = getString(R.string.student_tools_fragment);
+                mIsViewAtHome = false;
+                break;
+            case R.id.nav_its:
+                fragment = new ItsFragment();
+                title = getString(R.string.its_fragment);
+                mIsViewAtHome = false;
+                break;
+            case R.id.nav_engsoc:
+                fragment = new EngSocFragment();
+                title = getString(R.string.engsoc_fragment);
+                mIsViewAtHome = false;
+                break;
+            case R.id.nav_about:
+                fragment = new AboutFragment();
+                title = getString(R.string.about_fragment);
+                mIsViewAtHome = false;
+                break;
+        }
 
-        } else if (id == R.id.nav_share) {
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
 
-        } else if (id == R.id.nav_send) {
-
+        // set the toolbar title
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }
