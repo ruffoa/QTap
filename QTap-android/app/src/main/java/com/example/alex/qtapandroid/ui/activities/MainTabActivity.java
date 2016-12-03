@@ -1,5 +1,6 @@
 package com.example.alex.qtapandroid.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -109,7 +110,8 @@ public class MainTabActivity extends AppCompatActivity
                 mIsViewAtHome = true;
                 break;
             case R.id.nav_map:
-                //TODO: implement google maps api
+                startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
+
                 break;
             case R.id.nav_information:
                 fragment = new InformationFragment();
