@@ -6,17 +6,21 @@ package com.example.alex.qtapandroid.common;
 
 
 import android.content.SharedPreferences;
-        import android.content.Context;
+import android.content.Context;
 
+/**
+ *Controls the preferences of user.
+ * Currently only used for showing introduction on first launch
+ */
 
 public class PrefManager {
 
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    Context _context;
+    private SharedPreferences mPref;
+    private SharedPreferences.Editor mEditor;
+    private Context mContext;
 
-    // shared pref mode
-    int PRIVATE_MODE = 0;
+    // shared mPref mode
+    private int PRIVATE_MODE = 0;
 
     // Shared preferences file name
     private static final String PREF_NAME = "welcome";
@@ -24,20 +28,26 @@ public class PrefManager {
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
     public PrefManager(Context context) {
-        this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        editor = pref.edit();
+        this.mContext = context;
+        mPref = mContext.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        mEditor = mPref.edit(); //TODO why is edit called here?
     }
 
+    /**
+     * Controls if user sees the introduction.
+     * isFirstTime used as flag in preferences for showing the introduction.
+     */
     public void setFirstTimeLaunch(boolean isFirstTime) {
-        editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
-        editor.commit();
+        mEditor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
+        mEditor.commit();
     }
 
+    /**
+     * Accessor to see if the introduction needs to be shown
+     */
     public boolean isFirstTimeLaunch() {
-        return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+        return mPref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
-
 
 
 }

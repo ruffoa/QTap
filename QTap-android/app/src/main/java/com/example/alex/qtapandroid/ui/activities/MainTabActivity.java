@@ -24,6 +24,10 @@ import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
+/**
+ * activity holding most of the app.
+ * contains the drawer that navigates user to fragments with map, schedule, info etc.
+ */
 public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +40,7 @@ public class MainTabActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //TODO replace fab, or get rid of it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +61,11 @@ public class MainTabActivity extends AppCompatActivity
         displayView(R.id.nav_schedule); //start at calendar view
     }
 
+    /**
+     * does not call super onBackPressed.
+     * back closes drawer and sends user to calendar fragment (schedule).
+     * If already on calendar, exits app.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -98,6 +108,13 @@ public class MainTabActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * logic to decide what fragment to show, based on what drawer item user clicked.
+     * will attach new fragment.
+     * contains logic to know if on the home fragment or not, for back pressed logic.
+     * changes title of screen as well.
+     * @param viewId the ID of the drawer item user clicked.
+     */
     private void displayView(int viewId) {
 
         Fragment fragment = null;

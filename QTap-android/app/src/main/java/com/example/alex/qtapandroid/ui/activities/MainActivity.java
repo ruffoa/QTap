@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO need this fragment?
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -149,11 +150,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.section_one);
                 case 1:
-                    return "SECTION 2";
+                    return getString(R.string.section_two);
                 case 2:
-                    return "SECTION 3";
+                    return getString(R.string.section_three);
             }
             return null;
         }
