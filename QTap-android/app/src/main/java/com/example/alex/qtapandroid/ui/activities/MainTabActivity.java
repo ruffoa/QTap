@@ -23,6 +23,7 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
+import com.example.alex.qtapandroid.ui.fragments.InfoFragment;
 import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
@@ -58,15 +59,14 @@ public class MainTabActivity extends AppCompatActivity
         displayView(R.id.nav_schedule); //start at calendar view
 
         ////// Set Name and Email in nav header
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
-        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);  // Get default SharedPreferences Instance
+        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound"); // get the "UserEmail" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
+        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");   // get the "UserName" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
 
-        View header = navigationView.getHeaderView(0);
-        /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
-        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
+        View header = navigationView.getHeaderView(0);                                        // get the existing headerView
+        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);            // Set the navHeaderAccountName TextView to a local var
         TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
-        name.setText(userName);
+        name.setText(userName);                                                               // Set the textView text to the "UserName" string
         email.setText(userEmail);
 
 
@@ -130,7 +130,7 @@ public class MainTabActivity extends AppCompatActivity
 
                 break;
             case R.id.nav_information:
-//                fragment = new InformationFragment();
+                fragment = new InfoFragment();
                 title = getString(R.string.information_fragment);
                 mIsViewAtHome = false;
                 break;

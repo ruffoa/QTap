@@ -345,13 +345,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());    // Get the default SharedPreferences context
 
             if (success) {
 
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("UserEmail", mEmail);
-                editor.apply();
+                SharedPreferences.Editor editor = preferences.edit();                                           // Allow for editing the preferences
+                editor.putString("UserEmail", mEmail);                                                          // Create a string called "UserEmail" equal to mEmail
+                editor.apply();                                                                                 // Save changes
 
 
                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
