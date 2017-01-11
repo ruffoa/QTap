@@ -1,7 +1,9 @@
 package com.example.alex.qtapandroid.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,13 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
 import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
-import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
 public class MainTabActivity extends AppCompatActivity
@@ -54,6 +56,20 @@ public class MainTabActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_schedule); //start at calendar view
+
+        ////// Set Name and Email in nav header
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
+        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");
+
+        View header = navigationView.getHeaderView(0);
+        /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
+        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
+        TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
+        name.setText(userName);
+        email.setText(userEmail);
+
+
     }
 
     @Override
@@ -114,7 +130,7 @@ public class MainTabActivity extends AppCompatActivity
 
                 break;
             case R.id.nav_information:
-                fragment = new InformationFragment();
+//                fragment = new InformationFragment();
                 title = getString(R.string.information_fragment);
                 mIsViewAtHome = false;
                 break;

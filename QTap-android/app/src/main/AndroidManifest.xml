@@ -28,11 +28,14 @@
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ui.activities.MainTabActivity"
             android:label="@string/title_activity_main_tab"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activities.LoginActivity" />
+
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -22,6 +22,7 @@ public class PrefManager {
     private static final String PREF_NAME = "welcome";
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    private static final String USER_EMAIL = "test@queensu.ca";
 
     public PrefManager(Context context) {
         this._context = context;
@@ -39,5 +40,8 @@ public class PrefManager {
     }
 
 
-
+    public void setUserEmail(String entered_email) {
+        editor.putString(USER_EMAIL, entered_email);
+        editor.commit();
+    }
 }

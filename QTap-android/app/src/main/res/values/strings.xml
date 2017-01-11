@@ -51,4 +51,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_maps">Map</string>
+
+    <!-- Strings related to Account Info -->
+    <string name="user_account_name">Test User</string>
+    <string name="user_account_email">test@queensu.ca</string>
+
 </resources>
