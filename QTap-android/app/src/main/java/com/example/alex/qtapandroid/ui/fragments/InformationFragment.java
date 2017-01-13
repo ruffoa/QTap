@@ -29,16 +29,21 @@ public class InformationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_information,container,false);
+        return inflater.inflate(R.layout.fragment_information, container, false);
 
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-       setup();
+        TextView dataInfo = (TextView) getView().findViewById(R.id.dataInfo2);
+        dataInfo.setText("Initializing Database");
+        setData();
+        dataInfo.setText("Database created, 1 Record inserted");
+        listData();
+        dataInfo.setText("Information set to above textview");
     }
 
-    public void setup(){
+    public void setup() {
         setData();
         listData();
     }
@@ -48,12 +53,9 @@ public class InformationFragment extends Fragment {
         DataRecords record = new DataRecords("Elec 212", "Walter Light", "12:30", "14:30", 10180070);
         record.save();
 
-        Book book = new Book("Title here", "2nd edition");
-        book.save();
-
     }
 
-    public void listData(){
+    public void listData() {
 
         List<DataRecords> datRec = DataRecords.listAll(DataRecords.class);
         TextView dataInfo = (TextView) getView().findViewById(R.id.dataInfo1);
