@@ -23,7 +23,7 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
-import com.example.alex.qtapandroid.ui.fragments.InfoFragment;
+import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
 import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
@@ -130,7 +130,7 @@ public class MainTabActivity extends AppCompatActivity
 
                 break;
             case R.id.nav_information:
-                fragment = new InfoFragment();
+                fragment = new InformationFragment();
                 title = getString(R.string.information_fragment);
                 mIsViewAtHome = false;
                 break;

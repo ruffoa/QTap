@@ -11,35 +11,42 @@ import android.util.Log;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String TABLE_COMMENTS = "comments";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_COMMENT = "comment";
-
-    private static final String DATABASE_NAME = "commments.db";
+    private static final String DATABASE_NAME = "employees.db";
     private static final int DATABASE_VERSION = 1;
 
-    // Database creation sql statement
-    private static final String DATABASE_CREATE = "create table "
-            + TABLE_COMMENTS + "( " + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_COMMENT
-            + " text not null);";
+    public static final String TABLE_EMPLOYEES = "employees";
+    public static final String COLUMN_ID = "empId";
+    public static final String COLUMN_FIRST_NAME = "firstname";
+    public static final String COLUMN_LAST_NAME = "lastname";
+    public static final String COLUMN_GENDER = "gender";
+    public static final String COLUMN_HIRE_DATE = "hiredata";
+    public static final String COLUMN_DEPT = "dept";
+
+    private static final String TABLE_CREATE =
+            "CREATE TABLE " + TABLE_EMPLOYEES + " (" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_FIRST_NAME + " TEXT, " +
+                    COLUMN_LAST_NAME + " TEXT, " +
+                    COLUMN_GENDER + " TEXT, " +
+                    COLUMN_HIRE_DATE + " NUMERIC, " +
+                    COLUMN_DEPT + " TEXT " +
+                    ")";
+
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(TABLE_CREATE);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(SQLiteHelper.class.getName(),
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENTS);
-        onCreate(db);
-    }
 
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMPLOYEES);
+        db.execSQL(TABLE_CREATE);
+    }
 }
