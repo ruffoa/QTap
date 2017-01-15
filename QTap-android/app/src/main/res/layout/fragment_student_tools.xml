@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:paddingTop="@dimen/button_space"
+    android:background="#cbcaca">
 
+    <TextView
+        android:text="@string/resources"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="18sp"
+        android:textColorLink="?attr/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center" />
+
+    <Button
+        android:text="@string/title_emergency_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_marginTop="@dimen/button_space"
+        android:shadowColor="@android:color/background_light"
+        android:background="@android:color/background_light" />
+
+    <Button
+        android:text="@string/title_first_year_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:layout_marginTop="@dimen/button_space"
+        android:shadowColor="@android:color/background_light"
+        android:background="@android:color/background_light" />
 </LinearLayout>
