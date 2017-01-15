@@ -60,6 +60,7 @@
     <!--strings for button names -->
     <string name="title_emergency_contacts">Emergency Contacts</string>
     <string name="title_first_year_contacts">First Year Contacts</string>
+    <string name="counselling_services">Counselling Services</string>
 
     <!--strings for titles on top of pages -->
     <string name="resources">Resources</string>
