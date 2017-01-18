@@ -43,4 +43,24 @@
         android:layout_marginTop="@dimen/button_space"
         android:shadowColor="@android:color/background_light"
         android:background="@android:color/background_light" />
+
+    <Button
+        android:text="@string/career_services"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:layout_marginTop="@dimen/button_space"
+        android:shadowColor="@android:color/background_light"
+        android:background="@android:color/background_light" />
+
+    <TextView
+        android:text="@string/links"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/button_space"
+        android:textColorLink="?attr/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center" />
 </LinearLayout>
