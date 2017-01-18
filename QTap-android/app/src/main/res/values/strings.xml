@@ -62,9 +62,15 @@
     <string name="title_first_year_contacts">First Year Contacts</string>
     <string name="counselling_services">Counselling Services</string>
     <string name="career_services">Career Services</string>
+    <string name="solus">SOLUS</string>
+    <string name="outlook365">Outlook 365</string>
+    <string name="moodle">Moodle</string>
+    <string name="onq">OnQ</string>
+    <string name="education_d2l">Education D2L</string>
+    <string name="engineering_d2l">Engineering D2L</string>
 
     <!--strings for titles on top of pages -->
     <string name="resources">Resources</string>
-    <string name="links">Links</string>
+    <string name="links">Links (Open in Safari)</string>
 
 </resources>
