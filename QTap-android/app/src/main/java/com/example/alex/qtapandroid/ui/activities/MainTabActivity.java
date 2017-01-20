@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.DbHelper;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
@@ -32,6 +34,7 @@ public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private boolean mIsViewAtHome;
+    private DbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class MainTabActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_tab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mDbHelper = DbHelper.getInstance(this);
         //TODO replace fab, or get rid of it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +50,9 @@ public class MainTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Log.d("SQLITE", "Shops: " + mDbHelper.getShopNames());
+                mDbHelper.deleteShops();
+                Log.d("SQLITE", "Shops: " + mDbHelper.getShopNames());
             }
         });
 
@@ -77,6 +83,23 @@ public class MainTabActivity extends AppCompatActivity
         } else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mDbHelper != null) {
+            mDbHelper.close();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        /*implemented as well as onDestroy() because onDestroy()
+        is not always called in lifecycle of activity. Must always close
+        database when app is killed.*/
+        mDbHelper.close();
+        super.onStop();
     }
 
     @Override
@@ -113,6 +136,7 @@ public class MainTabActivity extends AppCompatActivity
      * will attach new fragment.
      * contains logic to know if on the home fragment or not, for back pressed logic.
      * changes title of screen as well.
+     *
      * @param viewId the ID of the drawer item user clicked.
      */
     private void displayView(int viewId) {
