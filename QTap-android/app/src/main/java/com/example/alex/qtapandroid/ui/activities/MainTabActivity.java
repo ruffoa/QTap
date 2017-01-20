@@ -19,12 +19,15 @@ import android.view.MenuItem;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.DbHelper;
+import com.example.alex.qtapandroid.common.Shop;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
 import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
+
+import java.util.ArrayList;
 
 /**
  * activity holding most of the app.
@@ -50,9 +53,19 @@ public class MainTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Log.d("SQLITE", "Shops: " + mDbHelper.getShopNames());
+                mDbHelper.addShop(new Shop("carson","305 alfred"));
+                mDbHelper.addShop(new Shop("jack","393 johnson"));
+                mDbHelper.addShop(new Shop("william","124 weber"));
+                ArrayList<Shop> test = mDbHelper.getTable(Shop.TABLE_NAME);
+                String output1="";
+                String output2="";
+                for (int i = 0; i<test.size(); i++){
+                    output1+=test.get(i).getName()+ " ";
+                    output2+=test.get(i).getAddress()+" ";
+                }
+                Log.d("SQLITE","Shops: "+output1 + '\n'+output2);
                 mDbHelper.deleteShops();
-                Log.d("SQLITE", "Shops: " + mDbHelper.getShopNames());
+                Log.d("SQLITE", "Shops: " + mDbHelper.getTable(Shop.TABLE_NAME));
             }
         });
 
