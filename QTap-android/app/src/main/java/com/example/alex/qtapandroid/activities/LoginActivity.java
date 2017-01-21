@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.ui.activities;
+package com.example.alex.qtapandroid.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
