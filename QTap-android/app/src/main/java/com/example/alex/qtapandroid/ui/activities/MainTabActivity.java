@@ -19,7 +19,7 @@ import android.view.MenuItem;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.DbHelper;
-import com.example.alex.qtapandroid.common.Shop;
+import com.example.alex.qtapandroid.common.Course;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
@@ -53,19 +53,19 @@ public class MainTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                mDbHelper.addShop(new Shop("carson","305 alfred"));
-                mDbHelper.addShop(new Shop("jack","393 johnson"));
-                mDbHelper.addShop(new Shop("william","124 weber"));
-                ArrayList<Shop> test = mDbHelper.getTable(Shop.TABLE_NAME);
+                mDbHelper.addShop(new Course("252","biosci","10:30"));
+                mDbHelper.addShop(new Course("212","WLH","4:30"));
+                mDbHelper.addShop(new Course("274","kingston","11:30"));
+                ArrayList<Course> test = mDbHelper.getTable(Course.TABLE_NAME);
                 String output1="";
                 String output2="";
                 for (int i = 0; i<test.size(); i++){
-                    output1+=test.get(i).getName()+ " ";
-                    output2+=test.get(i).getAddress()+" ";
+                    output1+=test.get(i).getTitle()+ " ";
+                    output2+=test.get(i).getLocation()+" ";
                 }
                 Log.d("SQLITE","Shops: "+output1 + '\n'+output2);
-                mDbHelper.deleteShops();
-                Log.d("SQLITE", "Shops: " + mDbHelper.getTable(Shop.TABLE_NAME));
+                mDbHelper.deleteClasses();
+                Log.d("SQLITE", "Shops: " + mDbHelper.getTable(Course.TABLE_NAME));
             }
         });
 
@@ -165,7 +165,6 @@ public class MainTabActivity extends AppCompatActivity
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
-
                 break;
             case R.id.nav_information:
                 fragment = new InformationFragment();

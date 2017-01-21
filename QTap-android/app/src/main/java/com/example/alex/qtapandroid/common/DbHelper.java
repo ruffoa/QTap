@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Carson on 19/01/2017.
@@ -15,15 +14,15 @@ import java.util.List;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " + Shop.TABLE_NAME + " (" +
-            Shop._ID + " INTEGER PRIMARY KEY," +
-            Shop.ROW_NAME + " TEXT," +
-            Shop.ROW_ADDRESS + " TEXT)";
+    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " + Course.TABLE_NAME + " (" +
+            Course._ID + " INTEGER PRIMARY KEY," +
+            Course.COLUMN_TITLE + " TEXT," +
+            Course.COLUMN_LOCATION + " TEXT, "+ Course.COLUMN_TIME+")";
 
-    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + Shop.TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Businesses.db";
+    public static final String DATABASE_NAME = "QTap.db";
 
     private static DbHelper mInstance = null;
 
@@ -57,46 +56,46 @@ public class DbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public void addShop(Shop shop) {
+    public void addShop(Course course) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Shop.ROW_NAME, shop.getName());
-        values.put(Shop.ROW_ADDRESS, shop.getAddress());
-        long newRowId = db.insert(Shop.TABLE_NAME, null, values);
+        values.put(Course.COLUMN_TITLE, course.getTitle());
+        values.put(Course.COLUMN_LOCATION, course.getLocation());
+        values.put(Course.COLUMN_TIME, course.getTime());
+        long newRowId = db.insert(Course.TABLE_NAME, null, values);
     }
 
-    public ArrayList<Shop> getTable(String tableName) {
+    public ArrayList<Course> getTable(String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = {
-                Shop._ID,
-                Shop.ROW_NAME,
-                Shop.ROW_ADDRESS
+                Course._ID,
+                Course.COLUMN_TITLE,
+                Course.COLUMN_LOCATION,
+                Course.COLUMN_TIME
         };
-        ArrayList<Shop> shops = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
         try (Cursor cursor = db.query(tableName, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
-                Shop shop = new Shop(cursor.getString(Shop.NAME_POS), cursor.getString(Shop.ADDRESS_POS));
-                shops.add(shop);
+                Course course = new Course(cursor.getString(Course.TITLE_POS),
+                        cursor.getString(Course.LOCATION_POS), cursor.getString(Course.TIME_POS));
+                courses.add(course);
             }
         }
-        return shops;
+        return courses;
     }
 
-    public void deleteShops() {
+    public void deleteClasses() {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = Shop.ROW_NAME + " LIKE ?";
-        String[] selectionArgs = {"Joe"};
-        db.delete(Shop.TABLE_NAME, null, null);
+        db.delete(Course.TABLE_NAME, null, null);
     }
 
     public int updateShop() {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Shop.ROW_NAME, "mike");
-        String selection = Shop.ROW_NAME + " LIKE ?";
-        String[] selectionArgs = {"Joe"};
-        int count = db.update(Shop.TABLE_NAME, values, selection, selectionArgs);
+        values.put(Course.COLUMN_TITLE, "mike");
+        String selection = Course.COLUMN_TITLE + " LIKE ?";
+        int count = db.update(Course.TABLE_NAME, values, selection, null);
         return count;
     }
 }
