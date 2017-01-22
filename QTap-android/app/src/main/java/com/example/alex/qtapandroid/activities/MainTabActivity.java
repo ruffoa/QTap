@@ -18,16 +18,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.DbHelper;
-import com.example.alex.qtapandroid.common.Course;
+import com.example.alex.qtapandroid.common.database.course.Course;
+import com.example.alex.qtapandroid.common.database.course.CourseManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
 import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
-
-import java.util.ArrayList;
 
 /**
  * activity holding most of the app.
@@ -37,7 +35,7 @@ public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private boolean mIsViewAtHome;
-    private DbHelper mDbHelper;
+    private CourseManager mCourseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class MainTabActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_tab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mDbHelper = DbHelper.getInstance(this);
+        mCourseManager = new CourseManager(this);
         //TODO replace fab, or get rid of it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,19 +51,18 @@ public class MainTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                mDbHelper.addShop(new Course("252","biosci","10:30"));
-                mDbHelper.addShop(new Course("212","WLH","4:30"));
-                mDbHelper.addShop(new Course("274","kingston","11:30"));
-                ArrayList<Course> test = mDbHelper.getTable(Course.TABLE_NAME);
-                String output1="";
-                String output2="";
-                for (int i = 0; i<test.size(); i++){
-                    output1+=test.get(i).getTitle()+ " ";
-                    output2+=test.get(i).getLocation()+" ";
-                }
-                Log.d("SQLITE","Shops: "+output1 + '\n'+output2);
-                mDbHelper.deleteClasses();
-                Log.d("SQLITE", "Shops: " + mDbHelper.getTable(Course.TABLE_NAME));
+                Course one = new Course("252", "1102", "11:30");
+                Course two = new Course("212", "210", "4:30");
+                Course three = new Course("280", "205", "9:30");
+                one.setID(mCourseManager.insertRow(one));
+                two.setID(mCourseManager.insertRow(two));
+                Course.printCourses(mCourseManager.getTable());
+                two = mCourseManager.updateRow(two, three);
+                Course.printCourses(mCourseManager.getTable());
+                mCourseManager.deleteRow(one);
+                Course.printCourses(mCourseManager.getTable());
+                mCourseManager.deleteTable();
+                Course.printCourses(mCourseManager.getTable());
             }
         });
 
@@ -100,19 +97,20 @@ public class MainTabActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-        if (mDbHelper != null) {
-            mDbHelper.close();
-        }
+        mCourseManager.close();
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
-        /*implemented as well as onDestroy() because onDestroy()
-        is not always called in lifecycle of activity. Must always close
-        database when app is killed.*/
-        mDbHelper.close();
+        mCourseManager.close();
         super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        mCourseManager.close();
+        super.onPause();
     }
 
     @Override
