@@ -13,7 +13,7 @@
         android:paddingTop="@dimen/button_space">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/resources"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -59,7 +59,7 @@
             android:text="@string/career_services" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/links"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/button_space"
