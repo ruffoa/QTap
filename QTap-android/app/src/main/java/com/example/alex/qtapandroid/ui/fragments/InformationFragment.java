@@ -9,9 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.alex.qtapandroid.common.Book;
-
-
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.DataRecords;
 
