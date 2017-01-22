@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activities.StartupActivity"
+            android:name=".activities.StartupActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,14 +25,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.MainTabActivity"
+            android:name=".activities.MainTabActivity"
             android:label="@string/title_activity_main_tab"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activities.LoginActivity" />
+        <activity android:name=".activities.LoginActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -52,11 +48,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.activities.MapsActivity"
+            android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.alex.qtapandroid.ui.activities.MainTabActivity" />
+                android:value="com.example.alex.qtapandroid.activities.MainTabActivity" />
         </activity>
     </application>
 
