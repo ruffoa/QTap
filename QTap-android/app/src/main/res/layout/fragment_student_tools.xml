@@ -84,28 +84,13 @@
         android:shadowColor="@android:color/background_light"
         android:background="@android:color/background_light" />
     <Button
-        android:text="@string/moodle"
+        android:text="@string/onq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button7"
         android:layout_marginTop="@dimen/button_space"
         android:shadowColor="@android:color/background_light"
         android:background="@android:color/background_light" />
-    <Button
-        android:text="@string/education_d2l"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button8"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
-    <Button
-        android:text="@string/engineering_d2l"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button9"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
+
 </LinearLayout>
 </ScrollView>
