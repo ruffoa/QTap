@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.ui.activities;
+package com.example.alex.qtapandroid.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

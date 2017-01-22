@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.ui.activities;
+package com.example.alex.qtapandroid.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.course.Course;
+import com.example.alex.qtapandroid.common.database.course.CourseManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
@@ -27,10 +30,15 @@ import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
 import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
+/**
+ * activity holding most of the app.
+ * contains the drawer that navigates user to fragments with map, schedule, info etc.
+ */
 public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private boolean mIsViewAtHome;
+    private CourseManager mCourseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +46,26 @@ public class MainTabActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_tab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mCourseManager = new CourseManager(this);
+        //TODO replace fab, or get rid of it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                //shows off the database
+                Course one = new Course("252", "1102", "11:30");
+                Course two = new Course("212", "210", "4:30");
+                Course three = new Course("280", "205", "9:30");
+                one.setID(mCourseManager.insertRow(one));
+                two.setID(mCourseManager.insertRow(two));
+                two = mCourseManager.updateRow(two, three);
+                Course.printCourses(mCourseManager.getTable());
+                mCourseManager.deleteRow(one);
+                Course.printCourses(mCourseManager.getTable());
+                mCourseManager.deleteTable();
+                Course.printCourses(mCourseManager.getTable());
             }
         });
 
@@ -72,6 +93,11 @@ public class MainTabActivity extends AppCompatActivity
 
     }
 
+    /**
+     * does not call super onBackPressed.
+     * back closes drawer and sends user to calendar fragment (schedule).
+     * If already on calendar, exits app.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,6 +109,12 @@ public class MainTabActivity extends AppCompatActivity
         } else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
+    }
+
+    @Override
+    protected void onPause() {
+        mCourseManager.close();
+        super.onPause();
     }
 
     @Override
@@ -114,6 +146,14 @@ public class MainTabActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * logic to decide what fragment to show, based on what drawer item user clicked.
+     * will attach new fragment.
+     * contains logic to know if on the home fragment or not, for back pressed logic.
+     * changes title of screen as well.
+     *
+     * @param viewId the ID of the drawer item user clicked.
+     */
     private void displayView(int viewId) {
 
         Fragment fragment = null;
@@ -127,7 +167,6 @@ public class MainTabActivity extends AppCompatActivity
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
-
                 break;
             case R.id.nav_information:
                 fragment = new InformationFragment();

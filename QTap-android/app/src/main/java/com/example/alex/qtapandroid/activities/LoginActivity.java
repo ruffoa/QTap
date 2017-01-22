@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.ui.activities;
+package com.example.alex.qtapandroid.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -99,6 +99,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    /**
+     * auto complete email used for login if permission for contacts is gained.
+     */
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -107,6 +110,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getLoaderManager().initLoader(0, null, this);
     }
 
+    /**
+     * Check for contacts permission. Used to autocomplete email.
+     * Ask for permission if do not have it.
+     * Returns true if have permission, false if permission is requested.
+     */
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -131,6 +139,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Callback received when a permissions request has been completed.
+     * If received permission, continue with auto complete of email.
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -200,6 +209,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    /**
+     * checks if email is of valid format.
+     * TODO possibly verify email is an actual email
+     * @param email string the user used as an email to log in
+     * @return 0 if the email has @queensu.ca and has at least 4 characters before that
+     *         1 if the email has less than 4 before @queensu.ca
+     *         -1 if the email does not contain @queensu.ca
+     */
     private int isEmailValid(String email) {
         //TODO: Replace this with your own logic
         if (email.contains("@queensu.ca"))
@@ -208,6 +225,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return -1;
     }
 
+    /**
+     * check to see if the user-entered password is acceptable
+     * @param password string the user entered as their password
+     * @return true if valid, false if not valid
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;

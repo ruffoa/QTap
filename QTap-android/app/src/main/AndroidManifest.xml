@@ -18,18 +18,15 @@
         android:name="com.orm.SugarApp">
 
         <activity
-            android:name=".ui.activities.MainTabActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activities.MainTabActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activities.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+
 
         <!--<activity-->
             <!--android:name=".ui.activities.MainTabActivity"-->
@@ -57,13 +54,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.activities.MapsActivity"
+            android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.alex.qtapandroid.ui.activities.MainTabActivity" />
-
-
+                android:value="com.example.alex.qtapandroid.activities.MainTabActivity" />
         </activity>
         <meta-data android:name="DATABASE" android:value="qtapData.db" />
         <meta-data android:name="VERSION" android:value="2" />

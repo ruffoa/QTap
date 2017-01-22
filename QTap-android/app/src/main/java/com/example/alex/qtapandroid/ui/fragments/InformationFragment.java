@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.DataRecords;
 
 import java.util.List;
 
@@ -33,31 +32,12 @@ public class InformationFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         TextView dataInfo = (TextView) getView().findViewById(R.id.dataInfo2);
-        dataInfo.setText("Initializing Database");
-        setData();
-        dataInfo.setText("Database created, 1 Record inserted");
-        listData();
-        dataInfo.setText("Information set to above textview");
+//        dataInfo.setText("Initializing Database");
+//
     }
 
     public void setup() {
-        setData();
-        listData();
     }
 
-    public void setData() {
-
-        DataRecords record = new DataRecords("Elec 212", "Walter Light", "12:30", "14:30", 10180070);
-        record.save();
-
-    }
-
-    public void listData() {
-
-        List<DataRecords> datRec = DataRecords.listAll(DataRecords.class);
-        TextView dataInfo = (TextView) getView().findViewById(R.id.dataInfo1);
-        dataInfo.setText(datRec.toString());
-
-    }
 
 }
