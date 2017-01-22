@@ -3,94 +3,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:paddingTop="@dimen/button_space"
-    android:background="#cbcaca">
 
-    <TextView
-        android:text="@string/resources"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:textSize="18sp"
-        android:textColorLink="?attr/colorPrimaryDark"
-        android:textColor="@color/colorPrimaryDark"
-        android:gravity="center" />
+        android:layout_height="match_parent"
+        android:background="#cbcaca"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/button_space">
 
-    <Button
-        android:text="@string/title_emergency_contacts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/resources"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorLink="?attr/colorPrimaryDark"
+            android:textSize="18sp" />
 
-    <Button
-        android:text="@string/title_first_year_contacts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
+        <Button
+            android:id="@+id/emergency_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/title_emergency_contacts" />
 
-    <Button
-        android:text="@string/counselling_services"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button3"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
+        <Button
+            android:id="@+id/first_year_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/title_first_year_contacts" />
 
-    <Button
-        android:text="@string/career_services"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button4"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
+        <Button
+            android:id="@+id/counselling_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/counselling_services" />
 
-    <TextView
-        android:text="@string/links"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-        android:textSize="18sp"
-        android:layout_marginTop="@dimen/button_space"
-        android:textColorLink="?attr/colorPrimaryDark"
-        android:textColor="@color/colorPrimaryDark"
-        android:gravity="center" />
-    <Button
-        android:text="@string/solus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button5"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
-    <Button
-        android:text="@string/outlook365"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button6"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
-    <Button
-        android:text="@string/onq"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button7"
-        android:layout_marginTop="@dimen/button_space"
-        android:shadowColor="@android:color/background_light"
-        android:background="@android:color/background_light" />
+        <Button
+            android:id="@+id/careers_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/career_services" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:gravity="center"
+            android:text="@string/links"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorLink="?attr/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/solus_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/solus" />
+
+        <Button
+            android:id="@+id/outlook_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/outlook365" />
+
+        <Button
+            android:id="@+id/onq_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/onq" />
+
+    </LinearLayout>
 </ScrollView>
