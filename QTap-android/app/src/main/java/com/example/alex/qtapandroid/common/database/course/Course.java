@@ -12,7 +12,7 @@ public class Course implements BaseColumns {
     //course that has 3 lectures and a lab gets 4 total Course classes
     public static final String TABLE_NAME = "class";
     public static final String COLUMN_TITLE = "title";
-    public static final String COLUMN_ROOM_NUM = "location";
+    public static final String COLUMN_ROOM_NUM = "roomNumber";
     public static final String COLUMN_TIME = "time";
 
     //row number each field ends up in
@@ -31,16 +31,6 @@ public class Course implements BaseColumns {
         this.roomNum = roomNum;
         this.time = time;
     }
-
-    public static void printCourses(ArrayList<Course> courses) {
-        String output = "";
-        for (int i = 0; i < courses.size(); i++) {
-            output += "COURSE id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
-                    + " num: " + courses.get(i).getRoomNum() + " time: " + courses.get(i).getTime()+" ";
-        }
-        Log.d("SQLITE", "INFO: " + output);
-    }
-
 
     public long getID() {
         return id;

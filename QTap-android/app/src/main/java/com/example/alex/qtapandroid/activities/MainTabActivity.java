@@ -51,18 +51,6 @@ public class MainTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Course one = new Course("252", "1102", "11:30");
-                Course two = new Course("212", "210", "4:30");
-                Course three = new Course("280", "205", "9:30");
-                one.setID(mCourseManager.insertRow(one));
-                two.setID(mCourseManager.insertRow(two));
-                Course.printCourses(mCourseManager.getTable());
-                two = mCourseManager.updateRow(two, three);
-                Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteRow(one);
-                Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteTable();
-                Course.printCourses(mCourseManager.getTable());
             }
         });
 
