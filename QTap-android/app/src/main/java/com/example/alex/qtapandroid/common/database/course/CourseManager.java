@@ -49,8 +49,9 @@ public class CourseManager extends DatabaseAccessor {
                 course.setID(cursor.getInt(Course.ID_POS));
                 courses.add(course);
             }
+            cursor.close();
+            return courses; //return only when the cursor has been closed
         }
-        return courses;
     }
 
     public Course getRow(long id) {
@@ -68,8 +69,9 @@ public class CourseManager extends DatabaseAccessor {
             course = new Course(cursor.getString(Course.TITLE_POS),
                     cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.TIME_POS));
             course.setID(cursor.getInt(Course.ID_POS));
+            cursor.close();
+            return course; //return only when the cursor has been closed
         }
-        return course;
     }
 
     public void deleteTable() {
