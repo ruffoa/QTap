@@ -1,25 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/parsingTestText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cbcaca"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/button_space">
 
-    <TextView
-        android:id="@+id/testEventDetails"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#00FF00"
-        android:gravity="center"
-        android:text="Parsed Events" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/resources"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorLink="?attr/colorPrimaryDark"
+            android:textSize="18sp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/emergency_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/title_emergency_contacts" />
+
+        <Button
+            android:id="@+id/first_year_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/title_first_year_contacts" />
+
+        <Button
+            android:id="@+id/counselling_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/counselling_services" />
+
+        <Button
+            android:id="@+id/careers_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/career_services" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:gravity="center"
+            android:text="@string/links"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorLink="?attr/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/solus_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/solus" />
+
+        <Button
+            android:id="@+id/outlook_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/outlook365" />
+
+        <Button
+            android:id="@+id/onq_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
+            android:text="@string/onq" />
+
+    </LinearLayout>
+</ScrollView>
