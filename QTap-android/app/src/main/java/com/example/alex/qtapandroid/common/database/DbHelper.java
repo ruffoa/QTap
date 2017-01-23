@@ -16,7 +16,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES = "CREATE TABLE " + Course.TABLE_NAME + "(" +
             Course._ID + " INTEGER PRIMARY KEY," +
             Course.COLUMN_TITLE + " TEXT," +
-            Course.COLUMN_ROOM_NUM + " TEXT," + Course.COLUMN_TIME + " TEXT);";
+            Course.COLUMN_ROOM_NUM + " TEXT," + Course.COLUMN_STARTTIME +  " TEXT, " + Course.COLUMN_ENDTIME + " TEXT);";
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
 

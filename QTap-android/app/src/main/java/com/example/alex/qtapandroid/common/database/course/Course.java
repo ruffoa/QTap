@@ -13,30 +13,34 @@ public class Course implements BaseColumns {
     public static final String TABLE_NAME = "class";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_ROOM_NUM = "roomNumber";
-    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_STARTTIME = "startTime";
+    public static final String COLUMN_ENDTIME = "endTIme";
 
     //row number each field ends up in
     public static final int ID_POS = 0;
     public static final int TITLE_POS = 1;
     public static final int ROOM_NUM_POS = 2;
-    public static final int TIME_POS = 3;
+    public static final int STIME_POS = 3;
+    public static final int ETIME_POS = 4;
 
     private String title;
     private String roomNum;
-    private String time;
+    private String startTime;
+    private String endTime;
     private long id;
 
-    public Course(String title, String roomNum, String time) {
+    public Course(String title, String roomNum, String sTime, String eTime) {
         this.title = title;
         this.roomNum = roomNum;
-        this.time = time;
+        this.startTime = sTime;
+        this.endTime = eTime;
     }
 
     public static void printCourses(ArrayList<Course> courses) {
         String output = "";
         for (int i = 0; i < courses.size(); i++) {
-            output += "COURSE id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
-                    + " num: " + courses.get(i).getRoomNum() + " time: " + courses.get(i).getTime()+" ";
+            output += System.getProperty("line.separator") +"COURSE id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
+                    + " Location: " + courses.get(i).getRoomNum() + " Start Time: " + courses.get(i).getStartTime()+" End Time: " + courses.get(i).getEndTime();
         }
         Log.d("SQLITE", "INFO: " + output);
     }
@@ -58,7 +62,8 @@ public class Course implements BaseColumns {
         return roomNum;
     }
 
-    public String getTime() {
-        return time;
-    }
+    public String getStartTime() {  return startTime;  }
+
+    public String getEndTime() {  return endTime;  }
+
 }

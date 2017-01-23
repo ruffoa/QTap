@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.classes.icsParser;
+import com.example.alex.qtapandroid.common.database.course.Course;
+import com.example.alex.qtapandroid.common.database.course.CourseManager;
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class StudentToolsFragment extends Fragment {
     private icsParser mParser;
     private List<String> mLines;
 
+    private CourseManager mCourseManager;
 
     @Nullable
     @Override
@@ -51,6 +54,7 @@ public class StudentToolsFragment extends Fragment {
         TextView dataInfo = (TextView) getView().findViewById(R.id.parsingTestText);
         TextView eventData = (TextView) getView().findViewById(R.id.testEventDetails);
         eventData.setMovementMethod(new ScrollingMovementMethod());
+        mCourseManager = new CourseManager(this.getContext());
 
         boolean isEvent = false;
         String sTime = "" ,eTime = "", loc = "", name = "";
@@ -74,7 +78,12 @@ public class StudentToolsFragment extends Fragment {
                 eventData.append(System.getProperty("line.separator") +"Starts: " + smonth + "/" + sday + " at " + shour + ":" + sminute);
                 eventData.append(System.getProperty("line.separator") +"Ends: " + month + "/" + day + " at " + hour + ":" + minute);
 
+                /// Inserting to Database
 
+                String tempTime = Integer.toString(shour) + ":" + Integer.toString(sminute);
+                String tempEndTime = Integer.toString(hour) + ":" + Integer.toString(minute);
+                Course one = new Course(name, loc, tempTime, tempEndTime);
+                one.setID(mCourseManager.insertRow(one));
             }
             else if(isEvent)
             {
@@ -106,7 +115,7 @@ public class StudentToolsFragment extends Fragment {
 
             }
 
-            Log.d(TAG, string);
+//            Log.d(TAG, string);
 
         }
 

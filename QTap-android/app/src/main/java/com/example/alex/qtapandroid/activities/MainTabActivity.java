@@ -55,17 +55,17 @@ public class MainTabActivity extends AppCompatActivity
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 //shows off the database
-                Course one = new Course("252", "1102", "11:30");
-                Course two = new Course("212", "210", "4:30");
-                Course three = new Course("280", "205", "9:30");
-                one.setID(mCourseManager.insertRow(one));
-                two.setID(mCourseManager.insertRow(two));
-                two = mCourseManager.updateRow(two, three);
+//                Course one = new Course("252", "1102", "11:30", "12:30");
+//                Course two = new Course("212", "210", "4:30", "6:30");
+//                Course three = new Course("280", "205", "9:30", "12:30");
+//                one.setID(mCourseManager.insertRow(one));
+//                two.setID(mCourseManager.insertRow(two));
+//                two = mCourseManager.updateRow(two, three);
                 Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteRow(one);
-                Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteTable();
-                Course.printCourses(mCourseManager.getTable());
+//                mCourseManager.deleteRow(one);
+//                Course.printCourses(mCourseManager.getTable());
+//                mCourseManager.deleteTable();
+//                Course.printCourses(mCourseManager.getTable());
             }
         });
 
