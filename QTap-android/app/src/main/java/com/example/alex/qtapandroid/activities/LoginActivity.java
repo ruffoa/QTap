@@ -1,10 +1,12 @@
-package com.example.alex.qtapandroid.ui.activities;
+package com.example.alex.qtapandroid.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -365,7 +367,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());    // Get the default SharedPreferences context
+
             if (success) {
+
+                SharedPreferences.Editor editor = preferences.edit();                                           // Allow for editing the preferences
+                editor.putString("UserEmail", mEmail);                                                          // Create a string called "UserEmail" equal to mEmail
+                editor.apply();                                                                                 // Save changes
+
 
                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             } else {
