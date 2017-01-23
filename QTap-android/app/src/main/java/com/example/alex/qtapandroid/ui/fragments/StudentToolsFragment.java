@@ -55,10 +55,11 @@ public class StudentToolsFragment extends Fragment {
         TextView eventData = (TextView) getView().findViewById(R.id.testEventDetails);
         eventData.setMovementMethod(new ScrollingMovementMethod());
         mCourseManager = new CourseManager(this.getContext());
+        mCourseManager.deleteTable();
 
         boolean isEvent = false;
         String sTime = "" ,eTime = "", loc = "", name = "";
-        int hour = 0, minute = 0, day = 0, month = 0;
+        int hour = 0, minute = 0, day = 0, month = 0, year = 0;
         int shour = 0, sminute = 0, sday = 0, smonth = 0;
 
         mParser = new icsParser(this.getContext());
@@ -82,8 +83,11 @@ public class StudentToolsFragment extends Fragment {
 
                 String tempTime = Integer.toString(shour) + ":" + Integer.toString(sminute);
                 String tempEndTime = Integer.toString(hour) + ":" + Integer.toString(minute);
-                Course one = new Course(name, loc, tempTime, tempEndTime);
+                Course one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                 one.setID(mCourseManager.insertRow(one));
+
+                Log.d(TAG, "Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(month) + " Day: "+ Integer.toString(day));
+
             }
             else if(isEvent)
             {
@@ -96,7 +100,7 @@ public class StudentToolsFragment extends Fragment {
                     sminute = Integer.parseInt(sTime.substring(10, 12));
                     sday = Integer.parseInt(sTime.substring(6, 8));
                     smonth = Integer.parseInt(sTime.substring(4, 6));
-
+                    year = Integer.parseInt(sTime.substring(0, 4));
                 }
                 else if (string.contains("DTEND"))
                 {
@@ -105,6 +109,7 @@ public class StudentToolsFragment extends Fragment {
                     minute = Integer.parseInt(eTime.substring(10, 12));
                     day = Integer.parseInt(eTime.substring(6, 8));
                     month = Integer.parseInt(eTime.substring(4, 6));
+
                 }
                 else if (string.contains("SUMMARY"))
                 {
