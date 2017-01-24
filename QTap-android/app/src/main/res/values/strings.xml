@@ -28,7 +28,7 @@
     <string name="slide_3_desc">Easily check building hours, ATM locations and more</string>
 
     <string name="slide_4_title">Queens Food</string>
-    <string name="slide_4_desc">Easily pay with QTap at any location on campus</string>
+    <string name="slide_4_desc">Easily pay with QTap at any roomNum on campus</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
