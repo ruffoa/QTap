@@ -75,5 +75,5 @@
         android:shadowColor="@android:color/background_light"
         android:text="@string/about" />
 
-   
+
 </LinearLayout>
