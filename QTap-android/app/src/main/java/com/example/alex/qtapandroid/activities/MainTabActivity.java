@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.building.Building;
+import com.example.alex.qtapandroid.common.database.building.BuildingManager;
 import com.example.alex.qtapandroid.common.database.course.Course;
 import com.example.alex.qtapandroid.common.database.course.CourseManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
@@ -36,6 +38,7 @@ public class MainTabActivity extends AppCompatActivity
 
     private boolean mIsViewAtHome;
     private CourseManager mCourseManager;
+    private BuildingManager mBuildingManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class MainTabActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mCourseManager = new CourseManager(this);
+        mBuildingManager = new BuildingManager(this);
         //TODO replace fab, or get rid of it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -51,18 +55,28 @@ public class MainTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                //shows off the database
-                /*Course one = new Course("252", "1102", "11:30");
-                Course two = new Course("212", "210", "4:30");
-                Course three = new Course("280", "205", "9:30");
-                one.setID(mCourseManager.insertRow(one));
-                two.setID(mCourseManager.insertRow(two));
-                two = mCourseManager.updateRow(two, three);
+                
+                //shows off the database in logcat
+                Building bio = new Building("biosci");
+                Building wlh = new Building("wlh");
+                Building ilc = new Building("ilc");
+                bio.setID(mBuildingManager.insertRow(bio));
+                wlh.setID(mBuildingManager.insertRow(wlh));
+                ilc.setID(mBuildingManager.insertRow(ilc));
+                Building.printBuildings(mBuildingManager.getTable());
+                Course sigs = new Course("252", bio.getID(), "1102", "11:30");
+                Course sci = new Course("212", wlh.getID(), "210", "4:30");
+                Course funds = new Course("280", ilc.getID(), "205", "9:30");
+                sigs.setID(mCourseManager.insertRow(sigs));
+                sci.setID(mCourseManager.insertRow(sci));
+                sci = mCourseManager.updateRow(sci, funds);
                 Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteRow(one);
+                mCourseManager.deleteRow(sigs);
                 Course.printCourses(mCourseManager.getTable());
                 mCourseManager.deleteTable();
-                Course.printCourses(mCourseManager.getTable());*/
+                Course.printCourses(mCourseManager.getTable());
+                mBuildingManager.deleteTable();
+                Building.printBuildings(mBuildingManager.getTable());
             }
         });
 
@@ -96,7 +110,7 @@ public class MainTabActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         mCourseManager.close();
         super.onPause();
     }

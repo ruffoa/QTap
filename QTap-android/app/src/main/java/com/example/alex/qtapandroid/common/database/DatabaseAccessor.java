@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Created by Carson on 21/01/2017.
+ * Manages opening and closing the database, as well as managing
+ * the instances of the database helper class. Database managers extends this
+ * class to access the database easily.
  */
-
 public class DatabaseAccessor {
     public SQLiteDatabase mDatabase;
     private DBHelper mDBHelper;
@@ -19,6 +21,11 @@ public class DatabaseAccessor {
         open();
     }
 
+    /**
+     * Creates an instance of the database helper and opens
+     * a readable/writeable instance of the database.
+     * @throws SQLException
+     */
     public void open() throws SQLException {
         if (mDBHelper == null) {
             mDBHelper = DBHelper.getInstance(mContext);
@@ -26,6 +33,9 @@ public class DatabaseAccessor {
         mDatabase = mDBHelper.getWritableDatabase();
     }
 
+    /**
+     * Ends the database connection.
+     */
     public void close() {
         mDBHelper.close();
         mDatabase = null;
