@@ -7,12 +7,13 @@
 
     <TextView
         android:text="@string/account"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
         android:textColorLink="?attr/colorPrimaryDark"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/button_space"/>
 
     <TextView
         android:id="@+id/netID"
@@ -48,16 +49,19 @@
         android:background="@android:color/background_light"
         android:shadowColor="@android:color/background_light"
         android:text="@string/logout"
-        android:textColor="@color/dot_dark_screen3" />
+        android:textColor="@color/dot_dark_screen3"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/button_space"/>
     <TextView
         android:text="@string/options"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
         android:textColorLink="?attr/colorPrimaryDark"
         android:textSize="18sp"
-        android:paddingTop="@dimen/button_space"/>
+        android:paddingTop="@dimen/button_space"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/button_space"/>
     <Button
         android:id="@+id/faculty"
         android:layout_width="match_parent"
@@ -65,7 +69,9 @@
         android:layout_marginTop="@dimen/button_space"
         android:background="@android:color/background_light"
         android:shadowColor="@android:color/background_light"
-        android:text="@string/faculty" />
+        android:text="@string/faculty"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/button_space"/>
     <Button
         android:id="@+id/about"
         android:layout_width="match_parent"
@@ -73,7 +79,9 @@
         android:layout_marginTop="@dimen/button_space"
         android:background="@android:color/background_light"
         android:shadowColor="@android:color/background_light"
-        android:text="@string/about" />
+        android:text="@string/about"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/button_space"/>
 
 
 </LinearLayout>
