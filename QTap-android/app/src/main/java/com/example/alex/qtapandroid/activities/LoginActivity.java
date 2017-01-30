@@ -3,6 +3,8 @@ package com.example.alex.qtapandroid.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -22,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +36,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.classes.downloadICS;
+import com.example.alex.qtapandroid.classes.icsParser;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    public static final String TAG = downloadICS.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -365,7 +378,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            showProgress(true);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());    // Get the default SharedPreferences context
 
@@ -376,7 +389,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 editor.apply();                                                                                 // Save changes
 
 
-                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                // DO LOGIC FOR GENERATING ICS FILE HERE....
+                editor.putString("icsURL", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "icsURL" to point to the ICS URL on SOLUS
+                editor.apply();
+
+                if (preferences.getString("DatabaseDate", "noData") != "noData")                    // if the database is up to date
+                {
+
+                }
+                else
+                {
+                    final downloadICS downloadICS = new downloadICS(LoginActivity.this);
+                    String url = preferences.getString("icsURL", "noURL");
+                    if (url != "noURL") {
+                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                        downloadICS.execute(preferences.getString("icsURL", "noURL"));
+                        Log.d(TAG, "done!");
+
+                    }
+                }
+                // replace later with actual logic code
+                try {
+                    // Simulate network access.
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+
+
+
+
+            startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -390,4 +432,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
+
 

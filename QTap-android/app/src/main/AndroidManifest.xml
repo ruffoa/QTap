@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.MainTabActivity"
+            android:name=".activities.StartupActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
@@ -28,11 +28,15 @@
         </activity>
 
 
-        <!--<activity-->
-            <!--android:name=".ui.activities.MainTabActivity"-->
-            <!--android:label="@string/title_activity_main_tab"-->
-            <!--android:theme="@style/AppTheme.NoActionBar" />-->
-        <!--<activity android:name=".ui.activities.LoginActivity" />-->
+        <activity
+            android:name=".activities.MainTabActivity"
+            android:label="@string/title_activity_main_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_welcome"
+            android:theme="@style/AppTheme" />
 
 
         <!--

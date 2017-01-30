@@ -1,6 +1,8 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
@@ -8,9 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import java.util.Date;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.classes.icsParser;
@@ -20,8 +22,9 @@ import com.example.alex.qtapandroid.common.database.course.CourseManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static java.sql.Types.NULL;
+import java.util.GregorianCalendar;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 /**
  * Created by Carson on 02/12/2016.
@@ -107,18 +110,24 @@ public class CalendarFragment extends Fragment {
 //        TextView eventData = (TextView) getView().findViewById(R.id.testEventDetails);
 //        eventData.setMovementMethod(new ScrollingMovementMethod());
         mCourseManager = new CourseManager(this.getContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());    // Get the default SharedPreferences context
 
-        if (mCourseManager.getTable().isEmpty() == true) {
+//        if (mCourseManager.getTable().isEmpty() == true ||  preferences.getString("DatabaseDate", "noData") != "noData" ) {
             mCourseManager.deleteTable();
 
 
             boolean isEvent = false;
-            String sTime = "", eTime = "", loc = "", name = "";
+            String sTime = "", eTime = "", loc = "", name = "", rTime;
             int hour = 0, minute = 0, day = 0, month = 0, year = 0;
             int shour = 0, sminute = 0, sday = 0, smonth = 0;
+            int rday = 0, rmonth = 0, ryear = 0;
+            boolean repeatWeekly = false;
+            String rDayStr = "", rMonStr = "", rYrStr = "", rHrStr = "", rMinStr ="", rSecStr = "";
 
             mParser = new icsParser(this.getContext());
-            mLines = mParser.readLine(mPath);
+//            mLines = mParser.readLine(mPath);
+            mLines = mParser.readDownloadFile("cal.ics");
+
             for (String string : mLines) {
 
                 if (string.contains("BEGIN:VEVENT")) {
@@ -139,7 +148,76 @@ public class CalendarFragment extends Fragment {
                     Course one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                     one.setID(mCourseManager.insertRow(one));
 
+                    if (repeatWeekly == true)
+                    {
+                        String endDateString = rYrStr + "-" + rMonStr + "-" + rDayStr + " " + rHrStr +":" + rMinStr + ":" + rSecStr;
+
+                        // get the supported ids for GMT-08:00 (Pacific Standard Time)
+                        String[] ids = TimeZone.getAvailableIDs(-8 * 60 * 60 * 1000);
+                        // if no ids were returned, something is wrong. get out.
+                        if (ids.length == 0)
+                            System.exit(0);
+
+                        // begin output
+                        System.out.println("Current Time");
+
+                        // create a Pacific Standard Time time zone
+                        SimpleTimeZone pdt = new SimpleTimeZone(-8 * 60 * 60 * 1000, ids[0]);
+
+                        // set up rules for Daylight Saving Time
+                        pdt.setStartRule(Calendar.APRIL, 1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
+                        pdt.setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
+
+                        // create a GregorianCalendar with the Pacific Daylight time zone
+                        // and the current date and time
+                        Calendar cal2 = new GregorianCalendar(pdt);
+                        Calendar cal = new GregorianCalendar(pdt);
+
+                        cal.set(year, smonth -1, sday);
+
+                        cal2.set(Integer.parseInt(rYrStr), Integer.parseInt(rMonStr) - 1, Integer.parseInt(rDayStr));
+
+                        Log.d(TAG, "Cal 2 Date: " + cal2.get(Calendar.DAY_OF_MONTH) + "/" + cal2.get(Calendar.MONTH) + "/" + cal2.get(Calendar.YEAR));
+                        Date endDate = cal2.getTime();
+                        Date date1 = cal.getTime();
+                        int ctr = 0;
+
+                        while (date1.before(endDate))
+                        {
+                            cal.add(Calendar.DATE, 7);
+                            date1 = cal.getTime();
+                            sday = cal.get(Calendar.DAY_OF_MONTH);
+                            smonth = cal.get(Calendar.MONTH);
+                            year = cal.get(Calendar.YEAR);
+                            ctr += 1;
+
+                            Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: "+ Integer.toString(sday) + " Name: " + name + " At: " + loc + " *DATE* = " + rday + "/" + rmonth + "/" + ryear + " End Date: " + endDateString + " CTR " + ctr);
+
+                            one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
+                            one.setID(mCourseManager.insertRow(one));
+                        }
+
+                    }
+                    repeatWeekly = false;
 //                Log.d(TAG, "Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(month) + " Day: "+ Integer.toString(day));
+                }
+                    else if (string.contains(("RRULE:FREQ=WEEKLY;")) )
+                {
+                    repeatWeekly = true;
+
+                    if (string.contains("UNTIL=")) {
+                        rTime = string.replaceAll("[^0-9]", "");
+                        rday = Integer.parseInt(rTime.substring(6, 8));
+                        rmonth = Integer.parseInt(rTime.substring(4, 6));
+                        ryear = Integer.parseInt(rTime.substring(0, 4));
+
+                        rSecStr = rTime.substring(12, 14);
+                        rHrStr = rTime.substring(8, 10);
+                        rMinStr = rTime.substring(10, 12);
+                        rDayStr = rTime.substring(6, 8);
+                        rMonStr = rTime.substring(4, 6);
+                        rYrStr = rTime.substring(0, 4);
+                    }
 
                 } else if (isEvent) {
                     if (string.contains("LOCATION"))
@@ -170,7 +248,7 @@ public class CalendarFragment extends Fragment {
 
             }
 
-        }
+//        }
     }
 
 }
