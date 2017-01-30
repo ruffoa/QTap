@@ -120,7 +120,6 @@ public class CalendarFragment extends Fragment {
             String sTime = "", eTime = "", loc = "", name = "", rTime;
             int hour = 0, minute = 0, day = 0, month = 0, year = 0;
             int shour = 0, sminute = 0, sday = 0, smonth = 0;
-            int rday = 0, rmonth = 0, ryear = 0;
             boolean repeatWeekly = false;
             String rDayStr = "", rMonStr = "", rYrStr = "", rHrStr = "", rMinStr ="", rSecStr = "";
 
@@ -191,7 +190,7 @@ public class CalendarFragment extends Fragment {
                             year = cal.get(Calendar.YEAR);
                             ctr += 1;
 
-                            Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: "+ Integer.toString(sday) + " Name: " + name + " At: " + loc + " *DATE* = " + rday + "/" + rmonth + "/" + ryear + " End Date: " + endDateString + " CTR " + ctr);
+                            Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: "+ Integer.toString(sday) + " Name: " + name + " At: " + loc +  " End Date: " + endDateString + " CTR " + ctr);
 
                             one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
                             one.setID(mCourseManager.insertRow(one));
@@ -199,7 +198,6 @@ public class CalendarFragment extends Fragment {
 
                     }
                     repeatWeekly = false;
-//                Log.d(TAG, "Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(month) + " Day: "+ Integer.toString(day));
                 }
                     else if (string.contains(("RRULE:FREQ=WEEKLY;")) )
                 {
@@ -207,9 +205,6 @@ public class CalendarFragment extends Fragment {
 
                     if (string.contains("UNTIL=")) {
                         rTime = string.replaceAll("[^0-9]", "");
-                        rday = Integer.parseInt(rTime.substring(6, 8));
-                        rmonth = Integer.parseInt(rTime.substring(4, 6));
-                        ryear = Integer.parseInt(rTime.substring(0, 4));
 
                         rSecStr = rTime.substring(12, 14);
                         rHrStr = rTime.substring(8, 10);
