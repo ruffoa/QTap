@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.building;
+package com.example.alex.qtapandroid.common.database.buildings;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,9 +1,8 @@
-package com.example.alex.qtapandroid.common.database.course;
+package com.example.alex.qtapandroid.common.database.courses;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 
@@ -52,7 +51,7 @@ public class CourseManager extends DatabaseAccessor {
     /**
      * Gets the entire Courses table.
      *
-     * @return ArrayList of all the courses in the Courses table.
+     * @return ArrayList of all the rows in the Courses table.
      */
     public ArrayList<Course> getTable() {
         String[] projection = {
@@ -77,7 +76,7 @@ public class CourseManager extends DatabaseAccessor {
      * Gets a single course from the Courses table.
      *
      * @param id ID of the course to get from the table.
-     * @return Course class obtained from the table. Contins all information
+     * @return Course class obtained from the table. Contains all information
      * held in row.
      */
     public Course getRow(long id) {

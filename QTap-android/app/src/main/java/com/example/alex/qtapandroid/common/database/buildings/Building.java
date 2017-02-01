@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.building;
+package com.example.alex.qtapandroid.common.database.buildings;
 
 import android.provider.BaseColumns;
 import android.util.Log;
@@ -35,13 +35,14 @@ public class Building implements BaseColumns {
      * @param buildings ArrayList of courses to print out.
      */
     public static void printBuildings(ArrayList<Building> buildings) {
-        String output = "";
+        String output = "BUIDLINGS:\n";
         for (int i = 0; i < buildings.size(); i++) {
-            output += " id:" + buildings.get(i).getID() + " title: " + buildings.get(i).getName();
+            output += " id:" + buildings.get(i).getID() + " title: " + buildings.get(i).getName() + "\n";
         }
-        Log.d("SQLITE", "BUILDINGS:" + output);
+        Log.d("SQLITE",output);
     }
 
+    //getters for each field and setter for ID
     public String getName() {
         return name;
     }
