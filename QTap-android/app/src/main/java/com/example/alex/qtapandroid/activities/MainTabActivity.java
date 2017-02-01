@@ -62,7 +62,7 @@ public class MainTabActivity extends AppCompatActivity
                         .setAction("Action", null).show();
 
                 //shows off the database in logcat
-                User carson = new User("14cdwc", "Carson", "Cook");
+                /*User carson = new User("14cdwc", "Carson", "Cook");
                 User alex = new User("14abcr", "Alex", "Ruffo");
                 User lachlan = new User("14labd", "Lachlan", "Devir");
                 carson.setID(mUserManager.insertRow(carson));
@@ -74,7 +74,7 @@ public class MainTabActivity extends AppCompatActivity
                 User.printUsers(mUserManager.getTable());
                 mUserManager.deleteRow(lachlan);
                 User.printUsers(mUserManager.getTable());
-                mUserManager.deleteTable();
+                mUserManager.deleteTable();*/
                 User.printUsers(mUserManager.getTable());
 
                 /*
