@@ -24,7 +24,7 @@ public class UserManager extends DatabaseAccessor {
      * Inserts a user into the database.
      *
      * @param user The user to be inserted. Before calling it must have
-     *               the values to be inserted.
+     *             the values to be inserted.
      * @return <long> The ID of the course just inserted. Set the id of the
      * the user inserted to be the return value.
      */
@@ -40,7 +40,7 @@ public class UserManager extends DatabaseAccessor {
      * Deletes a user from the database.
      *
      * @param user The user to be deleted. Identifies which user
-     *               using the ID of this parameter.
+     *             using the ID of this parameter.
      */
     public void deleteRow(User user) {
         String selection = User._ID + " LIKE ?";
@@ -73,7 +73,38 @@ public class UserManager extends DatabaseAccessor {
     }
 
     /**
-     * Gets a single user from the Users table.
+     * Queries the Users table for a user with a given netID. Since netIDs are unique they
+     * can be used to identify users.
+     *
+     * @param netid The netid searched for.
+     * @return User class obtained from the table. Contains all information held in that row.
+     */
+    public User getRow(String netid) {
+        String[] projection = {
+                User._ID,
+                User.COLUMN_NETID,
+                User.COLUMN_FIRST_NAME,
+                User.COLUMN_LAST_NAME
+        };
+        User user;
+        String selection = User.COLUMN_NETID + " LIKE ?";
+        String[] selectionArgs = {netid};
+        try (Cursor cursor = mDatabase.query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+            if (cursor != null && cursor.moveToNext()) {
+                user = new User(cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
+                        cursor.getString(User.LAST_NAME_POS));
+                user.setID(cursor.getInt(User.ID_POS));
+                cursor.close();
+                return user; //return only when the cursor has been closed.
+                //Return statement never missed, try block always finishes this.
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Gets a single known user from the Users table.
      *
      * @param id ID of the user to get from the table.
      * @return User class obtained from the table. Contains all information
@@ -98,6 +129,7 @@ public class UserManager extends DatabaseAccessor {
             return user; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
         }
+
     }
 
     /**
