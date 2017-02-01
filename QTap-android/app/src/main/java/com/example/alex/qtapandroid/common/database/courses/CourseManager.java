@@ -91,13 +91,16 @@ public class CourseManager extends DatabaseAccessor {
         String selection = Course._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            course = new Course(cursor.getString(Course.TITLE_POS), cursor.getInt(Course.BUILDING_ID_POS),
-                    cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.TIME_POS));
-            course.setID(cursor.getInt(Course.ID_POS));
-            cursor.close();
-            return course; //return only when the cursor has been closed.
-            //Return statement never missed, try block always finishes this.
+            if (cursor!=null && cursor.moveToNext()) {
+                course = new Course(cursor.getString(Course.TITLE_POS), cursor.getInt(Course.BUILDING_ID_POS),
+                        cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.TIME_POS));
+                course.setID(cursor.getInt(Course.ID_POS));
+                cursor.close();
+                return course; //return only when the cursor has been closed.
+                //Return statement never missed, try block always finishes this.
+            } else {
+                return null;
+            }
         }
     }
 

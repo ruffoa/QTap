@@ -36,7 +36,7 @@ public class BuildingManager extends DatabaseAccessor {
      * Deletes a building from the database.
      *
      * @param building The building to be deleted. Identifies which Building
-     *               using the ID of this parameter.
+     *                 using the ID of this parameter.
      */
     public void deleteRow(Building building) {
         String selection = Building._ID + " LIKE ?";
@@ -82,12 +82,15 @@ public class BuildingManager extends DatabaseAccessor {
         String selection = Building._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = mDatabase.query(Building.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            building = new Building(cursor.getString(Building.NAME_POS));
-            building.setID(cursor.getInt(Building.ID_POS));
-            cursor.close();
-            return building; //return only when the cursor has been closed.
-            //Return statement never missed, try block always finishes this.
+            if (cursor != null && cursor.moveToNext()) {
+                building = new Building(cursor.getString(Building.NAME_POS));
+                building.setID(cursor.getInt(Building.ID_POS));
+                cursor.close();
+                return building; //return only when the cursor has been closed.
+                //Return statement never missed, try block always finishes this.
+            } else {
+                return null;
+            }
         }
     }
 
