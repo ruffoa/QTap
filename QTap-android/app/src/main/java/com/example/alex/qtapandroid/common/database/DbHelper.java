@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_BUILDINGS = "DROP TABLE IF EXISTS " + Building.TABLE_NAME;
     private static final String SQL_DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
 
-    private static final int DATABASE_VERSION = 3; //**NOTE** this must be incremented if you are
+    private static final int DATABASE_VERSION = 1; //**NOTE** this must be incremented if you are
                                                 //trying to run changes to the database schema
     private static final String DATABASE_NAME = "QTap.db";
 
