@@ -12,12 +12,12 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DatabaseAccessor {
     public SQLiteDatabase mDatabase;
-    private DbHelper mDBHelper;
+    private DBHelper mDBHelper;
     private Context mContext;
 
     public DatabaseAccessor(Context context) {
         this.mContext = context;
-        mDBHelper = DbHelper.getInstance(mContext);
+        mDBHelper = DBHelper.getInstance(mContext);
         open();
     }
 
@@ -28,7 +28,7 @@ public class DatabaseAccessor {
      */
     public void open() throws SQLException {
         if (mDBHelper == null) {
-            mDBHelper = DbHelper.getInstance(mContext);
+            mDBHelper = DBHelper.getInstance(mContext);
         }
         mDatabase = mDBHelper.getWritableDatabase();
     }

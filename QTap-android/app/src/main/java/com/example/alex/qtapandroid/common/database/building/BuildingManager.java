@@ -28,7 +28,7 @@ public class BuildingManager extends DatabaseAccessor {
      */
     public long insertRow(Building building) {
         ContentValues values = new ContentValues();
-        values.put(Building.COLUMN_NAME, building.getName());
+        values.put(Building.COLUMN_TITLE, building.getTitle());
         return mDatabase.insert(Building.TABLE_NAME, null, values);
     }
 
@@ -52,7 +52,7 @@ public class BuildingManager extends DatabaseAccessor {
     public ArrayList<Building> getTable() {
         String[] projection = {
                 Building._ID,
-                Building.COLUMN_NAME,
+                Building.COLUMN_TITLE,
         };
         ArrayList<Building> buildings = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
@@ -76,14 +76,14 @@ public class BuildingManager extends DatabaseAccessor {
     public Building getRow(long id) {
         String[] projection = {
                 Building._ID,
-                Building.COLUMN_NAME,
+                Building.COLUMN_TITLE,
         };
         Building building;
         String selection = Building._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = mDatabase.query(Building.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-            building = new Building(cursor.getString(Building.NAME_POS));
+            building = new Building(cursor.getString(Building.TITLE_POS),cursor.getString(Building.ROOM_NUM_POS));
             building.setID(cursor.getInt(Building.ID_POS));
             cursor.close();
             return building; //return only when the cursor has been closed.
@@ -107,7 +107,7 @@ public class BuildingManager extends DatabaseAccessor {
      */
     public Building updateRow(Building oldBuilding, Building newBuilding) {
         ContentValues values = new ContentValues();
-        values.put(Building.COLUMN_NAME, newBuilding.getName());
+        values.put(Building.COLUMN_TITLE, newBuilding.getTitle());
         String selection = Building._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldBuilding.getID())};
         mDatabase.update(Building.TABLE_NAME, values, selection, selectionArgs);

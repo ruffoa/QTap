@@ -75,13 +75,14 @@ public class CourseManager extends DatabaseAccessor {
         //try with resources - automatically closes cursor whether or not its completed normally
         try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
-<<<<<<< HEAD
-                Course course = new Course(cursor.getString(Course.TITLE_POS), cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.STIME_POS), cursor.getString(Course.ETIME_POS),
-                        cursor.getString(Course.DAY_POS), cursor.getString(Course.MONTH_POS), cursor.getString(Course.YEAR_POS));
+                Course course = new Course(cursor.getString(Course.TITLE_POS),
+                        cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.STIME_POS),
+                        cursor.getString(Course.ETIME_POS),
+                        cursor.getString(Course.DAY_POS), cursor.getString(Course.MONTH_POS),
+                        cursor.getString(Course.YEAR_POS));
                 course.setID(cursor.getInt(Course.ID_POS));
-=======
-                Course course = getRow(cursor.getInt(Course.ID_POS));
->>>>>>> sqlitedatabase
+                course.setBuildingID(cursor.getInt(Course.BUILDING_ID_POS));
+
                 courses.add(course);
             }
             cursor.close();
@@ -113,14 +114,13 @@ public class CourseManager extends DatabaseAccessor {
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-<<<<<<< HEAD
-            course = new Course(cursor.getString(Course.TITLE_POS), cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.STIME_POS), cursor.getString(Course.ETIME_POS),
-                    cursor.getString(Course.DAY_POS), cursor.getString(Course.MONTH_POS), cursor.getString(Course.YEAR_POS));
-=======
-            course = new Course(cursor.getString(Course.TITLE_POS), cursor.getInt(Course.BUILDING_ID_POS),
-                    cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.TIME_POS));
->>>>>>> sqlitedatabase
+            course = new Course(cursor.getString(Course.TITLE_POS),
+                    cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.STIME_POS),
+                    cursor.getString(Course.ETIME_POS),
+                    cursor.getString(Course.DAY_POS), cursor.getString(Course.MONTH_POS),
+                    cursor.getString(Course.YEAR_POS));
             course.setID(cursor.getInt(Course.ID_POS));
+            course.setBuildingID(cursor.getInt(Course.BUILDING_ID_POS));
             cursor.close();
             return course; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
