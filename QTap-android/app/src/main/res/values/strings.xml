@@ -65,9 +65,17 @@
     <string name="solus">SOLUS</string>
     <string name="outlook365">Outlook 365</string>
     <string name="onq">OnQ</string>
+    <string name="netid">Net ID</string>
+    <string name="login_date">Login Date</string>
+    <string name="logout">Log Out</string>
+    <string name="faculty">Faculty</string>
+    <string name="about">About</string>
 
     <!--strings for titles on top of pages -->
     <string name="resources">Resources</string>
-    <string name="links">Links (Open in Safari)</string>
+    <string name="links">Links (Open in Internet)</string>
+    <string name="account">Account</string>
+    <string name="options">Options</string>
+
 
 </resources>

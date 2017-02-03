@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.building.Building;
+import com.example.alex.qtapandroid.common.database.building.BuildingManager;
 import com.example.alex.qtapandroid.common.database.course.Course;
 import com.example.alex.qtapandroid.common.database.course.CourseManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
@@ -39,6 +41,7 @@ public class MainTabActivity extends AppCompatActivity
 
     private boolean mIsViewAtHome;
     private CourseManager mCourseManager;
+    private BuildingManager mBuildingManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class MainTabActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mCourseManager = new CourseManager(this);
+        mBuildingManager = new BuildingManager(this);
         //TODO replace fab, or get rid of it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +116,7 @@ public class MainTabActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         mCourseManager.close();
         super.onPause();
     }
