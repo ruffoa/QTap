@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.course;
+package com.example.alex.qtapandroid.common.database.courses;
 
 import android.provider.BaseColumns;
 import android.util.Log;
@@ -62,12 +62,12 @@ public class Course implements BaseColumns {
      * @param courses ArrayList of courses to print out.
      */
     public static void printCourses(ArrayList<Course> courses) {
-        String output = "";
+        String output = "COURSES:\n";
         for (int i = 0; i < courses.size(); i++) {
             output += System.getProperty("line.separator") + "COURSE id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
                     + " Location: " + courses.get(i).getRoomNum() + " Start Time: " + courses.get(i).getStartTime() + " End Time: " + courses.get(i).getEndTime() + " Day: " + courses.get(i).getDay() + " Month: " + courses.get(i).getMonth() + " Year: " + courses.get(i).getYear();
         }
-        Log.d("SQLITE", "COURSES:" + output);
+        Log.d("SQLITE",output);
     }
 
     //getters and setters for fields

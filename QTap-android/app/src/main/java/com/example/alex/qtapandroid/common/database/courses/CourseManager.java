@@ -1,9 +1,8 @@
-package com.example.alex.qtapandroid.common.database.course;
+package com.example.alex.qtapandroid.common.database.courses;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 
@@ -58,7 +57,7 @@ public class CourseManager extends DatabaseAccessor {
     /**
      * Gets the entire Courses table.
      *
-     * @return ArrayList of all the courses in the Courses table.
+     * @return ArrayList of all the rows in the Courses table.
      */
     public ArrayList<Course> getTable() {
         String[] projection = {
@@ -69,7 +68,8 @@ public class CourseManager extends DatabaseAccessor {
                 Course.COLUMN_ENDTIME,
                 Course.COLUMN_DAY,
                 Course.COLUMN_MONTH,
-                Course.COLUMN_YEAR
+                Course.COLUMN_YEAR,
+                Course.COLUMN_BUILDING_ID
         };
         ArrayList<Course> courses = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
@@ -82,7 +82,6 @@ public class CourseManager extends DatabaseAccessor {
                         cursor.getString(Course.YEAR_POS));
                 course.setID(cursor.getInt(Course.ID_POS));
                 course.setBuildingID(cursor.getInt(Course.BUILDING_ID_POS));
-
                 courses.add(course);
             }
             cursor.close();
@@ -94,7 +93,7 @@ public class CourseManager extends DatabaseAccessor {
      * Gets a single course from the Courses table.
      *
      * @param id ID of the course to get from the table.
-     * @return Course class obtained from the table. Contins all information
+     * @return Course class obtained from the table. Contains all information
      * held in row.
      */
     public Course getRow(long id) {
@@ -107,23 +106,27 @@ public class CourseManager extends DatabaseAccessor {
                 Course.COLUMN_ENDTIME,
                 Course.COLUMN_DAY,
                 Course.COLUMN_MONTH,
-                Course.COLUMN_YEAR
+                Course.COLUMN_YEAR,
+                Course.COLUMN_BUILDING_ID
         };
         Course course;
         String selection = Course._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            course = new Course(cursor.getString(Course.TITLE_POS),
-                    cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.STIME_POS),
-                    cursor.getString(Course.ETIME_POS),
-                    cursor.getString(Course.DAY_POS), cursor.getString(Course.MONTH_POS),
-                    cursor.getString(Course.YEAR_POS));
-            course.setID(cursor.getInt(Course.ID_POS));
-            course.setBuildingID(cursor.getInt(Course.BUILDING_ID_POS));
-            cursor.close();
-            return course; //return only when the cursor has been closed.
-            //Return statement never missed, try block always finishes this.
+            if (cursor != null && cursor.moveToNext()) {
+                course = new Course(cursor.getString(Course.TITLE_POS),
+                        cursor.getString(Course.ROOM_NUM_POS), cursor.getString(Course.STIME_POS),
+                        cursor.getString(Course.ETIME_POS),
+                        cursor.getString(Course.DAY_POS), cursor.getString(Course.MONTH_POS),
+                        cursor.getString(Course.YEAR_POS));
+                course.setID(cursor.getInt(Course.ID_POS));
+                course.setBuildingID(cursor.getInt(Course.BUILDING_ID_POS));
+                cursor.close();
+                return course; //return only when the cursor has been closed.
+                //Return statement never missed, try block always finishes this.
+            } else {
+                return null;
+            }
         }
     }
 

@@ -1,10 +1,10 @@
-package com.example.alex.qtapandroid.common.database.building;
+package com.example.alex.qtapandroid.common.database.buildings;
 
 
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.example.alex.qtapandroid.common.database.course.Course;
+import com.example.alex.qtapandroid.common.database.courses.Course;
 
 import java.util.ArrayList;
 
@@ -16,11 +16,11 @@ public class Building implements BaseColumns {
     public static final String TABLE_NAME = "building";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_ROOM_NUM = "roomNumber";
-    public static final String COLUMN_MONHOURS = "time";
-    public static final String COLUMN_TUESHOURS = "time";
-    public static final String COLUMN_WEDHOURS = "time";
-    public static final String COLUMN_THURSHOURS = "time";
-    public static final String COLUMN_FRIHOURS = "time";
+    public static final String COLUMN_MONHOURS = "mondayHours";
+    public static final String COLUMN_TUESHOURS = "tuesdayHours";
+    public static final String COLUMN_WEDHOURS = "wednesdayHours";
+    public static final String COLUMN_THURSHOURS = "thursdayHours";
+    public static final String COLUMN_FRIHOURS = "fridayHours";
     public static final String COLUMN_CANBOOKROOMS = "canBookRooms";
     public static final String COLUMN_HASATM = "hasATM";
 
@@ -49,7 +49,6 @@ public class Building implements BaseColumns {
         }
         Log.d("SQLITE", "INFO: " + output);
     }
-
 
     public long getID() {
         return id;
