@@ -20,14 +20,24 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_CLASSES = "CREATE TABLE " + Course.TABLE_NAME + "(" +
             Course._ID + " INTEGER PRIMARY KEY," +
             Course.COLUMN_TITLE + " TEXT," +
-            Course.COLUMN_ROOM_NUM + " TEXT," + Course.COLUMN_TIME + " TEXT, " +
+            Course.COLUMN_ROOM_NUM + " TEXT," + Course.COLUMN_STARTTIME + " TEXT, " +
+            Course.COLUMN_ENDTIME + " TEXT, " + Course.COLUMN_DAY + " TEXT, " +
+            Course.COLUMN_MONTH + " TEXT, " + Course.COLUMN_YEAR + " TEXT," +
             Course.COLUMN_BUILDING_ID + " INT, " + "FOREIGN KEY (" +
             Course.COLUMN_BUILDING_ID + ") REFERENCES " +
             Building.TABLE_NAME + "(id) );";
 
     private static final String SQL_CREATE_BUILDINGS = "CREATE TABLE " + Building.TABLE_NAME + "(" +
             Building._ID + " INTEGER PRIMARY KEY," +
-            Building.COLUMN_NAME + " TEXT);";
+            Building.COLUMN_TITLE + " TEXT," +
+            Building.COLUMN_ROOM_NUM + " TEXT," +
+            Building.COLUMN_MONHOURS + " TEXT," +
+            Building.COLUMN_TUESHOURS + " TEXT," +
+            Building.COLUMN_WEDHOURS + " TEXT," +
+            Building.COLUMN_THURSHOURS + " TEXT," +
+            Building.COLUMN_FRIHOURS + " TEXT," +
+            Building.COLUMN_CANBOOKROOMS + " TEXT," +
+            Building.COLUMN_HASATM + " TEXT);";
 
     private static final String SQL_CREATE_USERS = "CREATE TABLE " + User.TABLE_NAME + "(" +
             User._ID + " INTEGER PRIMARY KEY," + User.COLUMN_NETID + " TEXT," +
@@ -44,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
     private static final String SQL_DELETE_SERVICES = "DROP TABLE IF EXISTS " + Service.TABLE_NAME;
 
-    private static final int DATABASE_VERSION = 3; //**NOTE** this must be incremented if you are
+    private static final int DATABASE_VERSION = 4; //**NOTE** this must be incremented if you are
                                                 //trying to run changes to the database schema
     private static final String DATABASE_NAME = "QTap.db";
 

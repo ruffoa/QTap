@@ -1,7 +1,9 @@
 package com.example.alex.qtapandroid.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.buildings.Building;
@@ -29,8 +32,8 @@ import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
-import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
+import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
 /**
@@ -64,7 +67,6 @@ public class MainTabActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
                 //shows off the database in logcat
                 /*User carson = new User("14cdwc", "Carson", "Cook");
                 User alex = new User("14abcr", "Alex", "Ruffo");
@@ -80,7 +82,7 @@ public class MainTabActivity extends AppCompatActivity
                 User.printUsers(mUserManager.getTable());
                 mUserManager.deleteTable();*/
                 //User.printUsers(mUserManager.getTable());
-                Service.printServices(mServiceManager.getTable());
+                //Service.printServices(mServiceManager.getTable());
                 /*
                 Building bio = new Building("biosci");
                 Building wlh = new Building("wlh");
@@ -114,6 +116,19 @@ public class MainTabActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_schedule); //start at calendar view
+
+        ////// Set Name and Email in nav header
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);  // Get default SharedPreferences Instance
+        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound"); // get the "UserEmail" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
+        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");   // get the "UserName" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
+
+        View header = navigationView.getHeaderView(0);                                        // get the existing headerView
+        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);            // Set the navHeaderAccountName TextView to a local var
+        TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
+        name.setText(userName);                                                               // Set the textView text to the "UserName" string
+        email.setText(userEmail);
+
+
     }
 
     /**

@@ -3,9 +3,12 @@ package com.example.alex.qtapandroid.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +38,8 @@ import android.widget.TextView;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
+
+import com.example.alex.qtapandroid.classes.downloadICS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    public static final String TAG = downloadICS.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             String netid = email.split("@")[0]; //take everything before the email starts
-                                                // this is the net ID
+            // this is the net ID
             mAuthTask = new UserLoginTask(netid, password, this);
             mAuthTask.execute((Void) null);
         }
@@ -354,7 +360,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //TODO as of now just adding new users into database
             User userInDB = mUserManager.getRow(netid);
             if (userInDB == null) {
-                User newUser = new User(netid,"",""); //TODO ask for their name
+                User newUser = new User(netid, "", ""); //TODO ask for their name
                 mUserManager.insertRow(newUser);
             }
             return true;
@@ -363,9 +369,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            showProgress(true);
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());    // Get the default SharedPreferences context
 
             if (success) {
+
+                SharedPreferences.Editor editor = preferences.edit();                                           // Allow for editing the preferences
+                editor.putString("UserEmail", netid + "@queensu.ca");                                                          // Create a string called "UserEmail" equal to mEmail
+                editor.apply();                                                                                 // Save changes
+
+
+                // DO LOGIC FOR GENERATING ICS FILE HERE....
+                editor.putString("icsURL", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "icsURL" to point to the ICS URL on SOLUS
+                editor.apply();
+
+                if (preferences.getString("DatabaseDate", "noData") != "noData")                    // if the database is up to date
+                {
+
+                } else {
+                    final downloadICS downloadICS = new downloadICS(LoginActivity.this);
+                    String url = preferences.getString("icsURL", "noURL");
+                    if (url != "noURL") {
+                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                        downloadICS.execute(preferences.getString("icsURL", "noURL"));
+                        Log.d(TAG, "done!");
+
+                    }
+                }
+                // replace later with actual logic code
+                try {
+                    // Simulate network access.
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+
+
                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -380,4 +419,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
+
 

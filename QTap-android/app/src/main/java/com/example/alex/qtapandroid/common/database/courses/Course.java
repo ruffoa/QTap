@@ -17,27 +17,43 @@ public class Course implements BaseColumns {
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_BUILDING_ID = "buildingID";
     public static final String COLUMN_ROOM_NUM = "roomNumber";
-    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_STARTTIME = "startTime";
+    public static final String COLUMN_ENDTIME = "endTime";
+    public static final String COLUMN_DAY = "day";
+    public static final String COLUMN_MONTH = "month";
+    public static final String COLUMN_YEAR = "year";
 
     //column number each field ends up in
     public static final int ID_POS = 0;
     public static final int TITLE_POS = 1;
-    public static final int BUILDING_ID_POS = 2;
-    public static final int ROOM_NUM_POS = 3;
-    public static final int TIME_POS = 4;
+    public static final int ROOM_NUM_POS = 2;
+    public static final int STIME_POS = 3;
+    public static final int ETIME_POS = 4;
+    public static final int DAY_POS = 5;
+    public static final int MONTH_POS = 6;
+    public static final int YEAR_POS = 7;
+    public static final int BUILDING_ID_POS = 8;
 
     //fields in database
     private String title;
     private long buildingID;
     private String roomNum;
-    private String time;
+    private String startTime;
+    private String endTime;
+    private String Day;
+    private String Month;
+    private String Year;
     private long id;
 
-    public Course(String title, long building, String roomNum, String time) {
+    public Course(String title, String roomNum, String sTime,
+                  String eTime, String Day, String Month, String Year) {
         this.title = title;
-        this.buildingID = building;
         this.roomNum = roomNum;
-        this.time = time;
+        this.startTime = sTime;
+        this.endTime = eTime;
+        this.Day = Day;
+        this.Month = Month;
+        this.Year = Year;
     }
 
     /**
@@ -48,14 +64,17 @@ public class Course implements BaseColumns {
     public static void printCourses(ArrayList<Course> courses) {
         String output = "COURSES:\n";
         for (int i = 0; i < courses.size(); i++) {
-            output += " id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
-                    + " building: " + courses.get(i).getBuildingID()
-                    + " num: " + courses.get(i).getRoomNum() + " time: " + courses.get(i).getTime() + "\n";
+            output += System.getProperty("line.separator") + "COURSE id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
+                    + " Location: " + courses.get(i).getRoomNum() + " Start Time: " + courses.get(i).getStartTime() + " End Time: " + courses.get(i).getEndTime() + " Day: " + courses.get(i).getDay() + " Month: " + courses.get(i).getMonth() + " Year: " + courses.get(i).getYear();
         }
         Log.d("SQLITE",output);
     }
 
-    //getters for each field and setter for ID
+    //getters and setters for fields
+    public void setBuildingID(long buildingID) {
+        this.buildingID = buildingID;
+    }
+
     public long getID() {
         return id;
     }
@@ -76,7 +95,23 @@ public class Course implements BaseColumns {
         return roomNum;
     }
 
-    public String getTime() {
-        return time;
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public String getDay() {
+        return Day;
+    }
+
+    public String getMonth() {
+        return Month;
+    }
+
+    public String getYear() {
+        return Year;
     }
 }

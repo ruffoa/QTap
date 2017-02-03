@@ -56,4 +56,26 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_maps">Map</string>
+
+    <!--strings for button names -->
+    <string name="title_emergency_contacts">Emergency Contacts</string>
+    <string name="title_first_year_contacts">First Year Contacts</string>
+    <string name="counselling_services">Counselling Services</string>
+    <string name="career_services">Career Services</string>
+    <string name="solus">SOLUS</string>
+    <string name="outlook365">Outlook 365</string>
+    <string name="onq">OnQ</string>
+    <string name="netid">Net ID</string>
+    <string name="login_date">Login Date</string>
+    <string name="logout">Log Out</string>
+    <string name="faculty">Faculty</string>
+    <string name="about">About</string>
+
+    <!--strings for titles on top of pages -->
+    <string name="resources">Resources</string>
+    <string name="links">Links (Open in Internet)</string>
+    <string name="account">Account</string>
+    <string name="options">Options</string>
+
+
 </resources>
