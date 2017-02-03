@@ -22,6 +22,8 @@ import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
+import com.example.alex.qtapandroid.common.database.services.Service;
+import com.example.alex.qtapandroid.common.database.services.ServiceManager;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
@@ -43,6 +45,7 @@ public class MainTabActivity extends AppCompatActivity
     private CourseManager mCourseManager;
     private BuildingManager mBuildingManager;
     private UserManager mUserManager;
+    private ServiceManager mServiceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class MainTabActivity extends AppCompatActivity
         mCourseManager = new CourseManager(this);
         mBuildingManager = new BuildingManager(this);
         mUserManager = new UserManager(this);
+        mServiceManager = new ServiceManager(this);
         //TODO replace fab, or get rid of it
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +79,8 @@ public class MainTabActivity extends AppCompatActivity
                 mUserManager.deleteRow(lachlan);
                 User.printUsers(mUserManager.getTable());
                 mUserManager.deleteTable();*/
-                User.printUsers(mUserManager.getTable());
-
+                //User.printUsers(mUserManager.getTable());
+                Service.printServices(mServiceManager.getTable());
                 /*
                 Building bio = new Building("biosci");
                 Building wlh = new Building("wlh");
@@ -135,6 +139,7 @@ public class MainTabActivity extends AppCompatActivity
         mCourseManager.close();
         mBuildingManager.close();
         mUserManager.close();
+        mServiceManager.close();
         super.onPause();
     }
 

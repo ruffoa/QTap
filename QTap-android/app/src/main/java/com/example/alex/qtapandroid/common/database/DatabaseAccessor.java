@@ -17,7 +17,7 @@ public class DatabaseAccessor {
 
     public DatabaseAccessor(Context context) {
         this.mContext = context;
-        mDBHelper = DBHelper.getInstance(mContext);
+        mDBHelper = com.example.alex.qtapandroid.common.database.DBHelper.getInstance(mContext);
         open();
     }
 
@@ -28,7 +28,7 @@ public class DatabaseAccessor {
      */
     public void open() throws SQLException {
         if (mDBHelper == null) {
-            mDBHelper = DBHelper.getInstance(mContext);
+            mDBHelper = com.example.alex.qtapandroid.common.database.DBHelper.getInstance(mContext);
         }
         mDatabase = mDBHelper.getWritableDatabase();
     }
