@@ -14,7 +14,7 @@ import com.example.alex.qtapandroid.common.database.users.User;
  * Manages creating/upgrading/downgrading the database.
  * Also holds static SQL query strings to create/delete the database.
  */
-public class DBHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
 
     //sql query strings to create/delete each table with its fields **HARD CODED**
     private static final String SQL_CREATE_CLASSES = "CREATE TABLE " + Course.TABLE_NAME + "(" +
@@ -58,9 +58,9 @@ public class DBHelper extends SQLiteOpenHelper {
     //trying to run changes to the database schema
     private static final String DATABASE_NAME = "QTap.db";
 
-    private static DBHelper mInstance = null;
+    private static DbHelper mInstance = null;
 
-    public DBHelper(Context context) {
+    public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -71,10 +71,10 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param context Context to create the DBHelper for.
      * @return returns the instance of DBHelper.
      */
-    public static DBHelper getInstance(Context context) {
+    public static DbHelper getInstance(Context context) {
         if (mInstance == null) {
             //use application context so as to not accidentally leak application context in database.
-            mInstance = new DBHelper(context.getApplicationContext());
+            mInstance = new DbHelper(context.getApplicationContext());
         }
         return mInstance;
     }

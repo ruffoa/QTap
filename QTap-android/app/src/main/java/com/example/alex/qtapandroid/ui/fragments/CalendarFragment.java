@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Carson on 02/12/2016.
@@ -176,26 +177,32 @@ public class CalendarFragment extends Fragment {
 
                         cal2.set(Integer.parseInt(rYrStr), Integer.parseInt(rMonStr) - 1, Integer.parseInt(rDayStr));
 
-                        Log.d(TAG, "Cal 2 Date: " + cal2.get(Calendar.DAY_OF_MONTH) + "/" + cal2.get(Calendar.MONTH) + "/" + cal2.get(Calendar.YEAR));
                         Date endDate = cal2.getTime();
                         Date date1 = cal.getTime();
                         int ctr = 0;
 
-                        while (date1.before(endDate))
-                        {
-                            cal.add(Calendar.DATE, 7);
-                            date1 = cal.getTime();
-                            sday = cal.get(Calendar.DAY_OF_MONTH);
-                            smonth = cal.get(Calendar.MONTH);
-                            year = cal.get(Calendar.YEAR);
-                            ctr += 1;
+                        long diff = endDate.getTime() - date1.getTime();
+                        long noOfDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+                        long a = TimeUnit.DAYS.toDays(noOfDays);
 
-                            Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: "+ Integer.toString(sday) + " Name: " + name + " At: " + loc +  " End Date: " + endDateString + " CTR " + ctr);
+                        Log.d(TAG, "Cal 2 Date: " + cal2.get(Calendar.DAY_OF_MONTH) + "/" + cal2.get(Calendar.MONTH) + "/" + cal2.get(Calendar.YEAR) + " # of days difference: " + a);
 
-                            one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
-                            one.setID(mCourseManager.insertRow(one));
+
+                        if (a >= 7) {
+                            while (date1.before(endDate)) {
+                                cal.add(Calendar.DATE, 7);
+                                date1 = cal.getTime();
+                                sday = cal.get(Calendar.DAY_OF_MONTH);
+                                smonth = cal.get(Calendar.MONTH);
+                                year = cal.get(Calendar.YEAR);
+                                ctr += 1;
+
+                                Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: " + Integer.toString(sday) + " Name: " + name + " At: " + loc + " End Date: " + endDateString + " CTR " + ctr);
+
+                                one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
+                                one.setID(mCourseManager.insertRow(one));
+                            }
                         }
-
                     }
                     repeatWeekly = false;
                 }
