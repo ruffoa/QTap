@@ -69,5 +69,6 @@
     <!--strings for titles on top of pages -->
     <string name="resources">Resources</string>
     <string name="links">Links (Open in Safari)</string>
+    <string name="hello_blank_fragment">hello</string>
 
 </resources>
