@@ -16,8 +16,8 @@ import java.util.Date;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.classes.icsParser;
-import com.example.alex.qtapandroid.common.database.course.Course;
-import com.example.alex.qtapandroid.common.database.course.CourseManager;
+import com.example.alex.qtapandroid.common.database.courses.Course;
+import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;

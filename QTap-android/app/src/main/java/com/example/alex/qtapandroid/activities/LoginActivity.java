@@ -3,7 +3,7 @@ package com.example.alex.qtapandroid.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,16 +36,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.classes.downloadICS;
-import com.example.alex.qtapandroid.classes.icsParser;
+import com.example.alex.qtapandroid.common.database.users.User;
+import com.example.alex.qtapandroid.common.database.users.UserManager;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import com.example.alex.qtapandroid.classes.downloadICS;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,6 +166,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+
         if (mAuthTask != null) {
             return;
         }
@@ -217,7 +213,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            String netid = email.split("@")[0]; //take everything before the email starts
+            // this is the net ID
+            mAuthTask = new UserLoginTask(netid, password, this);
             mAuthTask.execute((Void) null);
         }
     }
@@ -225,10 +223,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * checks if email is of valid format.
      * TODO possibly verify email is an actual email
+     *
      * @param email string the user used as an email to log in
      * @return 0 if the email has @queensu.ca and has at least 4 characters before that
-     *         1 if the email has less than 4 before @queensu.ca
-     *         -1 if the email does not contain @queensu.ca
+     * 1 if the email has less than 4 before @queensu.ca
+     * -1 if the email does not contain @queensu.ca
      */
     private int isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -240,6 +239,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * check to see if the user-entered password is acceptable
+     *
      * @param password string the user entered as their password
      * @return true if valid, false if not valid
      */
@@ -344,34 +344,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String netid;
         private final String mPassword;
+        private UserManager mUserManager;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+        UserLoginTask(String netid, String password, Context context) {
+            this.mUserManager = new UserManager(context);
+            this.netid = netid;
+            this.mPassword = password;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+            //TODO as of now just adding new users into database
+            User userInDB = mUserManager.getRow(netid);
+            if (userInDB == null) {
+                User newUser = new User(netid, "", ""); //TODO ask for their name
+                mUserManager.insertRow(newUser);
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
             return true;
         }
 
@@ -385,7 +376,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
 
                 SharedPreferences.Editor editor = preferences.edit();                                           // Allow for editing the preferences
-                editor.putString("UserEmail", mEmail);                                                          // Create a string called "UserEmail" equal to mEmail
+                editor.putString("UserEmail", netid + "@queensu.ca");                                                          // Create a string called "UserEmail" equal to mEmail
                 editor.apply();                                                                                 // Save changes
 
 
@@ -396,9 +387,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (preferences.getString("DatabaseDate", "noData") != "noData")                    // if the database is up to date
                 {
 
-                }
-                else
-                {
+                } else {
                     final downloadICS downloadICS = new downloadICS(LoginActivity.this);
                     String url = preferences.getString("icsURL", "noURL");
                     if (url != "noURL") {
@@ -416,9 +405,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
 
 
-
-
-            startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
