@@ -23,12 +23,17 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -74,11 +79,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     public static final String TAG = downloadICS.class.getSimpleName();
+    public static String icsURL = "";
+    public static String useremail = "";
+
+    @JavascriptInterface
+    public void processHTML(String html) {
+        if (html == null)
+            return;
+
+        if (html.contains("Class Schedule")) {
+            html = html.replaceAll("\n", "");
+            int index = html.indexOf("Class Schedule");
+            html = html.substring(index);
+            String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
+            index = html.indexOf(indexing) + indexing.length();
+            String URL = html.substring(index, index + 200);
+            URL.trim();
+            URL = URL.substring(0, URL.indexOf(".ics") + 4);
+            icsURL = URL;
+            Log.d("WEB", "URL: " + URL);
+
+            index = URL.indexOf("/FU/") + 4;
+            useremail = URL.substring(index, URL.indexOf("-", index + 1));
+            useremail += "@queensu.ca";
+            setText(useremail);
+        attemptLogin();
+
+        }
+    }
+
+    private void setText(String useremail) {
+
+        TextView dataInfo = (TextView) findViewById(R.id.userEmail);
+        dataInfo.setText(useremail);
+//        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+//        mEmailView.setText(useremail);
+        Log.d("WEB", "User Email: " + useremail);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        final WebView browser = (WebView) findViewById(R.id.webView);
+        browser.getSettings().setJavaScriptEnabled(true);
+        browser.addJavascriptInterface(this, "HTMLOUT");
+        browser.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                browser.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
+            }
+        });
+        browser.loadUrl("http://my.queensu.ca/software-centre");
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -95,6 +151,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -107,6 +164,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
+//    Log.d("WEB", "URL: ");
+//    if (icsURL != "" && icsURL.contains(".ics")) {
+//        browser.setVisibility(View.INVISIBLE);
+//        browser.destroy();
+//
+//        setText(useremail);
+//        attemptLogin();
+//    }
+
     /**
      * auto complete email used for login if permission for contacts is gained.
      */
@@ -117,6 +183,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         getLoaderManager().initLoader(0, null, this);
     }
+
 
     /**
      * Check for contacts permission. Used to autocomplete email.
@@ -179,6 +246,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
+        if (useremail != "" && useremail.contains("@"))
+            email = useremail;
+
         boolean cancel = false;
         View focusView = null;
 
@@ -189,7 +259,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        int emailValid = isEmailValid(email);
+         int  emailValid = isEmailValid(email);
+
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
@@ -318,6 +389,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
+
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -381,8 +453,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
                 // DO LOGIC FOR GENERATING ICS FILE HERE....
-                editor.putString("icsURL", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "icsURL" to point to the ICS URL on SOLUS
-                editor.apply();
+                if (icsURL != "" && icsURL.contains(".ics")) {
+                    editor.putString("icsURL", icsURL);   // Create a string called "icsURL" to point to the ICS URL on SOLUS
+                    editor.apply();
+                } else {
+                    editor.putString("icsURL", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "icsURL" to point to the ICS URL on SOLUS
+                    editor.apply();
+                }
 
                 if (preferences.getString("DatabaseDate", "noData") != "noData")                    // if the database is up to date
                 {
@@ -418,6 +495,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+
 }
 
 

@@ -36,7 +36,8 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -80,6 +81,19 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:id="@+id/webView"
+                android:layout_weight="15.75"></WebView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/userEmail"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
+
     </ScrollView>
+
 </LinearLayout>
