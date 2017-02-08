@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 /**
  * Created by Carson on 07/02/2017.
+ * Defines the schema for the oneClass table. Fields for
+ * type of class (tutorial/lecture/lab), start/end times, building ID,
+ * room number, day, month, year. Also references the Course table
+ * so that each individual class is tied together to one course.
  */
 public class OneClass implements BaseColumns {
 
@@ -19,6 +23,7 @@ public class OneClass implements BaseColumns {
     public static final String COLUMN_DAY = "day";
     public static final String COLUMN_MONTH = "month";
     public static final String COLUMN_YEAR = "year";
+    public static final String COLUMN_COURSE_ID = "courseID";
 
     //column number each field ends up in
     public static final int ID_POS = 0;
@@ -30,6 +35,7 @@ public class OneClass implements BaseColumns {
     public static final int DAY_POS = 6;
     public static final int MONTH_POS = 7;
     public static final int YEAR_POS = 8;
+    public static final int COURSE_ID_POS = 9;
 
     //fields in database
     private long id;
@@ -41,6 +47,7 @@ public class OneClass implements BaseColumns {
     private String day;
     private String month;
     private String year;
+    private long courseID;
 
     public OneClass(String type, String roomNum, String startTime, String endTime, String day, String month, String year) {
         this.type = type;
@@ -65,6 +72,14 @@ public class OneClass implements BaseColumns {
     }
 
     //getters and setters
+    public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
+    }
+
     public void setID(long id) {
         this.id = id;
     }

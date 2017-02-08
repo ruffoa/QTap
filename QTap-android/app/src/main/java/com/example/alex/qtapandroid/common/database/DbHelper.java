@@ -44,7 +44,8 @@ public class DbHelper extends SQLiteOpenHelper {
             ") REFERENCES " + Building.TABLE_NAME + "(id), " + OneClass.COLUMN_ROOM_NUM + " TEXT," +
             OneClass.COLUMN_START_TIME + " TEXT," + OneClass.COLUMN_END_TIME + " TEXT," +
             OneClass.COLUMN_DAY + " TEXT," + OneClass.COLUMN_MONTH + " TEXT," + OneClass.COLUMN_YEAR +
-            "TEXT);";
+            "TEXT," + OneClass.COLUMN_COURSE_ID + " INT, FOREIGN KEY(" + OneClass.COLUMN_COURSE_ID +
+            ") REFERENCES " + Course.TABLE_NAME + "(id) );";
 
     private static final String SQL_CREATE_SERVICES = "CREATE TABLE" + Service.TABLE_NAME + "(" +
             Service._ID + " INTEGER PRIMARY KEY" + Service.COLUMN_HOURS + " TEXT," +
@@ -88,7 +89,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_USERS);
         db.execSQL(SQL_CREATE_COURSES);
         db.execSQL(SQL_CREATE_BUILDINGS);
-        db.execSQL(SQL_DELETE_CLASSES);
+        db.execSQL(SQL_CREATE_CLASSES);
         // db.execSQL(SQL_CREATE_SERVICES);
     }
 
