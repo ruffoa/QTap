@@ -37,8 +37,6 @@ public class CourseManager extends DatabaseAccessor {
         values.put(Course.COLUMN_DAY, course.getDay());
         values.put(Course.COLUMN_MONTH, course.getMonth());
         values.put(Course.COLUMN_YEAR, course.getYear());
-
-
         return mDatabase.insert(Course.TABLE_NAME, null, values);
     }
 
