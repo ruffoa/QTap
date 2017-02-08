@@ -3,6 +3,8 @@ package com.example.alex.qtapandroid.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -21,11 +23,18 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -33,6 +42,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.users.User;
+import com.example.alex.qtapandroid.common.database.users.UserManager;
+
+import com.example.alex.qtapandroid.classes.downloadICS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,11 +79,99 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    public static final String TAG = downloadICS.class.getSimpleName();
+    public static String icsURL = "";
+    public static String useremail = "";
+
+    @JavascriptInterface
+    public void processHTML(String html) {          // This is for the old method, I'm keeping it for archival purposes, but this is depreciated.  It failed to work properly on some devices.
+        if (html == null)
+            return;
+
+        if (html.contains("Class Schedule")) {
+            html = html.replaceAll("\n", "");
+            int index = html.indexOf("Class Schedule");
+            html = html.substring(index);
+            String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
+            index = html.indexOf(indexing) + indexing.length();
+            String URL = html.substring(index, index + 200);
+            URL.trim();
+            URL = URL.substring(0, URL.indexOf(".ics") + 4);
+            icsURL = URL;
+            Log.d("WEB", "URL: " + URL);
+
+            index = URL.indexOf("/FU/") + 4;
+            useremail = URL.substring(index, URL.indexOf("-", index + 1));
+            useremail += "@queensu.ca";
+//            setText(useremail);
+            attemptLogin();
+
+        }
+    }
+
+    public void tryProcessHtml (String html){
+        if (html == null)
+            return;
+
+        if (html.contains("Class Schedule")) {
+            html = html.replaceAll("\n", "");
+            int index = html.indexOf("Class Schedule");
+            html = html.substring(index);
+            String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
+            index = html.indexOf(indexing) + indexing.length();
+            String URL = html.substring(index, index + 200);
+            URL.trim();
+            URL = URL.substring(0, URL.indexOf(".ics") + 4);
+            icsURL = URL;
+            Log.d("WEB", "URL: " + URL);
+
+            index = URL.indexOf("/FU/") + 4;
+            useremail = URL.substring(index, URL.indexOf("-", index + 1));
+            useremail += "@queensu.ca";
+            setText(useremail);
+            attemptLogin();
+        }
+    }
+
+    private void setText(String useremail) {
+
+//        TextView dataInfo = (TextView) findViewById(R.id.userEmail);
+//        dataInfo.setText(useremail);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView.setText(useremail);
+        Log.d("WEB", "User Email: " + useremail);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        final WebView browser = (WebView) findViewById(R.id.webView);
+        browser.getSettings().setJavaScriptEnabled(true);
+//        browser.addJavascriptInterface(this, "HTMLOUT");      // Old method, worked well but would crash with certain android 5.0+ implementations (eg. samsung)
+        browser.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+//                browser.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");  // Old method, worked well but would crash with certain android 5.0+ implementations (eg. samsung)
+
+                browser.evaluateJavascript(
+                        "(function() { return ('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                        new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String html) {
+//                                Log.d("HTML", html);
+                                tryProcessHtml(html);
+                            }
+                        });
+
+
+            }
+        });
+        browser.loadUrl("http://my.queensu.ca/software-centre");
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -87,6 +188,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -99,6 +201,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
+//    Log.d("WEB", "URL: ");
+//    if (icsURL != "" && icsURL.contains(".ics")) {
+//        browser.setVisibility(View.INVISIBLE);
+//        browser.destroy();
+//
+//        setText(useremail);
+//        attemptLogin();
+//    }
+
     /**
      * auto complete email used for login if permission for contacts is gained.
      */
@@ -109,6 +220,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         getLoaderManager().initLoader(0, null, this);
     }
+
 
     /**
      * Check for contacts permission. Used to autocomplete email.
@@ -158,6 +270,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+
         if (mAuthTask != null) {
             return;
         }
@@ -170,6 +283,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
+        if (useremail != "" && useremail.contains("@"))
+            email = useremail;
+
         boolean cancel = false;
         View focusView = null;
 
@@ -180,7 +296,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        int emailValid = isEmailValid(email);
+         int  emailValid = isEmailValid(email);
+
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
@@ -204,7 +321,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            String netid = email.split("@")[0]; //take everything before the email starts
+            // this is the net ID
+            mAuthTask = new UserLoginTask(netid, password, this);
             mAuthTask.execute((Void) null);
         }
     }
@@ -212,10 +331,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * checks if email is of valid format.
      * TODO possibly verify email is an actual email
+     *
      * @param email string the user used as an email to log in
      * @return 0 if the email has @queensu.ca and has at least 4 characters before that
-     *         1 if the email has less than 4 before @queensu.ca
-     *         -1 if the email does not contain @queensu.ca
+     * 1 if the email has less than 4 before @queensu.ca
+     * -1 if the email does not contain @queensu.ca
      */
     private int isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -227,6 +347,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * check to see if the user-entered password is acceptable
+     *
      * @param password string the user entered as their password
      * @return true if valid, false if not valid
      */
@@ -305,6 +426,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
+
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -331,49 +453,70 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String netid;
         private final String mPassword;
+        private UserManager mUserManager;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+        UserLoginTask(String netid, String password, Context context) {
+            this.mUserManager = new UserManager(context);
+            this.netid = netid;
+            this.mPassword = password;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+            //TODO as of now just adding new users into database
+            User userInDB = mUserManager.getRow(netid);
+            if (userInDB == null) {
+                User newUser = new User(netid, "", "", "", icsURL); //TODO ask for their name
+                mUserManager.insertRow(newUser);
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            showProgress(true);
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());    // Get the default SharedPreferences context
 
             if (success) {
 
                 SharedPreferences.Editor editor = preferences.edit();                                           // Allow for editing the preferences
-                editor.putString("UserEmail", mEmail);                                                          // Create a string called "UserEmail" equal to mEmail
+                editor.putString("UserEmail", netid + "@queensu.ca");                                                          // Create a string called "UserEmail" equal to mEmail
                 editor.apply();                                                                                 // Save changes
+
+
+                // DO LOGIC FOR GENERATING ICS FILE HERE....
+                if (icsURL != "" && icsURL.contains(".ics")) {
+                    editor.putString("icsURL", icsURL);   // Create a string called "icsURL" to point to the ICS URL on SOLUS
+                    editor.apply();
+                } else {
+                    editor.putString("icsURL", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "icsURL" to point to the ICS URL on SOLUS
+                    editor.apply();
+                }
+
+                if (preferences.getString("DatabaseDate", "noData") != "noData")                    // if the database is up to date
+                {
+
+                } else {
+                    final downloadICS downloadICS = new downloadICS(LoginActivity.this);
+                    String url = preferences.getString("icsURL", "noURL");
+                    if (url != "noURL") {
+                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                        downloadICS.execute(preferences.getString("icsURL", "noURL"));
+                        Log.d(TAG, "done!");
+
+                    }
+                }
+                // replace later with actual logic code
+                try {
+                    // Simulate network access.
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
 
 
                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
@@ -389,5 +532,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+
 }
+
 

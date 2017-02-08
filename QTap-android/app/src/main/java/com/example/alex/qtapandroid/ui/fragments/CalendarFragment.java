@@ -1,27 +1,35 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.classes.icsParser;
-import com.example.alex.qtapandroid.common.database.course.Course;
-import com.example.alex.qtapandroid.common.database.course.CourseManager;
+import com.example.alex.qtapandroid.common.database.courses.Course;
+import com.example.alex.qtapandroid.common.database.courses.CourseManager;
+import com.example.alex.qtapandroid.common.database.users.User;
+import com.example.alex.qtapandroid.common.database.users.UserManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static java.sql.Types.NULL;
+import java.util.GregorianCalendar;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Carson on 02/12/2016.
@@ -66,59 +74,77 @@ public class CalendarFragment extends Fragment {
         getData();
     }
 
-    public void getData() {
+    public void getData() {                     // this function displays the data for the selected day in the green text view
         mCourseManager = new CourseManager(this.getContext());
         TextView dataInfo = (TextView) getView().findViewById(R.id.calendarEvents);
         DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
 
         ArrayList<Course> data = mCourseManager.getTable();
 
-//        String output = "";               //For Debugging purposes
-//        for (int i = 0; i < data.size(); i++) {
-//            output = System.getProperty("line.separator") + "COURSE id:" + data.get(i).getID() + " title: " + data.get(i).getTitle()
-//                    + " Location: " + data.get(i).getRoomNum() + " Start Time: " + data.get(i).getStartTime() + " End Time: " + data.get(i).getEndTime() + " Day: " + data.get(i).getDay() + " Month: " + data.get(i).getMonth() + " Year: " + data.get(i).getYear();
-//        }
-//        Log.d("SQLITE", "INFO: " + output);
-        dataInfo.setText("Event Information for " + dateSel.getMonth() + 1 + "/" + dateSel.getDayOfMonth());
+        dataInfo.setText("Event Information for " + (dateSel.getMonth() + 1) + "/" + dateSel.getDayOfMonth());        // get the selected day
 
         int day = 0, month = 0, year = 0;
         boolean isInfo = false;
-        for (int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < data.size(); i++) {             // look for the selected day in the events from the database
             day = Integer.parseInt(data.get(i).getDay());
             month = Integer.parseInt(data.get(i).getMonth());
             year = Integer.parseInt(data.get(i).getYear());
-//            Log.d("Date", "Year=" + year + " Month=" + month + " day=" + day + " Data To String: " + data.get(i).getTitle());
 
-            if (year == dateSel.getYear() && month == (dateSel.getMonth() + 1) && dateSel.getDayOfMonth() == day) {
+            if (year == dateSel.getYear() && month == (dateSel.getMonth() + 1) && dateSel.getDayOfMonth() == day) {     // if the day matches...
                 dataInfo.append(System.getProperty("line.separator") + "Event Name: " + data.get(i).getTitle() + " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " + data.get(i).getEndTime());
                 isInfo = true;
             }
 
         }
 
-        if (isInfo == false)
-        {
+        if (isInfo == false) {
             dataInfo.setText("No Data Found; has the database been initialized?");
         }
     }
 
     public void setup() {
-//        TextView dataInfo = (TextView) getView().findViewById(R.id.parsingTestText);
-//        TextView eventData = (TextView) getView().findViewById(R.id.testEventDetails);
-//        eventData.setMovementMethod(new ScrollingMovementMethod());
         mCourseManager = new CourseManager(this.getContext());
+        UserManager mUserManager = new UserManager(this.getContext());
+        ArrayList<User> user = mUserManager.getTable();
+        User.printUsers(mUserManager.getTable());
+        boolean isInit = false;
 
-        if (mCourseManager.getTable().isEmpty() == true) {
+
+        for (int i = 0; i < user.size(); i++) {             // see if user has initialized database yet, and if the database is up to date
+
+            if (!user.get(i).getDateInit().isEmpty()) {
+                String rTime = user.get(i).getDateInit();
+                int yr = Integer.parseInt(rTime.substring(0, 4));
+                int mon = Integer.parseInt(rTime.substring(5, 7));
+                int day = Integer.parseInt(rTime.substring(8,10));
+
+                Calendar c = Calendar.getInstance();
+                c.set(yr, mon, day);
+                c.add(Calendar.DATE, 7);
+
+                Calendar endDate = Calendar.getInstance();
+
+                if (c.after(endDate))
+                    isInit = true;
+                Log.d(TAG, "User Date Inf ->  Start Date:" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + " End Date: " + endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DAY_OF_MONTH) + " isInit: " + isInit);
+
+            }
+        }
+
+        if (mCourseManager.getTable().isEmpty() || !isInit) {
             mCourseManager.deleteTable();
 
-
             boolean isEvent = false;
-            String sTime = "", eTime = "", loc = "", name = "";
+            String sTime = "", eTime = "", loc = "", name = "", rTime;
             int hour = 0, minute = 0, day = 0, month = 0, year = 0;
             int shour = 0, sminute = 0, sday = 0, smonth = 0;
+            boolean repeatWeekly = false;
+            String rDayStr = "", rMonStr = "", rYrStr = "";
 
             mParser = new icsParser(this.getContext());
-            mLines = mParser.readLine(mPath);
+//            mLines = mParser.readLine(mPath); // this is for the hardcoded file
+            mLines = mParser.readDownloadFile("cal.ics");
+
             for (String string : mLines) {
 
                 if (string.contains("BEGIN:VEVENT")) {
@@ -126,20 +152,67 @@ public class CalendarFragment extends Fragment {
 //                dataInfo.append("\n" + "New Event");
                 } else if (string.contains("END:VEVENT")) {
                     isEvent = false;
-//                eventData.append(System.getProperty("line.separator"));
-//                eventData.append(System.getProperty("line.separator") +"Event Name: " + name);
-//                eventData.append(System.getProperty("line.separator") +"Event Location: " + loc);
-//                eventData.append(System.getProperty("line.separator") +"Starts: " + smonth + "/" + sday + " at " + shour + ":" + sminute);
-//                eventData.append(System.getProperty("line.separator") +"Ends: " + month + "/" + day + " at " + hour + ":" + minute);
-
-                    /// Inserting to Database
 
                     String tempTime = Integer.toString(shour) + ":" + Integer.toString(sminute);
                     String tempEndTime = Integer.toString(hour) + ":" + Integer.toString(minute);
                     Course one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                     one.setID(mCourseManager.insertRow(one));
 
-//                Log.d(TAG, "Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(month) + " Day: "+ Integer.toString(day));
+                    if (repeatWeekly == true) {
+
+                        // get the supported ids for GMT-08:00 (Pacific Standard Time)
+                        String[] ids = TimeZone.getAvailableIDs(-8 * 60 * 60 * 1000);
+                        // if no ids were returned, something is wrong. get out.
+                        if (ids.length == 0)
+                            System.exit(0);
+
+                        // create a Pacific Standard Time time zone
+                        SimpleTimeZone pdt = new SimpleTimeZone(-8 * 60 * 60 * 1000, ids[0]);
+
+                        // set up rules for Daylight Saving Time
+                        pdt.setStartRule(Calendar.APRIL, 1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
+                        pdt.setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
+
+                        // create a GregorianCalendar with the Pacific Daylight time zone
+                        // and the current date and time
+                        Calendar cal2 = new GregorianCalendar(pdt);
+                        Calendar cal = new GregorianCalendar(pdt);
+
+                        cal.set(year, smonth - 1, sday);
+
+                        cal2.set(Integer.parseInt(rYrStr), Integer.parseInt(rMonStr) - 1, Integer.parseInt(rDayStr) + 1);
+
+                        Date endDate = cal2.getTime();
+                        Date date1;
+
+                        cal.add(Calendar.DATE, 7);
+                        date1 = cal.getTime();
+
+                        while (date1.before(endDate)) {
+                            sday = cal.get(Calendar.DAY_OF_MONTH);
+                            smonth = cal.get(Calendar.MONTH);
+                            year = cal.get(Calendar.YEAR);
+//                                Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: " + Integer.toString(sday) + " Name: " + name + " At: " + loc + " End Date: " + endDateString);
+
+                            one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
+                            one.setID(mCourseManager.insertRow(one));
+                            cal.add(Calendar.DATE, 7);
+                            date1 = cal.getTime();
+//                            }
+                        }
+                    }
+                    repeatWeekly = false;
+
+                } else if (string.contains(("RRULE:FREQ=WEEKLY;"))) {
+                    repeatWeekly = true;
+
+                    if (string.contains("UNTIL=")) {
+                        rTime = string.replaceAll("[^0-9]", "");
+
+                        rDayStr = rTime.substring(6, 8);
+                        rMonStr = rTime.substring(4, 6);
+                        rYrStr = rTime.substring(0, 4);
+                    }
 
                 } else if (isEvent) {
                     if (string.contains("LOCATION"))
@@ -155,20 +228,26 @@ public class CalendarFragment extends Fragment {
                         eTime = string.replaceAll("[^0-9]", "");
                         hour = Integer.parseInt(eTime.substring(8, 10));
                         minute = Integer.parseInt(eTime.substring(10, 12));
-                        day = Integer.parseInt(eTime.substring(6, 8));
-                        month = Integer.parseInt(eTime.substring(4, 6));
 
                     } else if (string.contains("SUMMARY")) {
                         name = (string.substring(string.lastIndexOf(":") + 1));
                     }
 
-//                dataInfo.append("\n"+string);
-
                 }
 
-//            Log.d(TAG, string);
-
             }
+            Date d = new Date();
+            CharSequence s = DateFormat.format("yyyy-MM-dd hh:mm:ss", d.getTime());
+
+            String uName =  user.get(0).getFirstName();
+            String uLastName = user.get(0).getLastName();
+            String uNetID =  user.get(0).getNetid();
+            String uURL = user.get(0).getIcsURL();
+
+            User nUser = new User (uNetID, uName, uLastName, s.toString(), uURL);
+            mUserManager.updateRow(user.get(0), nUser);
+
+            Log.d(TAG, "User Init info: " + user.get(0).getDateInit() + " User NetID: "+ user.get(0).getNetid() + " User NetID: "+ user.get(0).getIcsURL());
 
         }
     }
