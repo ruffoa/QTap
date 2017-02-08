@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
@@ -83,7 +84,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static String useremail = "";
 
     @JavascriptInterface
-    public void processHTML(String html) {
+    public void processHTML(String html) {          // This is for the old method, I'm keeping it for archival purposes, but this is depreciated.  It failed to work properly on some devices.
+        if (html == null)
+            return;
+
+        if (html.contains("Class Schedule")) {
+            html = html.replaceAll("\n", "");
+            int index = html.indexOf("Class Schedule");
+            html = html.substring(index);
+            String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
+            index = html.indexOf(indexing) + indexing.length();
+            String URL = html.substring(index, index + 200);
+            URL.trim();
+            URL = URL.substring(0, URL.indexOf(".ics") + 4);
+            icsURL = URL;
+            Log.d("WEB", "URL: " + URL);
+
+            index = URL.indexOf("/FU/") + 4;
+            useremail = URL.substring(index, URL.indexOf("-", index + 1));
+            useremail += "@queensu.ca";
+//            setText(useremail);
+            attemptLogin();
+
+        }
+    }
+
+    public void tryProcessHtml (String html){
         if (html == null)
             return;
 
@@ -103,17 +129,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             useremail = URL.substring(index, URL.indexOf("-", index + 1));
             useremail += "@queensu.ca";
             setText(useremail);
-        attemptLogin();
-
+            attemptLogin();
         }
     }
 
     private void setText(String useremail) {
 
-        TextView dataInfo = (TextView) findViewById(R.id.userEmail);
-        dataInfo.setText(useremail);
-//        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-//        mEmailView.setText(useremail);
+//        TextView dataInfo = (TextView) findViewById(R.id.userEmail);
+//        dataInfo.setText(useremail);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView.setText(useremail);
         Log.d("WEB", "User Email: " + useremail);
     }
 
@@ -125,11 +150,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         final WebView browser = (WebView) findViewById(R.id.webView);
         browser.getSettings().setJavaScriptEnabled(true);
-        browser.addJavascriptInterface(this, "HTMLOUT");
+//        browser.addJavascriptInterface(this, "HTMLOUT");      // Old method, worked well but would crash with certain android 5.0+ implementations (eg. samsung)
         browser.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                browser.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
+//                browser.loadUrl("javascript:window.HTMLOUT.processHTML('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");  // Old method, worked well but would crash with certain android 5.0+ implementations (eg. samsung)
+
+                browser.evaluateJavascript(
+                        "(function() { return ('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                        new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String html) {
+//                                Log.d("HTML", html);
+                                tryProcessHtml(html);
+                            }
+                        });
+
+
             }
         });
         browser.loadUrl("http://my.queensu.ca/software-centre");
@@ -432,7 +469,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //TODO as of now just adding new users into database
             User userInDB = mUserManager.getRow(netid);
             if (userInDB == null) {
-                User newUser = new User(netid, "", ""); //TODO ask for their name
+                User newUser = new User(netid, "", "", "", icsURL); //TODO ask for their name
                 mUserManager.insertRow(newUser);
             }
             return true;

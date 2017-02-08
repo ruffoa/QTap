@@ -33,6 +33,9 @@ public class UserManager extends DatabaseAccessor {
         values.put(User.COLUMN_NETID, user.getNetid());
         values.put(User.COLUMN_FIRST_NAME, user.getFirstName());
         values.put(User.COLUMN_LAST_NAME, user.getLastName());
+        values.put(User.COLUMN_DATE_INIT, user.getDateInit());
+        values.put(User.COLUMN_ICS_URL, user.getIcsURL());
+
         return mDatabase.insert(User.TABLE_NAME, null, values);
     }
 
@@ -58,7 +61,9 @@ public class UserManager extends DatabaseAccessor {
                 User._ID,
                 User.COLUMN_NETID,
                 User.COLUMN_FIRST_NAME,
-                User.COLUMN_LAST_NAME
+                User.COLUMN_LAST_NAME,
+                User.COLUMN_DATE_INIT,
+                User.COLUMN_ICS_URL
         };
         ArrayList<User> users = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
@@ -84,7 +89,9 @@ public class UserManager extends DatabaseAccessor {
                 User._ID,
                 User.COLUMN_NETID,
                 User.COLUMN_FIRST_NAME,
-                User.COLUMN_LAST_NAME
+                User.COLUMN_LAST_NAME,
+                User.COLUMN_DATE_INIT,
+                User.COLUMN_ICS_URL
         };
         User user;
         String selection = User.COLUMN_NETID + " LIKE ?";
@@ -92,7 +99,7 @@ public class UserManager extends DatabaseAccessor {
         try (Cursor cursor = mDatabase.query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 user = new User(cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
-                        cursor.getString(User.LAST_NAME_POS));
+                        cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS));
                 user.setID(cursor.getInt(User.ID_POS));
                 cursor.close();
                 return user; //return only when the cursor has been closed.
@@ -115,7 +122,9 @@ public class UserManager extends DatabaseAccessor {
                 User._ID,
                 User.COLUMN_NETID,
                 User.COLUMN_FIRST_NAME,
-                User.COLUMN_LAST_NAME
+                User.COLUMN_LAST_NAME,
+                User.COLUMN_DATE_INIT,
+                User.COLUMN_ICS_URL
         };
         User user;
         String selection = User._ID + " LIKE ?";
@@ -123,7 +132,7 @@ public class UserManager extends DatabaseAccessor {
         try (Cursor cursor = mDatabase.query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
             user = new User(cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
-                    cursor.getString(User.LAST_NAME_POS));
+                    cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS));
             user.setID(cursor.getInt(User.ID_POS));
             cursor.close();
             return user; //return only when the cursor has been closed.
@@ -151,6 +160,9 @@ public class UserManager extends DatabaseAccessor {
         values.put(User.COLUMN_NETID, newUser.getNetid());
         values.put(User.COLUMN_FIRST_NAME, newUser.getFirstName());
         values.put(User.COLUMN_LAST_NAME, newUser.getLastName());
+        values.put(User.COLUMN_DATE_INIT, newUser.getDateInit());
+        values.put(User.COLUMN_ICS_URL, newUser.getIcsURL());
+
         String selection = User._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldUser.getID())};
         mDatabase.update(User.TABLE_NAME, values, selection, selectionArgs);

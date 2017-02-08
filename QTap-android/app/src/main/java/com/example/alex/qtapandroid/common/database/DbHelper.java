@@ -41,7 +41,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_USERS = "CREATE TABLE " + User.TABLE_NAME + "(" +
             User._ID + " INTEGER PRIMARY KEY," + User.COLUMN_NETID + " TEXT," +
-            User.COLUMN_FIRST_NAME + " TEXT," + User.COLUMN_LAST_NAME + " TEXT);";
+            User.COLUMN_FIRST_NAME + " TEXT," + User.COLUMN_LAST_NAME + " TEXT," +
+            User.COLUMN_DATE_INIT + " TEXT," + User.COLUMN_ICS_URL + " TEXT);";
 
     private static final String SQL_CREATE_SERVICES = "CREATE TABLE" + Service.TABLE_NAME + "(" +
             Service._ID + " INTEGER PRIMARY KEY" + Service.COLUMN_HOURS + " TEXT," +
@@ -54,7 +55,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
     private static final String SQL_DELETE_SERVICES = "DROP TABLE IF EXISTS " + Service.TABLE_NAME;
 
-    private static final int DATABASE_VERSION = 4; //**NOTE** this must be incremented if you are
+    private static final int DATABASE_VERSION = 2; //**NOTE** this must be incremented if you are
     //trying to run changes to the database schema
     private static final String DATABASE_NAME = "QTap.db";
 
