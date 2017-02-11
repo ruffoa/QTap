@@ -247,7 +247,7 @@ public class CalendarFragment extends Fragment {
             User nUser = new User (uNetID, uName, uLastName, s.toString(), uURL);
             mUserManager.updateRow(user.get(0), nUser);
 
-            Log.d(TAG, "User Init info: " + user.get(0).getDateInit() + " User NetID: "+ user.get(0).getNetid() + " User NetID: "+ user.get(0).getIcsURL());
+            Log.d(TAG, "Updated User info: " + user.get(0).getDateInit() + " User NetID: "+ user.get(0).getNetid() + " User NetID: "+ user.get(0).getIcsURL());
 
         }
     }

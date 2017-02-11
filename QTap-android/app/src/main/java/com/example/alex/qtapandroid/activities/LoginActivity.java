@@ -83,31 +83,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static String icsURL = "";
     public static String useremail = "";
 
-    @JavascriptInterface
-    public void processHTML(String html) {          // This is for the old method, I'm keeping it for archival purposes, but this is depreciated.  It failed to work properly on some devices.
-        if (html == null)
-            return;
-
-        if (html.contains("Class Schedule")) {
-            html = html.replaceAll("\n", "");
-            int index = html.indexOf("Class Schedule");
-            html = html.substring(index);
-            String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
-            index = html.indexOf(indexing) + indexing.length();
-            String URL = html.substring(index, index + 200);
-            URL.trim();
-            URL = URL.substring(0, URL.indexOf(".ics") + 4);
-            icsURL = URL;
-            Log.d("WEB", "URL: " + URL);
-
-            index = URL.indexOf("/FU/") + 4;
-            useremail = URL.substring(index, URL.indexOf("-", index + 1));
-            useremail += "@queensu.ca";
-//            setText(useremail);
-            attemptLogin();
-
-        }
-    }
+//    @JavascriptInterface
+//    public void processHTML(String html) {          // This is for the old method, I'm keeping it for archival purposes, but this is depreciated.  It failed to work properly on some devices.
+//        if (html == null)
+//            return;
+//
+//        if (html.contains("Class Schedule")) {
+//            html = html.replaceAll("\n", "");
+//            int index = html.indexOf("Class Schedule");
+//            html = html.substring(index);
+//            String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
+//            index = html.indexOf(indexing) + indexing.length();
+//            String URL = html.substring(index, index + 200);
+//            URL.trim();
+//            URL = URL.substring(0, URL.indexOf(".ics") + 4);
+//            icsURL = URL;
+//            Log.d("WEB", "URL: " + URL);
+//
+//            index = URL.indexOf("/FU/") + 4;
+//            useremail = URL.substring(index, URL.indexOf("-", index + 1));
+//            useremail += "@queensu.ca";
+////            setText(useremail);
+//            attemptLogin();
+//
+//        }
+//    }
 
     public void tryProcessHtml (String html){
         if (html == null)
