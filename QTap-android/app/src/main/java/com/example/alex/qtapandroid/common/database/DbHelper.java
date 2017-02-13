@@ -19,12 +19,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //sql query strings to create/delete each table with its fields **HARD CODED**
     private static final String SQL_CREATE_COURSES = "CREATE TABLE " + Course.TABLE_NAME + "(" +
-            Course._ID + " INTEGER PRIMARY KEY," + Course.COLUMN_TITLE + " TEXT," +
-            Course.COLUMN_ROOM_NUM + " TEXT," + Course.COLUMN_STARTTIME + " TEXT, " +
-            Course.COLUMN_ENDTIME + " TEXT, " + Course.COLUMN_DAY + " TEXT, " +
-            Course.COLUMN_MONTH + " TEXT, " + Course.COLUMN_YEAR + " TEXT," +
-            Course.COLUMN_BUILDING_ID + " INT, FOREIGN KEY (" +
-            Course.COLUMN_BUILDING_ID + ") REFERENCES " + Building.TABLE_NAME + "(id) );";
+            Course._ID + " INTEGER PRIMARY KEY," + Course.COLUMN_TITLE + " TEXT);";
 
     private static final String SQL_CREATE_BUILDINGS = "CREATE TABLE " + Building.TABLE_NAME + "(" +
             Building._ID + " INTEGER PRIMARY KEY," + Building.COLUMN_TITLE + " TEXT," +
@@ -39,13 +34,13 @@ public class DbHelper extends SQLiteOpenHelper {
             User.COLUMN_DATE_INIT + " TEXT," + User.COLUMN_ICS_URL + " TEXT);";
 
     private static final String SQL_CREATE_CLASSES = "CREATE TABLE " + OneClass.TABLE_NAME + "(" +
-            OneClass._ID + " INTEGER PRIMARY KEY," + OneClass.COLUMN_CLASS_TYPE + "TEXT," +
-            OneClass.COLUMN_BUILDING_ID + " INT, FOREGIN KEY (" + OneClass.COLUMN_BUILDING_ID +
-            ") REFERENCES " + Building.TABLE_NAME + "(id), " + OneClass.COLUMN_ROOM_NUM + " TEXT," +
+            OneClass._ID + " INTEGER PRIMARY KEY," + OneClass.COLUMN_CLASS_TYPE + " TEXT," +
+            OneClass.COLUMN_BUILDING_ID + " INT," + OneClass.COLUMN_ROOM_NUM + " TEXT," +
             OneClass.COLUMN_START_TIME + " TEXT," + OneClass.COLUMN_END_TIME + " TEXT," +
             OneClass.COLUMN_DAY + " TEXT," + OneClass.COLUMN_MONTH + " TEXT," + OneClass.COLUMN_YEAR +
-            "TEXT," + OneClass.COLUMN_COURSE_ID + " INT, FOREIGN KEY(" + OneClass.COLUMN_COURSE_ID +
-            ") REFERENCES " + Course.TABLE_NAME + "(id) );";
+            " TEXT," + OneClass.COLUMN_COURSE_ID + " INT, FOREIGN KEY(" + OneClass.COLUMN_COURSE_ID +
+            ") REFERENCES " + Course.TABLE_NAME + "(" + Course._ID + "), FOREIGN KEY(" + OneClass.COLUMN_BUILDING_ID +
+            ") REFERENCES " + Building.TABLE_NAME + "(" + Building._ID + ") );";
 
     private static final String SQL_CREATE_SERVICES = "CREATE TABLE" + Service.TABLE_NAME + "(" +
             Service._ID + " INTEGER PRIMARY KEY" + Service.COLUMN_HOURS + " TEXT," +
@@ -59,7 +54,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_SERVICES = "DROP TABLE IF EXISTS " + Service.TABLE_NAME;
     private static final String SQL_DELETE_CLASSES = "DROP TABLE IF EXISTS " + OneClass.TABLE_NAME;
 
-    private static final int DATABASE_VERSION = 2; //**NOTE** this must be incremented if you are
+    private static final int DATABASE_VERSION = 14; //**NOTE** this must be incremented if you are
     //trying to run changes to the database schema
     private static final String DATABASE_NAME = "QTap.db";
 
@@ -82,6 +77,12 @@ public class DbHelper extends SQLiteOpenHelper {
             mInstance = new DbHelper(context.getApplicationContext());
         }
         return mInstance;
+    }
+
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        //enable foreign keys
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     @Override
