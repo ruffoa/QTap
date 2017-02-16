@@ -1,8 +1,6 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
@@ -20,6 +18,8 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.classes.icsParser;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
+import com.example.alex.qtapandroid.common.database.courses.OneClass;
+import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 
@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Carson on 02/12/2016.
@@ -39,6 +38,7 @@ import java.util.concurrent.TimeUnit;
  * Attached to MainTabActivity only.
  */
 public class CalendarFragment extends Fragment {
+    private OneClassManager mOneClassManager;
     private CourseManager mCourseManager;
     public static final String TAG = StudentToolsFragment.class.getSimpleName();
     public static final String mPath = "testCal.ics";
@@ -75,11 +75,12 @@ public class CalendarFragment extends Fragment {
     }
 
     public void getData() {                     // this function displays the data for the selected day in the green text view
+        mOneClassManager = new OneClassManager(this.getContext());
         mCourseManager = new CourseManager(this.getContext());
         TextView dataInfo = (TextView) getView().findViewById(R.id.calendarEvents);
         DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
 
-        ArrayList<Course> data = mCourseManager.getTable();
+        ArrayList<OneClass> data = mOneClassManager.getTable();
 
         dataInfo.setText("Event Information for " + (dateSel.getMonth() + 1) + "/" + dateSel.getDayOfMonth());        // get the selected day
 
@@ -89,21 +90,23 @@ public class CalendarFragment extends Fragment {
             day = Integer.parseInt(data.get(i).getDay());
             month = Integer.parseInt(data.get(i).getMonth());
             year = Integer.parseInt(data.get(i).getYear());
-
+            String courseTitle = mCourseManager.getRow(data.get(i).getID()).getTitle();
             if (year == dateSel.getYear() && month == (dateSel.getMonth() + 1) && dateSel.getDayOfMonth() == day) {     // if the day matches...
-                dataInfo.append(System.getProperty("line.separator") + "Event Name: " + data.get(i).getTitle() + " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " + data.get(i).getEndTime());
+                dataInfo.append(System.getProperty("line.separator") + "Event Name: " + courseTitle +
+                        " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " +
+                        data.get(i).getEndTime());
                 isInfo = true;
             }
 
         }
 
-        if (isInfo == false) {
+        if (!isInfo) {
             dataInfo.setText("No Data Found; has the database been initialized?");
         }
     }
 
     public void setup() {
-        mCourseManager = new CourseManager(this.getContext());
+        mOneClassManager = new OneClassManager(this.getContext());
         UserManager mUserManager = new UserManager(this.getContext());
         ArrayList<User> user = mUserManager.getTable();
         User.printUsers(mUserManager.getTable());
@@ -131,8 +134,8 @@ public class CalendarFragment extends Fragment {
             }
         }
 
-        if (mCourseManager.getTable().isEmpty() || !isInit) {
-            mCourseManager.deleteTable();
+        if (mOneClassManager.getTable().isEmpty() || !isInit) {
+            mOneClassManager.deleteTable();
 
             boolean isEvent = false;
             String sTime = "", eTime = "", loc = "", name = "", rTime;
@@ -144,7 +147,8 @@ public class CalendarFragment extends Fragment {
             mParser = new icsParser(this.getContext());
 //            mLines = mParser.readLine(mPath); // this is for the hardcoded file
             mLines = mParser.readDownloadFile("cal.ics");
-
+        int test=0;
+            int test2=0;
             for (String string : mLines) {
 
                 if (string.contains("BEGIN:VEVENT")) {
@@ -155,10 +159,11 @@ public class CalendarFragment extends Fragment {
 
                     String tempTime = Integer.toString(shour) + ":" + Integer.toString(sminute);
                     String tempEndTime = Integer.toString(hour) + ":" + Integer.toString(minute);
-                    Course one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
-                    one.setID(mCourseManager.insertRow(one));
+                    OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
+                    one.setID(mOneClassManager.insertRow(one));
+                    //TODO set course ID as well: query Course table for entry with the same title, that is the ID to use
 
-                    if (repeatWeekly == true) {
+                    if (repeatWeekly) {
 
                         // get the supported ids for GMT-08:00 (Pacific Standard Time)
                         String[] ids = TimeZone.getAvailableIDs(-8 * 60 * 60 * 1000);
@@ -194,8 +199,10 @@ public class CalendarFragment extends Fragment {
                             year = cal.get(Calendar.YEAR);
 //                                Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: " + Integer.toString(sday) + " Name: " + name + " At: " + loc + " End Date: " + endDateString);
 
-                            one = new Course(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
-                            one.setID(mCourseManager.insertRow(one));
+                            one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
+                            one.setBuildingID(++test);
+                            one.setCourseID(++test2);
+                            one.setID(mOneClassManager.insertRow(one));
                             cal.add(Calendar.DATE, 7);
                             date1 = cal.getTime();
 //                            }
