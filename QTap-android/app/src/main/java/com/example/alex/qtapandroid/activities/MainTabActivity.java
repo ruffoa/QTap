@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +20,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
-import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
-import com.example.alex.qtapandroid.common.database.services.Service;
 import com.example.alex.qtapandroid.common.database.services.ServiceManager;
-import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
+import com.example.alex.qtapandroid.ui.fragments.AgendaFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
@@ -65,7 +61,9 @@ public class MainTabActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+
+
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 //shows off the database in logcat
                 /*User carson = new User("14cdwc", "Carson", "Cook");
@@ -204,6 +202,11 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_schedule:
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
+                mIsViewAtHome = true;
+                break;
+            case R.id.nav_agenda:
+                fragment = new AgendaFragment();
+                title = getString(R.string.agenda_fragment);
                 mIsViewAtHome = true;
                 break;
             case R.id.nav_map:
