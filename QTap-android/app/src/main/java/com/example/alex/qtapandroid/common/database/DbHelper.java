@@ -75,12 +75,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return mInstance;
     }
 
-//    @Override
-//    public void onConfigure(SQLiteDatabase db) {
-//        //enable foreign keys
-//        db.setForeignKeyConstraintsEnabled(true);
-//    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_USERS);
