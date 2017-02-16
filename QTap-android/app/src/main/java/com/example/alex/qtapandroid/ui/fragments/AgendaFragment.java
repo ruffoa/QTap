@@ -22,6 +22,7 @@ import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Carson on 02/12/2016.
@@ -54,7 +55,7 @@ public class AgendaFragment extends Fragment {
 
         CharSequence s = DateFormat.format("yyyy-MM-dd", calendar.getTime());
 
-        dataInfo.setText( "Showing Information For: " + s );
+        dataInfo.setText( "Showing Information For: " + s + " (" + calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US) + ")");
 
         Button mEmailSignInButton = (Button) V.findViewById(R.id.nextDay);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -77,16 +78,14 @@ public class AgendaFragment extends Fragment {
 
     public void btnClick()
     {
-        Snackbar.make(this.getView(), "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
 
+        TextView dataInfo = (TextView) this.getView().findViewById(R.id.textDay);
+        String rTime = dataInfo.getText().toString();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-        TextView dataInfo = (TextView) this.getView().findViewById(R.id.textDay);
 
-        String rTime = dataInfo.getText().toString();
         Log.d("TEST", "Date: " + rTime );
 
         rTime = rTime.substring(rTime.indexOf(":") + 2);
@@ -95,6 +94,8 @@ public class AgendaFragment extends Fragment {
         int yr = Integer.parseInt(rTime.substring(0, 4));
         int mon = Integer.parseInt(rTime.substring(5, 7));
         int day = Integer.parseInt(rTime.substring(8,10));
+
+        mon -= 1;
 
         calendar.set(yr, mon, day);
 
@@ -105,7 +106,7 @@ public class AgendaFragment extends Fragment {
             calendar.add(Calendar.DAY_OF_YEAR, 2);
         }
 
-        Log.d("TEST", "Cal Success! -> new date: " + yr + "/" + mon + "/" + day);
+        Log.d("TEST", "Cal Success! -> new date: " + yr + "/" + mon + "/" + day + " -> Cal values: (mon/day) " + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH));
 
         ListView listview =(ListView) this.getView().findViewById(R.id.agendaList);
         String[] itemArr = getData(calendar);
@@ -116,7 +117,7 @@ public class AgendaFragment extends Fragment {
         Log.d("TEST", "DONE?" );
 
         CharSequence s = DateFormat.format("yyyy-MM-dd", calendar.getTime());
-        dataInfo.setText( "Showing Information For: " + s );
+        dataInfo.setText( "Showing Information For: " + s + " (" + calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US) + ")");
 
 
 //        adapter.notifyDataSetChanged();
@@ -129,6 +130,8 @@ public class AgendaFragment extends Fragment {
 
 
         mCourseManager = new CourseManager(this.getContext());
+
+        Log.d("TEST", "Loaded func GetData" );
 
 //        String [] data = new String [];
         List<String> list = new ArrayList<String>();
@@ -147,7 +150,7 @@ public class AgendaFragment extends Fragment {
             int calMon = calendar.get(Calendar.MONTH) + 1;
             int calYear = calendar.get(Calendar.YEAR);
 
-//            Log.d("Date", "Year=" + year + " Month=" + (month + 1) + " day=" + day + " Calendar: " + calYear + "/" + calMon + "/" + calDay );
+//            Log.d("Get Data: Date", "Year=" + year + " Month=" + (month + 1) + " day=" + day + " Calendar: " + calYear + "/" + calMon + "/" + calDay );
 
             if (year == calYear && month == calMon && calDay == day) {     // if the day matches...
 //                dataInfo.append(System.getProperty("line.separator") + "Event Name: " + data.get(i).getTitle() + " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " + data.get(i).getEndTime());
@@ -161,6 +164,10 @@ public class AgendaFragment extends Fragment {
         if (isInfo == false) {
 //            arrayList.add("No Data Found; has the database been initialized?");
             list.add("No Data Found; has the database been initialized?");
+
+            String[] listArr = new String[list.size()];
+            listArr = list.toArray(listArr);
+            return listArr;
 
         }
 
@@ -176,12 +183,20 @@ public class AgendaFragment extends Fragment {
 
                 String s =list.get(j);
 
-                String temp1 = s.substring(s.indexOf("at: ") + 4, s.indexOf("at: ") + 6);
-                String temp2 = s.substring(s.indexOf("at: ") + 7, s.indexOf("at: ") + 9);
+                int index = s.indexOf("at: ") + 4;
+                String tp = s.substring(index);
+                String temp1 = tp.substring(0, tp.indexOf(":"));
+
+                index = temp1.length() + 1;
+                String temp2 = tp.substring(index, s.indexOf(" ") - 1);
+
 //                Log.d("Date", "String: " + s + " -> Hour: " + temp1 + " Minute: " + temp2);
 
-                startHour = Integer.parseInt(s.substring(s.indexOf("at: ") + 4, s.indexOf("at: ") + 6) );
-                startMin = Integer.parseInt(s.substring(s.indexOf("at: ") + 7, s.indexOf("at: ") + 9) );
+                startHour = Integer.parseInt(temp1);
+                startMin = Integer.parseInt(temp2);
+
+//                startHour = Integer.parseInt(s.substring(s.indexOf("at: ") + 4, s.indexOf("at: ") + 6) );
+//                startMin = Integer.parseInt(s.substring(s.indexOf("at: ") + 7, s.indexOf("at: ") + 9) );
 
                 if (startHour < minHour)
                 {
