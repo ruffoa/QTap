@@ -38,15 +38,11 @@ public class DbHelper extends SQLiteOpenHelper {
             OneClass.COLUMN_BUILDING_ID + " INT," + OneClass.COLUMN_ROOM_NUM + " TEXT," +
             OneClass.COLUMN_START_TIME + " TEXT," + OneClass.COLUMN_END_TIME + " TEXT," +
             OneClass.COLUMN_DAY + " TEXT," + OneClass.COLUMN_MONTH + " TEXT," + OneClass.COLUMN_YEAR +
-            " TEXT," + OneClass.COLUMN_COURSE_ID + " INT, FOREIGN KEY(" + OneClass.COLUMN_COURSE_ID +
-            ") REFERENCES " + Course.TABLE_NAME + "(" + Course._ID + "), FOREIGN KEY(" + OneClass.COLUMN_BUILDING_ID +
-            ") REFERENCES " + Building.TABLE_NAME + "(" + Building._ID + ") );";
+            " TEXT," + OneClass.COLUMN_COURSE_ID + " INT );";
 
     private static final String SQL_CREATE_SERVICES = "CREATE TABLE" + Service.TABLE_NAME + "(" +
             Service._ID + " INTEGER PRIMARY KEY" + Service.COLUMN_HOURS + " TEXT," +
-            Service.COLUMN_BUILDING_ID + " INT, " + "FOREIGN KEY (" +
-            Service.COLUMN_BUILDING_ID + ") REFERENCES" +
-            Service.COLUMN_WEBSITE + " TEXt," + Service.COLUMN_PURPOSE + " TEXT)";
+            Service.COLUMN_BUILDING_ID + " INT )";
 
     private static final String SQL_DELETE_COURSES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
     private static final String SQL_DELETE_BUILDINGS = "DROP TABLE IF EXISTS " + Building.TABLE_NAME;
@@ -54,7 +50,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_SERVICES = "DROP TABLE IF EXISTS " + Service.TABLE_NAME;
     private static final String SQL_DELETE_CLASSES = "DROP TABLE IF EXISTS " + OneClass.TABLE_NAME;
 
-    private static final int DATABASE_VERSION = 14; //**NOTE** this must be incremented if you are
+    private static final int DATABASE_VERSION = 4; //**NOTE** this must be incremented if you are
     //trying to run changes to the database schema
     private static final String DATABASE_NAME = "QTap.db";
 
@@ -79,11 +75,11 @@ public class DbHelper extends SQLiteOpenHelper {
         return mInstance;
     }
 
-    @Override
-    public void onConfigure(SQLiteDatabase db) {
-        //enable foreign keys
-        db.setForeignKeyConstraintsEnabled(true);
-    }
+//    @Override
+//    public void onConfigure(SQLiteDatabase db) {
+//        //enable foreign keys
+//        db.setForeignKeyConstraintsEnabled(true);
+//    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

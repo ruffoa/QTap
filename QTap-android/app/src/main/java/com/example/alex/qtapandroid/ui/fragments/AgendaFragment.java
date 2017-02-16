@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
+import com.example.alex.qtapandroid.common.database.courses.OneClass;
+import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +32,7 @@ import java.util.Locale;
 
 public class AgendaFragment extends Fragment {
 
-    private CourseManager mCourseManager;
+    private OneClassManager mOneClassManager;
     public static final String TAG = AgendaFragment.class.getSimpleName();
 
     @Nullable
@@ -129,14 +131,14 @@ public class AgendaFragment extends Fragment {
 
 
 
-        mCourseManager = new CourseManager(this.getContext());
+        mOneClassManager = new OneClassManager(this.getContext());
 
         Log.d("TEST", "Loaded func GetData" );
 
 //        String [] data = new String [];
         List<String> list = new ArrayList<String>();
 
-        ArrayList<Course> data = mCourseManager.getTable();
+        ArrayList<OneClass> data = mOneClassManager.getTable();
 
         int day = 0, month = 0, year = 0;
         boolean isInfo = false;
@@ -155,7 +157,7 @@ public class AgendaFragment extends Fragment {
             if (year == calYear && month == calMon && calDay == day) {     // if the day matches...
 //                dataInfo.append(System.getProperty("line.separator") + "Event Name: " + data.get(i).getTitle() + " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " + data.get(i).getEndTime());
 //                arrayList.add("Event Name: " + data.get(i).getTitle() + " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " + data.get(i).getEndTime());
-                list.add("Event Name: " + data.get(i).getTitle() + " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " + data.get(i).getEndTime());
+                list.add("Event Name: " + data.get(i).getType() + " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " + data.get(i).getEndTime());
                 isInfo = true;
             }
 

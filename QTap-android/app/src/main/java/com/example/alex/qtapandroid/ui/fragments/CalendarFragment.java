@@ -90,7 +90,7 @@ public class CalendarFragment extends Fragment {
             day = Integer.parseInt(data.get(i).getDay());
             month = Integer.parseInt(data.get(i).getMonth());
             year = Integer.parseInt(data.get(i).getYear());
-            String courseTitle = mCourseManager.getRow(data.get(i).getID()).getTitle();
+            String courseTitle = mCourseManager.getRow(data.get(i).getCourseID()).getTitle();
             if (year == dateSel.getYear() && month == (dateSel.getMonth() + 1) && dateSel.getDayOfMonth() == day) {     // if the day matches...
                 dataInfo.append(System.getProperty("line.separator") + "Event Name: " + courseTitle +
                         " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " +
@@ -107,6 +107,7 @@ public class CalendarFragment extends Fragment {
 
     public void setup() {
         mOneClassManager = new OneClassManager(this.getContext());
+        mCourseManager = new CourseManager(this.getContext());
         UserManager mUserManager = new UserManager(this.getContext());
         ArrayList<User> user = mUserManager.getTable();
         User.printUsers(mUserManager.getTable());
@@ -147,8 +148,9 @@ public class CalendarFragment extends Fragment {
             mParser = new icsParser(this.getContext());
 //            mLines = mParser.readLine(mPath); // this is for the hardcoded file
             mLines = mParser.readDownloadFile("cal.ics");
-        int test=0;
-            int test2=0;
+
+            int test=1;
+
             for (String string : mLines) {
 
                 if (string.contains("BEGIN:VEVENT")) {
@@ -159,8 +161,18 @@ public class CalendarFragment extends Fragment {
 
                     String tempTime = Integer.toString(shour) + ":" + Integer.toString(sminute);
                     String tempEndTime = Integer.toString(hour) + ":" + Integer.toString(minute);
+
+                    Course course = new Course(name);
+                    course.setID(mCourseManager.insertRow(course));
+                    Course.printCourses(mCourseManager.getTable());
+
+
                     OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
+                    one.setBuildingID(15);       // delete later, this is temporary
+                    one.setCourseID(test);
                     one.setID(mOneClassManager.insertRow(one));
+
+
                     //TODO set course ID as well: query Course table for entry with the same title, that is the ID to use
 
                     if (repeatWeekly) {
@@ -200,8 +212,8 @@ public class CalendarFragment extends Fragment {
 //                                Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: " + Integer.toString(sday) + " Name: " + name + " At: " + loc + " End Date: " + endDateString);
 
                             one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
-                            one.setBuildingID(++test);
-                            one.setCourseID(++test2);
+                            one.setBuildingID(15);       // delete later, this is temporary
+                            one.setCourseID(test);
                             one.setID(mOneClassManager.insertRow(one));
                             cal.add(Calendar.DATE, 7);
                             date1 = cal.getTime();
@@ -209,6 +221,7 @@ public class CalendarFragment extends Fragment {
                         }
                     }
                     repeatWeekly = false;
+                    test +=1;
 
                 } else if (string.contains(("RRULE:FREQ=WEEKLY;"))) {
                     repeatWeekly = true;
