@@ -18,8 +18,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.alex.qtapandroid.common.PrefManager;
 import com.example.alex.qtapandroid.R;
+import io.fabric.sdk.android.Fabric;
 
 public class StartupActivity extends AppCompatActivity {
 
@@ -34,6 +36,7 @@ public class StartupActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            Fabric.with(this, new Crashlytics());
 
             // Checking for first time launch - before calling setContentView()
             prefManager = new PrefManager(this);
