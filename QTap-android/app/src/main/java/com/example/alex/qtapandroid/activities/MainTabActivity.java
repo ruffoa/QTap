@@ -153,7 +153,7 @@ public class MainTabActivity extends AppCompatActivity
         mBuildingManager.close();
         mUserManager.close();
         mServiceManager.close();
-        super.onPause();
+        super.onDestroy();
     }
 
     @Override
