@@ -40,11 +40,6 @@ public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private boolean mIsViewAtHome;
-    //used to show off database
-    private CourseManager mCourseManager;
-    private BuildingManager mBuildingManager;
-    private UserManager mUserManager;
-    private ServiceManager mServiceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,58 +47,6 @@ public class MainTabActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_tab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mCourseManager = new CourseManager(this);
-        mBuildingManager = new BuildingManager(this);
-        mUserManager = new UserManager(this);
-        mServiceManager = new ServiceManager(this);
-        //TODO replace fab, or get rid of it
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                //shows off the database in logcat
-                /*User carson = new User("14cdwc", "Carson", "Cook");
-                User alex = new User("14abcr", "Alex", "Ruffo");
-                User lachlan = new User("14labd", "Lachlan", "Devir");
-                carson.setID(mUserManager.insertRow(carson));
-                alex.setID(mUserManager.insertRow(alex));
-                lachlan.setID(mUserManager.insertRow(lachlan));
-                User.printUsers(mUserManager.getTable());
-                User michael = new User("15mabw", "Michael", "Wang");
-                lachlan = mUserManager.updateRow(lachlan, michael);
-                User.printUsers(mUserManager.getTable());
-                mUserManager.deleteRow(lachlan);
-                User.printUsers(mUserManager.getTable());
-                mUserManager.deleteTable();*/
-                //User.printUsers(mUserManager.getTable());
-                //Service.printServices(mServiceManager.getTable());
-                /*
-                Building bio = new Building("biosci");
-                Building wlh = new Building("wlh");
-                Building ilc = new Building("ilc");
-                bio.setID(mBuildingManager.insertRow(bio));
-                wlh.setID(mBuildingManager.insertRow(wlh));
-                ilc.setID(mBuildingManager.insertRow(ilc));
-                Building.printBuildings(mBuildingManager.getTable());
-                Course sigs = new Course("252", bio.getID(), "1102", "11:30");
-                Course sci = new Course("212", wlh.getID(), "210", "4:30");
-                Course funds = new Course("280", ilc.getID(), "205", "9:30");
-                sigs.setID(mCourseManager.insertRow(sigs));
-                sci.setID(mCourseManager.insertRow(sci));
-                sci = mCourseManager.updateRow(sci, funds);
-                Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteRow(sigs);
-                Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteTable();
-                Course.printCourses(mCourseManager.getTable());
-                mBuildingManager.deleteTable();
-                Building.printBuildings(mBuildingManager.getTable());*/
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -145,15 +88,6 @@ public class MainTabActivity extends AppCompatActivity
         } else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        mCourseManager.close();
-        mBuildingManager.close();
-        mUserManager.close();
-        mServiceManager.close();
-        super.onDestroy();
     }
 
     @Override
