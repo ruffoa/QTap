@@ -142,7 +142,7 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_agenda:
                 fragment = new AgendaFragment();
                 title = getString(R.string.agenda_fragment);
-                mIsViewAtHome = true;
+                mIsViewAtHome = false;
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
