@@ -3,6 +3,9 @@ package com.example.alex.qtapandroid.common.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.crashlytics.android.Crashlytics;
 
 /**
  * Created by Carson on 19/01/2017.
@@ -11,8 +14,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4; //**NOTE** this must be incremented if you are
-    //trying to run changes to the database schema
+    //**NOTE** this must be incremented if you are trying to run changes to the database schema
+    private static final int DATABASE_VERSION = 1;
+    //**NOTE** add your name, the database version and the reason it was changed to DBVersionLog.txt
+    //when you make a change to the database version
 
     private static DbHelper mInstance = null;
 
@@ -37,6 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Crashlytics.logException(new Throwable("DB Version Change"));
         db.execSQL(SqlStringStatements.CREATE_USERS);
         db.execSQL(SqlStringStatements.CREATE_COURSES);
         db.execSQL(SqlStringStatements.CREATE_BUILDINGS);
