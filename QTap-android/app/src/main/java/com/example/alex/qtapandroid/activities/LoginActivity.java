@@ -54,6 +54,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static String mIcsUrl = "";
     public static String mUserEmail = "";
 
+    //TODO document and remove literals
+
     public void tryProcessHtml(String html) {
         if (html == null)
             return;

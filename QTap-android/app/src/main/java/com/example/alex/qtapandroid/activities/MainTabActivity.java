@@ -61,15 +61,15 @@ public class MainTabActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_schedule); //start at calendar view
 
-        ////// Set Name and Email in nav header
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);  // Get default SharedPreferences Instance
-        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound"); // get the "UserEmail" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
-        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");   // get the "UserName" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
+        // Set Name and Email in nav header
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
+        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");
 
-        View header = navigationView.getHeaderView(0);                                        // get the existing headerView
-        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);            // Set the navHeaderAccountName TextView to a local var
+        View header = navigationView.getHeaderView(0);// get the existing headerView
+        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
-        name.setText(userName);                                                               // Set the textView text to the "UserName" string
+        name.setText(userName);
         email.setText(userEmail);
     }
 
@@ -80,9 +80,8 @@ public class MainTabActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         }
         if (!mIsViewAtHome) { //if the current view is not the calendar fragment
             displayView(R.id.nav_schedule); //display the calendar fragment
@@ -113,7 +112,6 @@ public class MainTabActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         displayView(item.getItemId());
