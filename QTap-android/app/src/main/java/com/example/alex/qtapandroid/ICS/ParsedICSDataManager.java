@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.classes;
+package com.example.alex.qtapandroid.ICS;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,17 +11,17 @@ import java.util.List;
  * Created by Alex on 1/22/2017.
  */
 
-public class icsParsedDataManager {
+public class ParsedICSDataManager {
 
     private Context mContext;
     private boolean isEvent;
     public static final String TAG = StudentToolsFragment.class.getSimpleName();
 
     public static final String mPath = "testCal.ics";
-    private icsParser mParser;
+    private ParseICS mParser;
     private List<String> mLines;
 
-    public icsParsedDataManager(Context context) {
+    public ParsedICSDataManager(Context context) {
         this.mContext = context;
     }
 
@@ -31,7 +31,7 @@ public class icsParsedDataManager {
         int hour = 0, minute = 0, day = 0, month = 0;
         int shour = 0, sminute = 0, sday = 0, smonth = 0;
 
-        mParser = new icsParser(this.mContext.getApplicationContext());
+        mParser = new ParseICS(this.mContext.getApplicationContext());
         mLines = mParser.readLine(mPath);
         for (String string : mLines) {
 

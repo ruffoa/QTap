@@ -31,7 +31,7 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 
-import com.example.alex.qtapandroid.classes.downloadICS;
+import com.example.alex.qtapandroid.ICS.DownloadICSFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    public static final String TAG = downloadICS.class.getSimpleName();
+    public static final String TAG = DownloadICSFile.class.getSimpleName();
     private static final int REQUEST_READ_CONTACTS = 0;
 
     //Keep track of the login task to ensure we can cancel it if requested
@@ -333,7 +333,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (!preferences.getString("DatabaseDate", "noData").equals("noData")) { // if the database is up to date
 
                 } else {
-                    final downloadICS downloadICS = new downloadICS(LoginActivity.this);
+                    final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
                     String url = preferences.getString("mIcsUrl", "noURL");
                     if (!url.equals("noURL")) {
                         Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");

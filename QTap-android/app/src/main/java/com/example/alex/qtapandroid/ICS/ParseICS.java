@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.classes;
+package com.example.alex.qtapandroid.ICS;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -18,11 +18,11 @@ import java.util.List;
  * Created by Alex on 1/18/2017.
  */
 
-public class icsParser {
+public class ParseICS {
 
     private Context mContext;
 
-    public icsParser(Context context) {
+    public ParseICS(Context context) {
         this.mContext = context;
     }
 

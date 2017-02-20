@@ -3,21 +3,15 @@ package com.example.alex.qtapandroid.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.classes.icsParser;
-import com.example.alex.qtapandroid.common.database.courses.Course;
+import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 
 import java.util.List;
-
-import static android.R.attr.value;
 
 
 /**
@@ -29,7 +23,7 @@ public class StudentToolsFragment extends Fragment {
     public static final String TAG = StudentToolsFragment.class.getSimpleName();
 
     public static final String mPath = "testCal.ics";
-    private icsParser mParser;
+    private ParseICS mParser;
     private List<String> mLines;
 
     private CourseManager mCourseManager;
@@ -62,7 +56,7 @@ public class StudentToolsFragment extends Fragment {
 //        int hour = 0, minute = 0, day = 0, month = 0, year = 0;
 //        int shour = 0, sminute = 0, sday = 0, smonth = 0;
 //
-//        mParser = new icsParser(this.getContext());
+//        mParser = new ParseICS(this.getContext());
 //        mLines = mParser.readLine(mPath);
 //        for (String string : mLines) {
 //

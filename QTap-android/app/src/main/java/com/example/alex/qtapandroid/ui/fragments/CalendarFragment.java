@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import java.util.Date;
 
+import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.classes.icsParser;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
@@ -42,7 +42,7 @@ public class CalendarFragment extends Fragment {
     private CourseManager mCourseManager;
     public static final String TAG = StudentToolsFragment.class.getSimpleName();
     public static final String mPath = "testCal.ics";
-    private icsParser mParser;
+    private ParseICS mParser;
     private List<String> mLines;
 
 
@@ -145,7 +145,7 @@ public class CalendarFragment extends Fragment {
             boolean repeatWeekly = false;
             String rDayStr = "", rMonStr = "", rYrStr = "";
 
-            mParser = new icsParser(this.getContext());
+            mParser = new ParseICS(this.getContext());
 //            mLines = mParser.readLine(mPath); // this is for the hardcoded file
             mLines = mParser.readDownloadFile("cal.ics");
 
