@@ -2,7 +2,6 @@ package com.example.alex.qtapandroid.ICS;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.PowerManager;
 import android.util.Log;
 
 import java.io.FileOutputStream;
@@ -15,15 +14,16 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Alex on 1/29/2017.
+ * Class to download the ICS file.
  */
 public class DownloadICSFile extends AsyncTask<String, Integer, String> {
 
     private static final String TAG = DownloadICSFile.class.getSimpleName();
 
-    private Context context;
+    private Context mContext;
 
-    public DownloadICSFile(Context context) {
-        this.context = context;
+    public DownloadICSFile(Context mContext) {
+        this.mContext = mContext;
     }
 
     @Override
@@ -50,10 +50,8 @@ public class DownloadICSFile extends AsyncTask<String, Integer, String> {
 
             // download the file
             input = connection.getInputStream();
-//                output = new FileOutputStream("cal.ics", Context.MODE_PRIVATE);
-            output = this.context.getApplicationContext().openFileOutput("cal.ics", MODE_PRIVATE);
+            output = this.mContext.getApplicationContext().openFileOutput("cal.ics", MODE_PRIVATE);
             Log.d(TAG, "set file output");
-
 
             byte data[] = new byte[4096];
             long total = 0;
@@ -69,12 +67,12 @@ public class DownloadICSFile extends AsyncTask<String, Integer, String> {
                 if (fileLength > 0) // only if total length is known
                     publishProgress((int) (total * 100 / fileLength));
                 output.write(data, 0, count);
-                Log.d(TAG, data.toString());
-
+                logcatArray(data);
             }
         } catch (Exception e) {
             return e.toString();
         } finally {
+            //close streams, end connection
             try {
                 if (output != null)
                     output.close();
@@ -82,11 +80,22 @@ public class DownloadICSFile extends AsyncTask<String, Integer, String> {
                     input.close();
             } catch (IOException ignored) {
             }
-
             if (connection != null)
                 connection.disconnect();
         }
         return null;
     }
 
+    /**
+     * Method to output a byte array's contents on the debug logcat.
+     *
+     * @param array The byte array to be outputted.
+     */
+    private void logcatArray(byte[] array) {
+        String output = "";
+        for (int i : array) {
+            output += array[i] + " ";
+        }
+        Log.d(TAG, output);
+    }
 }
