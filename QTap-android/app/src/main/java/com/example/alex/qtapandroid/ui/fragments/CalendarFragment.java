@@ -38,124 +38,116 @@ import java.util.TimeZone;
  * Attached to MainTabActivity only.
  */
 public class CalendarFragment extends Fragment {
+    //TODO replace literal strings with values from a Literals class
+    private static final String TAG = StudentToolsFragment.class.getSimpleName();
+
     private OneClassManager mOneClassManager;
     private CourseManager mCourseManager;
-    public static final String TAG = StudentToolsFragment.class.getSimpleName();
-    public static final String mPath = "testCal.ics";
-    private ParseICS mParser;
-    private List<String> mLines;
+    private DatePicker mDateSelection;
 
+    private TextView mDataInfo;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_calendar, container, false);
+        mDataInfo = (TextView) v.findViewById(R.id.calendarEvents);
+        mDateSelection = (DatePicker) v.findViewById(R.id.datePicker);
+        mOneClassManager = new OneClassManager(this.getContext());
+        mCourseManager = new CourseManager(this.getContext());
         setup();
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
-
+        return v;
     }
 
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView dataInfo = (TextView) getView().findViewById(R.id.calendarEvents);
-        DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        dateSel.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
-
+        mDateSelection.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+                new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-//                        Log.d("Date", "Year=" + year + " Month=" + (month + 1) + " day=" + dayOfMonth);
                         getData();
                     }
                 }
         );
 
-        dataInfo.setMovementMethod(new ScrollingMovementMethod());
-        dataInfo.setText("Initializing Database");
+        mDataInfo.setMovementMethod(new ScrollingMovementMethod());
+        mDataInfo.setText(getString(R.string.init_database));
         getData();
     }
 
-    public void getData() {                     // this function displays the data for the selected day in the green text view
-        mOneClassManager = new OneClassManager(this.getContext());
-        mCourseManager = new CourseManager(this.getContext());
-        TextView dataInfo = (TextView) getView().findViewById(R.id.calendarEvents);
-        DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
-
+    public void getData() {                     // this function displays the data for the selected day in the green text vie
         ArrayList<OneClass> data = mOneClassManager.getTable();
 
-        dataInfo.setText("Event Information for " + (dateSel.getMonth() + 1) + "/" + dateSel.getDayOfMonth());        // get the selected day
+        mDataInfo.setText("Event Information for " + (mDateSelection.getMonth() + 1) + "/" + mDateSelection.getDayOfMonth());        // get the selected day
 
-        int day = 0, month = 0, year = 0;
+        int day, month, year;
         boolean isInfo = false;
-        for (int i = 0; i < data.size(); i++) {             // look for the selected day in the events from the database
+        // look for the selected day in the events from the database
+        for (int i = 0; i < data.size(); i++) {
             day = Integer.parseInt(data.get(i).getDay());
             month = Integer.parseInt(data.get(i).getMonth());
             year = Integer.parseInt(data.get(i).getYear());
             String courseTitle = mCourseManager.getRow(data.get(i).getCourseID()).getTitle();
-            if (year == dateSel.getYear() && month == (dateSel.getMonth() + 1) && dateSel.getDayOfMonth() == day) {     // if the day matches...
-                dataInfo.append(System.getProperty("line.separator") + "Event Name: " + courseTitle +
+            if (year == mDateSelection.getYear() && month == (mDateSelection.getMonth() + 1)
+                    && mDateSelection.getDayOfMonth() == day) {     // if the day matches add its info to mDataInfo
+
+                mDataInfo.append(System.getProperty("line.separator") + "Event Name: " + courseTitle +
                         " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " +
                         data.get(i).getEndTime());
                 isInfo = true;
             }
-
         }
-
         if (!isInfo) {
-            dataInfo.setText("No Data Found; has the database been initialized?");
+            mDataInfo.setText("");
         }
     }
 
     public void setup() {
-        mOneClassManager = new OneClassManager(this.getContext());
-        mCourseManager = new CourseManager(this.getContext());
         UserManager mUserManager = new UserManager(this.getContext());
         ArrayList<User> user = mUserManager.getTable();
-        User.printUsers(mUserManager.getTable());
+
         boolean isInit = false;
 
-
-        for (int i = 0; i < user.size(); i++) {             // see if user has initialized database yet, and if the database is up to date
+        // see if user has initialized database yet, and if the database is up to date
+        for (int i = 0; i < user.size(); i++) {
 
             if (!user.get(i).getDateInit().isEmpty()) {
                 String rTime = user.get(i).getDateInit();
                 int yr = Integer.parseInt(rTime.substring(0, 4));
                 int mon = Integer.parseInt(rTime.substring(5, 7));
-                int day = Integer.parseInt(rTime.substring(8,10));
+                int day = Integer.parseInt(rTime.substring(8, 10));
 
                 Calendar c = Calendar.getInstance();
                 c.set(yr, mon, day);
                 c.add(Calendar.DATE, 7);
-
                 Calendar endDate = Calendar.getInstance();
 
-                if (c.after(endDate))
+                if (c.after(endDate)) {
                     isInit = true;
-                Log.d(TAG, "User Date Inf ->  Start Date:" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + " End Date: " + endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DAY_OF_MONTH) + " isInit: " + isInit);
-
+                }
             }
         }
-
         if (mOneClassManager.getTable().isEmpty() || !isInit) {
             mOneClassManager.deleteTable();
 
             boolean isEvent = false;
-            String sTime = "", eTime = "", loc = "", name = "", rTime;
-            int hour = 0, minute = 0, day = 0, month = 0, year = 0;
+            String sTime = "", eTime = "", loc = "", name = "", rTime = "";
+            int hour = 0, minute = 0, year = 0;
             int shour = 0, sminute = 0, sday = 0, smonth = 0;
             boolean repeatWeekly = false;
             String rDayStr = "", rMonStr = "", rYrStr = "";
 
-            mParser = new ParseICS(this.getContext());
-//            mLines = mParser.readLine(mPath); // this is for the hardcoded file
-            mLines = mParser.readDownloadFile("cal.ics");
+            ParseICS icsParser = new ParseICS(this.getContext());
+            List<String> lines = icsParser.readDownloadFile("cal.ics");
 
-            int test=1;
+            int test = 1;
 
-            for (String string : mLines) {
+            for (String string : lines) {
 
                 if (string.contains("BEGIN:VEVENT")) {
                     isEvent = true;
-//                dataInfo.append("\n" + "New Event");
                 } else if (string.contains("END:VEVENT")) {
                     isEvent = false;
 
@@ -168,7 +160,7 @@ public class CalendarFragment extends Fragment {
 
 
                     OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
-                    one.setBuildingID(15);       // delete later, this is temporary
+                    one.setBuildingID(15);       // TODO delete later, this is temporary
                     one.setCourseID(test);
                     one.setID(mOneClassManager.insertRow(one));
 
@@ -176,7 +168,6 @@ public class CalendarFragment extends Fragment {
                     //TODO set course ID as well: query Course table for entry with the same title, that is the ID to use
 
                     if (repeatWeekly) {
-
                         // get the supported ids for GMT-08:00 (Pacific Standard Time)
                         String[] ids = TimeZone.getAvailableIDs(-8 * 60 * 60 * 1000);
                         // if no ids were returned, something is wrong. get out.
@@ -209,7 +200,6 @@ public class CalendarFragment extends Fragment {
                             sday = cal.get(Calendar.DAY_OF_MONTH);
                             smonth = cal.get(Calendar.MONTH);
                             year = cal.get(Calendar.YEAR);
-//                                Log.d(TAG, "Repeated Event Date =>  Year: " + Integer.toString(year) + " Month: " + Integer.toString(smonth) + " Day: " + Integer.toString(sday) + " Name: " + name + " At: " + loc + " End Date: " + endDateString);
 
                             one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
                             one.setBuildingID(15);       // delete later, this is temporary
@@ -217,11 +207,10 @@ public class CalendarFragment extends Fragment {
                             one.setID(mOneClassManager.insertRow(one));
                             cal.add(Calendar.DATE, 7);
                             date1 = cal.getTime();
-//                            }
                         }
                     }
                     repeatWeekly = false;
-                    test +=1;
+                    test += 1;
 
                 } else if (string.contains(("RRULE:FREQ=WEEKLY;"))) {
                     repeatWeekly = true;
@@ -252,24 +241,18 @@ public class CalendarFragment extends Fragment {
                     } else if (string.contains("SUMMARY")) {
                         name = (string.substring(string.lastIndexOf(":") + 1));
                     }
-
                 }
-
             }
             Date d = new Date();
             CharSequence s = DateFormat.format("yyyy-MM-dd hh:mm:ss", d.getTime());
 
-            String uName =  user.get(0).getFirstName();
+            String uName = user.get(0).getFirstName();
             String uLastName = user.get(0).getLastName();
-            String uNetID =  user.get(0).getNetid();
+            String uNetID = user.get(0).getNetid();
             String uURL = user.get(0).getIcsURL();
 
-            User nUser = new User (uNetID, uName, uLastName, s.toString(), uURL);
+            User nUser = new User(uNetID, uName, uLastName, s.toString(), uURL);
             mUserManager.updateRow(user.get(0), nUser);
-
-            Log.d(TAG, "Updated User info: " + user.get(0).getDateInit() + " User NetID: "+ user.get(0).getNetid() + " User NetID: "+ user.get(0).getIcsURL());
-
         }
     }
-
 }
