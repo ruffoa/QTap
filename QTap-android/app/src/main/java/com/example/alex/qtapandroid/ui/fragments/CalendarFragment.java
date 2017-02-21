@@ -158,12 +158,10 @@ public class CalendarFragment extends Fragment {
                     course.setID(mCourseManager.insertRow(course));
                     Course.printCourses(mCourseManager.getTable());
 
-
                     OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                     one.setBuildingID(15);       // TODO delete later, this is temporary
                     one.setCourseID(test);
                     one.setID(mOneClassManager.insertRow(one));
-
 
                     //TODO set course ID as well: query Course table for entry with the same title, that is the ID to use
 

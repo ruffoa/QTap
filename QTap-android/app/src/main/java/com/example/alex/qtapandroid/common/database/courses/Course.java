@@ -19,9 +19,6 @@ public class Course implements BaseColumns {
     //column number each field ends up in
     public static final int ID_POS = 0;
     public static final int TITLE_POS = 1;
-<<<<<<< HEAD
-=======
-
     public static final int ROOM_NUM_POS = 2;
     public static final int STIME_POS = 3;
     public static final int ETIME_POS = 4;
@@ -29,29 +26,12 @@ public class Course implements BaseColumns {
     public static final int MONTH_POS = 6;
     public static final int YEAR_POS = 7;
 
->>>>>>> origin/SqliteDatabase
-
     //fields in database
     private long id;
     private String title;
 
-<<<<<<< HEAD
     public Course(String title) {
         this.title = title;
-=======
-
-    public Course(String title, String roomNum, String sTime, String eTime, String Day, String Month, String Year) {
-
-        this.title = title;
-       // this.buildingID = building;
-        this.roomNum = roomNum;
-        this.startTime = sTime;
-        this.endTime = eTime;
-        this.Day = Day;
-        this.Month = Month;
-        this.Year = Year;
-
->>>>>>> origin/SqliteDatabase
     }
 
     /**
@@ -59,7 +39,6 @@ public class Course implements BaseColumns {
      *
      * @param courses ArrayList of courses to print out.
      */
-<<<<<<< HEAD
     public static void printCourses(ArrayList<Course> courses) {
         String output = "COURSES:\n";
         for (int i = 0; i < courses.size(); i++) {
@@ -68,9 +47,6 @@ public class Course implements BaseColumns {
         }
         Log.d("SQLITE",output);
     }
-=======
-
->>>>>>> origin/SqliteDatabase
 
     //getters and setters for fields
     public long getID() {
@@ -84,25 +60,4 @@ public class Course implements BaseColumns {
     public String getTitle() {
         return title;
     }
-<<<<<<< HEAD
-=======
-
-    //public long getBuildingID() {
-     //   return buildingID;
-    //}
-
-    public String getRoomNum() {
-        return roomNum;
-    }
-
-    public String getStartTime() {  return startTime;  }
-
-    public String getEndTime() {  return endTime;  }
-
-    public String getDay() {  return Day;  }
-
-    public String getMonth() {  return Month;  }
-
-    public String getYear() {  return Year;  }
->>>>>>> origin/SqliteDatabase
 }
