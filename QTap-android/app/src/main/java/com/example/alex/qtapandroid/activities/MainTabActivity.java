@@ -109,7 +109,8 @@ public class MainTabActivity extends AppCompatActivity
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
+        //return super.onOptionsItemSelected(item);
     }
 
     @Override

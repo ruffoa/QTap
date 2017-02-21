@@ -9,7 +9,11 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/QTAP.iml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/QTap-android/.idea/vcs.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/SqliteDatabase
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QTap-android/.idea/compiler.xml" afterPath="$PROJECT_DIR$/QTap-android/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/QTap-android/.idea/gradle.xml" afterPath="$PROJECT_DIR$/QTap-android/.idea/gradle.xml" />
@@ -185,7 +189,11 @@
 =======
     <option name="width" value="1378" />
     <option name="height" value="744" />
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/SqliteDatabase
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -202,7 +210,11 @@
     <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
 =======
     <navigator currentView="ProjectPane" proportions="" version="1">
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/SqliteDatabase
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -482,7 +494,11 @@
           </PATH>
         </subPane>
       </pane>
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/SqliteDatabase
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -756,7 +772,11 @@
     <frame x="-8" y="-8" width="1924" height="1084" extended-state="0" />
 =======
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/SqliteDatabase
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -778,7 +798,11 @@
 =======
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25341427" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/SqliteDatabase
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980299" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />

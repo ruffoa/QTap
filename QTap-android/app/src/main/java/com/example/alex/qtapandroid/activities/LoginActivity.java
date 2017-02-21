@@ -80,13 +80,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void setText(String useremail) {
-
+    private void setText(String userEmail) {
         TextView dataInfo = (TextView) findViewById(R.id.userEmail);
-        dataInfo.setText(useremail);
-//        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-//        mEmailView.setText(mUserEmail);
-        Log.d("WEB", "User Email: " + useremail);
+        dataInfo.setText(userEmail);
+        Log.d("WEB", "User Email: " + userEmail);
     }
 
     @Override
@@ -353,5 +350,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
-
-

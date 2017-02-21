@@ -24,6 +24,7 @@ public class DatabaseAccessor {
     /**
      * Creates an instance of the database helper and opens
      * a readable/writeable instance of the database.
+     *
      * @throws SQLException
      */
     public void open() throws SQLException {
@@ -32,12 +33,5 @@ public class DatabaseAccessor {
         }
         mDatabase = mDBHelper.getWritableDatabase();
     }
-
-    /**
-     * Ends the database connection.
-     */
-    public void close() {
-        mDBHelper.close();
-        mDatabase = null;
-    }
 }
+

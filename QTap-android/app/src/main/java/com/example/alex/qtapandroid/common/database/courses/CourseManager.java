@@ -30,6 +30,18 @@ public class CourseManager extends DatabaseAccessor {
     public long insertRow(Course course) {
         ContentValues values = new ContentValues();
         values.put(Course.COLUMN_TITLE, course.getTitle());
+<<<<<<< HEAD
+=======
+       // values.put(Course.COLUMN_BUILDING_ID, course.getBuildingID());
+        values.put(Course.COLUMN_ROOM_NUM, course.getRoomNum());
+        values.put(Course.COLUMN_STARTTIME, course.getStartTime());
+        values.put(Course.COLUMN_ENDTIME, course.getEndTime());
+        values.put(Course.COLUMN_DAY, course.getDay());
+        values.put(Course.COLUMN_MONTH, course.getMonth());
+        values.put(Course.COLUMN_YEAR, course.getYear());
+
+
+>>>>>>> origin/SqliteDatabase
         return mDatabase.insert(Course.TABLE_NAME, null, values);
     }
 
@@ -59,9 +71,14 @@ public class CourseManager extends DatabaseAccessor {
         //try with resources - automatically closes cursor whether or not its completed normally
         try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
+<<<<<<< HEAD
                 Course course = new Course(cursor.getString(Course.TITLE_POS));
                 course.setID(cursor.getInt(Course.ID_POS));
                 courses.add(course);
+=======
+
+                //courses.add(course);
+>>>>>>> origin/SqliteDatabase
             }
             cursor.close();
             return courses; //return only when the cursor has been closed
@@ -80,9 +97,10 @@ public class CourseManager extends DatabaseAccessor {
                 Course._ID,
                 Course.COLUMN_TITLE
         };
-        Course course;
+        Course course = null;
         String selection = Course._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
+<<<<<<< HEAD
         try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 course = new Course(cursor.getString(Course.TITLE_POS));
@@ -94,7 +112,11 @@ public class CourseManager extends DatabaseAccessor {
                 return null;
             }
         }
+=======
+        return course;
+>>>>>>> origin/SqliteDatabase
     }
+
 
     /**
      * Deletes the entire Courses table.
