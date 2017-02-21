@@ -12,13 +12,14 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DatabaseAccessor {
     public SQLiteDatabase mDatabase;
-    private DBHelper mDBHelper;
+    //private DbHelper mDBHelper;
     private Context mContext;
 
     public DatabaseAccessor(Context context) {
         this.mContext = context;
-        mDBHelper = com.example.alex.qtapandroid.common.database.DBHelper.getInstance(mContext);
-        open();
+
+       // mDBHelper = DbHelper.getInstance(mContext);
+        //open();
     }
 
     /**
@@ -26,18 +27,15 @@ public class DatabaseAccessor {
      * a readable/writeable instance of the database.
      * @throws SQLException
      */
-    public void open() throws SQLException {
-        if (mDBHelper == null) {
-            mDBHelper = com.example.alex.qtapandroid.common.database.DBHelper.getInstance(mContext);
+    //public void open() throws SQLException {
+     //   if (mDBHelper == null) {
+
+        //    mDBHelper = DbHelper.getInstance(mContext);
         }
-        mDatabase = mDBHelper.getWritableDatabase();
-    }
+       // mDatabase = mDBHelper.getWritableDatabase();
+    //}
 
     /**
      * Ends the database connection.
-     */
-    public void close() {
-        mDBHelper.close();
-        mDatabase = null;
-    }
-}
+    */
+

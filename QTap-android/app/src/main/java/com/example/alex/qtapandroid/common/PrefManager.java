@@ -49,5 +49,4 @@ public class PrefManager {
         return mPref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
 
-
 }
