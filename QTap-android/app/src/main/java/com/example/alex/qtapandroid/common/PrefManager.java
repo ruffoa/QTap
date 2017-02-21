@@ -12,7 +12,7 @@ import android.content.Context;
  *Controls the preferences of user.
  * Currently only used for showing introduction on first launch
  */
-
+//TODO remove all uses of this, add info to database instead
 public class PrefManager {
 
     private SharedPreferences mPref;

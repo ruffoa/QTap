@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +20,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
-import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
-import com.example.alex.qtapandroid.common.database.services.Service;
 import com.example.alex.qtapandroid.common.database.services.ServiceManager;
-import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
+import com.example.alex.qtapandroid.ui.fragments.AgendaFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
@@ -44,91 +40,37 @@ public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private boolean mIsViewAtHome;
-    //used to show off database
-    private CourseManager mCourseManager;
-    private BuildingManager mBuildingManager;
-    private UserManager mUserManager;
-    private ServiceManager mServiceManager;
+
+    private DrawerLayout mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mCourseManager = new CourseManager(this);
-        mBuildingManager = new BuildingManager(this);
-        mUserManager = new UserManager(this);
-        mServiceManager = new ServiceManager(this);
-        //TODO replace fab, or get rid of it
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                //shows off the database in logcat
-                /*User carson = new User("14cdwc", "Carson", "Cook");
-                User alex = new User("14abcr", "Alex", "Ruffo");
-                User lachlan = new User("14labd", "Lachlan", "Devir");
-                carson.setID(mUserManager.insertRow(carson));
-                alex.setID(mUserManager.insertRow(alex));
-                lachlan.setID(mUserManager.insertRow(lachlan));
-                User.printUsers(mUserManager.getTable());
-                User michael = new User("15mabw", "Michael", "Wang");
-                lachlan = mUserManager.updateRow(lachlan, michael);
-                User.printUsers(mUserManager.getTable());
-                mUserManager.deleteRow(lachlan);
-                User.printUsers(mUserManager.getTable());
-                mUserManager.deleteTable();*/
-                //User.printUsers(mUserManager.getTable());
-                //Service.printServices(mServiceManager.getTable());
-                /*
-                Building bio = new Building("biosci");
-                Building wlh = new Building("wlh");
-                Building ilc = new Building("ilc");
-                bio.setID(mBuildingManager.insertRow(bio));
-                wlh.setID(mBuildingManager.insertRow(wlh));
-                ilc.setID(mBuildingManager.insertRow(ilc));
-                Building.printBuildings(mBuildingManager.getTable());
-                Course sigs = new Course("252", bio.getID(), "1102", "11:30");
-                Course sci = new Course("212", wlh.getID(), "210", "4:30");
-                Course funds = new Course("280", ilc.getID(), "205", "9:30");
-                sigs.setID(mCourseManager.insertRow(sigs));
-                sci.setID(mCourseManager.insertRow(sci));
-                sci = mCourseManager.updateRow(sci, funds);
-                Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteRow(sigs);
-                Course.printCourses(mCourseManager.getTable());
-                mCourseManager.deleteTable();
-                Course.printCourses(mCourseManager.getTable());
-                mBuildingManager.deleteTable();
-                Building.printBuildings(mBuildingManager.getTable());*/
-            }
-        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_schedule); //start at calendar view
 
-        ////// Set Name and Email in nav header
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);  // Get default SharedPreferences Instance
-        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound"); // get the "UserEmail" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
-        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");   // get the "UserName" string from SharedPreferences.  If it does not exist, it will be set to "defaultStringIfNothingFound"
+        // Set Name and Email in nav header
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
+        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");
 
-        View header = navigationView.getHeaderView(0);                                        // get the existing headerView
-        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);            // Set the navHeaderAccountName TextView to a local var
+        View header = navigationView.getHeaderView(0);// get the existing headerView
+        TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
-        name.setText(userName);                                                               // Set the textView text to the "UserName" string
+        name.setText(userName);
         email.setText(userEmail);
-
-
     }
 
     /**
@@ -138,24 +80,14 @@ public class MainTabActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         }
         if (!mIsViewAtHome) { //if the current view is not the calendar fragment
             displayView(R.id.nav_schedule); //display the calendar fragment
         } else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        mCourseManager.close();
-        mBuildingManager.close();
-        mUserManager.close();
-        mServiceManager.close();
-        super.onPause();
     }
 
     @Override
@@ -177,10 +109,10 @@ public class MainTabActivity extends AppCompatActivity
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
+        //return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         displayView(item.getItemId());
@@ -205,6 +137,11 @@ public class MainTabActivity extends AppCompatActivity
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
                 mIsViewAtHome = true;
+                break;
+            case R.id.nav_agenda:
+                fragment = new AgendaFragment();
+                title = getString(R.string.agenda_fragment);
+                mIsViewAtHome = false;
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
@@ -247,7 +184,6 @@ public class MainTabActivity extends AppCompatActivity
             getSupportActionBar().setTitle(title);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawer.closeDrawer(GravityCompat.START);
     }
 }

@@ -65,6 +65,12 @@
                 android:value="com.example.alex.qtapandroid.activities.MainTabActivity" />
         </activity>
 
+
+        <!--api key for crashlytics-->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d84ee4ad5d54b10dede20dd1d87deb32e5214421" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

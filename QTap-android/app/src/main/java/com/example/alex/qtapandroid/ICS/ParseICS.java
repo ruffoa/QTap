@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.classes;
+package com.example.alex.qtapandroid.ICS;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -16,19 +16,20 @@ import java.util.List;
 
 /**
  * Created by Alex on 1/18/2017.
+ * Class to parse the ICS file.
  */
+public class ParseICS {
 
-public class icsParser {
+    private String TAG = StudentToolsFragment.class.getSimpleName();
 
     private Context mContext;
 
-    public icsParser(Context context) {
+    public ParseICS(Context context) {
         this.mContext = context;
     }
 
     public List<String> readLine(String path) {
         List<String> mLines = new ArrayList<>();
-
         AssetManager am = mContext.getAssets();
 
         try {
@@ -41,13 +42,10 @@ public class icsParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return mLines;
     }
 
-    public List<String> readDownloadFile (String path) {
-
-        String TAG = StudentToolsFragment.class.getSimpleName();
+    public List<String> readDownloadFile(String path) {
         List<String> mLines = new ArrayList<>();
 
         String ret = "";
@@ -55,29 +53,25 @@ public class icsParser {
         try {
             InputStream inputStream = mContext.openFileInput(path);
 
-            if ( inputStream != null ) {
+            if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new StringBuilder(); //TODO what is stringbuilder used for
 
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                while ((receiveString = bufferedReader.readLine()) != null) {
                     mLines.add(receiveString);
-//                    Log.e(TAG, "Add: " + receiveString);
                 }
 
                 inputStream.close();
                 ret = stringBuilder.toString();
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             Log.e(TAG, "File not found: " + e.toString());
         } catch (IOException e) {
             Log.e(TAG, "Can not read file: " + e.toString());
         }
         Log.e(TAG, "Done: " + ret);
-
         return mLines;
-
     }
 }

@@ -1,10 +1,7 @@
 package com.example.alex.qtapandroid.common.database.buildings;
 
-
 import android.provider.BaseColumns;
 import android.util.Log;
-
-import com.example.alex.qtapandroid.common.database.courses.Course;
 
 import java.util.ArrayList;
 
@@ -40,15 +37,39 @@ public class Building implements BaseColumns {
         this.roomNum = roomNum;
     }
 
-    public static void printCourses(ArrayList<Course> courses) {
-        String output = "";
-        for (int i = 0; i < courses.size(); i++) {
-            output += "COURSE id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
-                    + " num: " + courses.get(i).getRoomNum() + " time: " + courses.get(i).getStartTime() + " "
-            + " " + courses.get(i).getEndTime();
+//    public static void printCourses(ArrayList<com.example.alex.qtapandroid.common.database.course.Course> courses) {
+//        String output = "";
+//        for (int i = 0; i < courses.size(); i++) {
+//            output += "COURSE id:" + courses.get(i).getID() + " title: " + courses.get(i).getTitle()
+//                    + " num: " + courses.get(i).getRoomNum() + " time: " + courses.get(i).getTime()+" ";
+//        }
+//        Log.d("SQLITE", "INFO: " + output);
+//    }
+
+/*
+ * Created by Carson on 22/01/2017.
+ * Defines the schema for the Buildings table. Currently holds a field for the building name,
+ * and ID.
+ */
+
+
+
+    /**
+     * Prints out course information.
+     *
+     * @param buildings ArrayList of courses to print out.
+     */
+    public static void printBuildings(ArrayList<Building> buildings) {
+        String output = "BUIDLINGS:\n";
+        for (int i = 0; i < buildings.size(); i++) {
+            output += " id:" + buildings.get(i).getID() + " title: "  + "\n";
         }
-        Log.d("SQLITE", "INFO: " + output);
+        Log.d("SQLITE", output);
     }
+
+    //getters for each field and setter for ID
+   // public String getName() {return name;}
+
 
     public long getID() {
         return id;
@@ -65,5 +86,4 @@ public class Building implements BaseColumns {
     public String getRoomNum() {
         return roomNum;
     }
-
 }

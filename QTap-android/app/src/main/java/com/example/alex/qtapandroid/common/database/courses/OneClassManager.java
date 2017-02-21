@@ -34,6 +34,7 @@ public class OneClassManager extends DatabaseAccessor {
         values.put(OneClass.COLUMN_DAY, oneClass.getDay());
         values.put(OneClass.COLUMN_MONTH, oneClass.getMonth());
         values.put(OneClass.COLUMN_YEAR, oneClass.getYear());
+        values.put(OneClass.COLUMN_COURSE_ID, oneClass.getCourseID());
         return mDatabase.insert(OneClass.TABLE_NAME, null, values);
     }
 
@@ -64,7 +65,8 @@ public class OneClassManager extends DatabaseAccessor {
                 OneClass.COLUMN_END_TIME,
                 OneClass.COLUMN_DAY,
                 OneClass.COLUMN_MONTH,
-                OneClass.COLUMN_YEAR
+                OneClass.COLUMN_YEAR,
+                OneClass.COLUMN_COURSE_ID
         };
 
         ArrayList<OneClass> classes = new ArrayList<>();
@@ -78,6 +80,7 @@ public class OneClassManager extends DatabaseAccessor {
                         cursor.getString(OneClass.YEAR_POS));
                 oneClass.setID(cursor.getInt(OneClass.ID_POS));
                 oneClass.setBuildingID(cursor.getInt(OneClass.BUILDING_ID_POS));
+                oneClass.setCourseID(cursor.getInt(OneClass.COURSE_ID_POS));
                 classes.add(oneClass);
             }
             cursor.close();
@@ -102,7 +105,8 @@ public class OneClassManager extends DatabaseAccessor {
                 OneClass.COLUMN_END_TIME,
                 OneClass.COLUMN_DAY,
                 OneClass.COLUMN_MONTH,
-                OneClass.COLUMN_YEAR
+                OneClass.COLUMN_YEAR,
+                OneClass.COLUMN_COURSE_ID
         };
         OneClass oneClass;
         String selection = OneClass._ID + " LIKE ?";
@@ -116,6 +120,7 @@ public class OneClassManager extends DatabaseAccessor {
                         cursor.getString(OneClass.YEAR_POS));
                 oneClass.setID(cursor.getInt(OneClass.ID_POS));
                 oneClass.setBuildingID(cursor.getInt(OneClass.BUILDING_ID_POS));
+                oneClass.setCourseID(cursor.getInt(OneClass.COURSE_ID_POS));
                 cursor.close();
                 return oneClass; //return only when the cursor has been closed.
                 //Return statement never missed, try block always finishes this.
@@ -148,6 +153,7 @@ public class OneClassManager extends DatabaseAccessor {
         values.put(OneClass.COLUMN_DAY, newClass.getDay());
         values.put(OneClass.COLUMN_MONTH, newClass.getMonth());
         values.put(OneClass.COLUMN_YEAR, newClass.getYear());
+        values.put(OneClass.COLUMN_COURSE_ID, newClass.getCourseID());
         String selection = OneClass._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldClass.getID())};
         mDatabase.update(OneClass.TABLE_NAME, values, selection, selectionArgs);
