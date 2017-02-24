@@ -43,8 +43,8 @@
     <string name="solus">SOLUS</string>
     <string name="outlook365">Outlook 365</string>
     <string name="onq">OnQ</string>
-    <string name="netid">Net ID</string>
-    <string name="login_date">Login Date</string>
+    <string name="netid">Net ID:</string>
+    <string name="login_date">Login Date:</string>
     <string name="logout">Log Out</string>
     <string name="faculty">Faculty</string>
     <string name="about">About</string>

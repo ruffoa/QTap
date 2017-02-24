@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.example.alex.qtapandroid.R;
 
@@ -27,6 +28,7 @@ public class DayFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,6 +57,10 @@ public class DayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO: Fill in the names of these empty courses with real database inputs of real courses
+        String[] courses = {"APSC 111","APSC 112","APSC 142","APSC 171", "APSC 172", "APSC 151", "APSC 100", "APSC 161"};
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,getContext().simple_list_item_1, courses);
+        //getListView().setAdapter(adapter);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
