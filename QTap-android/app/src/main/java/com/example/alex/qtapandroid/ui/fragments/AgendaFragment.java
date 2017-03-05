@@ -165,7 +165,8 @@ public class AgendaFragment extends Fragment {
             list.remove(posSmall);
             i = 0;
         }
-        result.add(list.get(0));
+        if (list.size() > 0)
+            result.add(list.get(0));
         return result.toArray(new String[list.size()]);
     }
 }

@@ -156,7 +156,7 @@ public class CalendarFragment extends Fragment {
 
                     Course course = new Course(name);
                     course.setID(mCourseManager.insertRow(course));
-                    Course.printCourses(mCourseManager.getTable());
+//                    Course.printCourses(mCourseManager.getTable());
 
                     OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                     one.setBuildingID(15);       // TODO delete later, this is temporary
@@ -233,6 +233,7 @@ public class CalendarFragment extends Fragment {
                         year = Integer.parseInt(sTime.substring(0, 4));
                     } else if (string.contains("DTEND")) {
                         eTime = string.replaceAll("[^0-9]", "");
+                        Log.d(TAG, "time that's crashing: " + eTime);
                         hour = Integer.parseInt(eTime.substring(8, 10));
                         minute = Integer.parseInt(eTime.substring(10, 12));
 

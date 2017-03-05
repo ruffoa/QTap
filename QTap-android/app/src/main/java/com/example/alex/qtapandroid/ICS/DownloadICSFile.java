@@ -67,7 +67,7 @@ public class DownloadICSFile extends AsyncTask<String, Integer, String> {
                 if (fileLength > 0) // only if total length is known
                     publishProgress((int) (total * 100 / fileLength));
                 output.write(data, 0, count);
-                logcatArray(data);
+//                logcatArray(data);    // this prints the output to the console, uncomment this for debugging purposes
             }
         } catch (Exception e) {
             return e.toString();
