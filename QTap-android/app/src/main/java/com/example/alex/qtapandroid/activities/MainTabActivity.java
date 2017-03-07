@@ -80,12 +80,18 @@ public class MainTabActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
-            mDrawer.closeDrawer(GravityCompat.START);
+        int count = getFragmentManager().getBackStackEntryCount();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         }
         if (!mIsViewAtHome) { //if the current view is not the calendar fragment
             displayView(R.id.nav_schedule); //display the calendar fragment
-        } else {
+
+        }
+        else if (count > 0)
+            getFragmentManager().popBackStack();
+        else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
     }
@@ -106,7 +112,7 @@ public class MainTabActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+//            startActivity(new Intent(MainTabActivity.this, SettingsActivity.class));
         }
 
         return false;

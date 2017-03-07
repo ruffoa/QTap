@@ -40,6 +40,7 @@ import java.util.TimeZone;
 public class CalendarFragment extends Fragment {
     //TODO replace literal strings with values from a Literals class
     private static final String TAG = StudentToolsFragment.class.getSimpleName();
+    private static final String TAG_FRAGMENT = "AgendaFrag";
 
     private OneClassManager mOneClassManager;
     private CourseManager mCourseManager;
@@ -67,7 +68,7 @@ public class CalendarFragment extends Fragment {
                 new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                        getData();
+                        getCalData();
                     }
                 }
         );
@@ -75,6 +76,22 @@ public class CalendarFragment extends Fragment {
         mDataInfo.setMovementMethod(new ScrollingMovementMethod());
         mDataInfo.setText(getString(R.string.init_database));
         getData();
+    }
+
+    public void getCalData(){
+        DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
+
+        AgendaFragment nextFrag= new AgendaFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("day", dateSel.getDayOfMonth());
+        bundle.putInt("month", dateSel.getMonth());
+        bundle.putInt("year", dateSel.getYear());
+        nextFrag.setArguments(bundle);
+
+        this.getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, nextFrag,TAG_FRAGMENT)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void getData() {                     // this function displays the data for the selected day in the green text vie

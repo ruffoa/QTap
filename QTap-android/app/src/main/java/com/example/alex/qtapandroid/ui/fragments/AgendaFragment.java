@@ -40,6 +40,16 @@ public class AgendaFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            int day = bundle.getInt("day", 0);
+            int month = bundle.getInt("month", 0);
+            int year = bundle.getInt("year", 2016);
+
+            calendar.set(year, month, day);
+
+        }
+
         String[] itemArr = getDayEventData(calendar);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, itemArr);
