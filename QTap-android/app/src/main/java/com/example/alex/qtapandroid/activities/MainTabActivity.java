@@ -112,7 +112,7 @@ public class MainTabActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-//            startActivity(new Intent(MainTabActivity.this, SettingsActivity.class));
+            startActivity(new Intent(MainTabActivity.this, SettingsActivity.class));
         }
 
         return false;
