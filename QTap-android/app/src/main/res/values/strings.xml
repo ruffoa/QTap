@@ -11,7 +11,7 @@
 
     <!--sections for introduction screen -->
     <string name="slide_1_title">Welcome to QTap!</string>
-    <string name="slide_1_desc">The one app for all of your Queen's needs</string>
+    <string name="slide_1_desc">The one app for all of your Queen\'s needs</string>
     <string name="slide_2_title">Class Schedule</string>
     <string name="slide_2_desc">See when your classes are</string>
     <string name="slide_3_title">Campus Info</string>
