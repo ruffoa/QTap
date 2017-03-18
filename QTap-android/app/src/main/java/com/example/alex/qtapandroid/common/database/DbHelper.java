@@ -3,7 +3,6 @@ package com.example.alex.qtapandroid.common.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -22,7 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static DbHelper mInstance = null;
 
     public DbHelper(Context context) {
-        super(context, SqlStringStatements.DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, SqlStringStatements.PHONE_DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     /**
