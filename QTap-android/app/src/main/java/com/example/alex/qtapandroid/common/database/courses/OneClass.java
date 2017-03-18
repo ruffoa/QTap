@@ -99,7 +99,7 @@ public class OneClass implements BaseColumns {
     public long getBuildingID() {
         return buildingID;
     }
-
+    
     public String getRoomNum() {
         return roomNum;
     }

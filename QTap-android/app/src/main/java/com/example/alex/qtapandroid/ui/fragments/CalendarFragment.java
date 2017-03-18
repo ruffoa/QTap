@@ -16,6 +16,7 @@ import java.util.Date;
 
 import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.activities.MainTabActivity;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
@@ -89,8 +90,8 @@ public class CalendarFragment extends Fragment {
         nextFrag.setArguments(bundle);
 
         this.getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, nextFrag,TAG_FRAGMENT)
-                .addToBackStack(null)
+                .replace(R.id.content_frame, nextFrag)
+                .addToBackStack("AgendaFragmentDateClick")
                 .commit();
     }
 
@@ -250,7 +251,7 @@ public class CalendarFragment extends Fragment {
                         year = Integer.parseInt(sTime.substring(0, 4));
                     } else if (string.contains("DTEND")) {
                         eTime = string.replaceAll("[^0-9]", "");
-                        Log.d(TAG, "time that's crashing: " + eTime);
+//                        Log.d(TAG, "time that's crashing: " + eTime);
                         hour = Integer.parseInt(eTime.substring(8, 10));
                         minute = Integer.parseInt(eTime.substring(10, 12));
 
