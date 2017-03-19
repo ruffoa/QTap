@@ -23,6 +23,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.alex.qtapandroid.common.database.users.User;
@@ -44,6 +47,31 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatActivity {
+
+    private void ClearData() {
+//        android.webkit.CookieManager cookieManager = CookieManager.getInstance();
+        CookieManager.getInstance().removeAllCookies(null);
+        CookieManager.getInstance().flush();
+
+        WebView web = new WebView(getApplicationContext());
+        web.clearFormData();
+        web.clearHistory();
+        web.clearCache(true);
+
+        // Todo: launch the settings activity with a bundle or flag to clear webView form data so that NetIDs do not show up in the username box
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+//                // a callback which is executed when the cookies have been removed
+//                @Override
+//                public void onReceiveValue(Boolean aBoolean) {
+//                    Log.d("TEST", "Cookie removed: " + aBoolean);
+//                }
+//            });
+//        } else cookieManager.removeAllCookie();
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +81,10 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Context context = v.getContext();
                 context.deleteDatabase(SqlStringStatements.PHONE_DATABASE_NAME);
+
+                ClearData();
+                new WebView(getApplicationContext()).clearCache(true);
+
                 Intent intent = new Intent(SettingsActivity.this , LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("EXIT", true);
