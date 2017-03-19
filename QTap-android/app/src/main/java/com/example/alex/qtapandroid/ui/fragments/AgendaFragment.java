@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.activities.MainTabActivity;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 
@@ -125,6 +126,7 @@ public class AgendaFragment extends Fragment {
             }
         });
 
+        MainTabActivity.flag = true;
         return view;
     }
 
@@ -259,7 +261,6 @@ public class AgendaFragment extends Fragment {
                 result.add(list.get(i));
                 list.remove(i);
                 i -= 1;
-//                i =0;
             }else if (list.get(i) == ("Nothing is happening today"))
                 {
                     result.add(list.get(i));

@@ -42,6 +42,7 @@ public class MainTabActivity extends AppCompatActivity
     private boolean mIsViewAtHome;
 
     private DrawerLayout mDrawer;
+    public static boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class MainTabActivity extends AppCompatActivity
      * If already on calendar, exits app.
      */
 
-    private String getCurrentFragmentName() {
+    private String getCurrentFragmentName() {   // if the backstack was actually created, this would get the name of the last fragment in the stack
 
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
 
@@ -96,8 +97,8 @@ public class MainTabActivity extends AppCompatActivity
 
 
     @Override
-    public void onBackPressed() {
-        int count = getFragmentManager().getBackStackEntryCount();
+    public void onBackPressed() {       // Todo: implement a proper fragment stack
+//        int count = getFragmentManager().getBackStackEntryCount();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -105,14 +106,16 @@ public class MainTabActivity extends AppCompatActivity
         if (getCurrentFragmentName().equals("AgendaFragmentDateClick"))
         {
             displayView(R.id.nav_schedule); //display the calendar fragment
-
         }
         if (!mIsViewAtHome) { //if the current view is not the calendar fragment
             displayView(R.id.nav_schedule); //display the calendar fragment
-
         }
-        else if (count > 0)
-            getFragmentManager().popBackStack();
+        else if (flag == true) {
+            flag = false;
+            displayView(R.id.nav_schedule); //display the calendar fragment
+        }
+//        else if (count > 0)       // does not work as the backstack is not populated with the current MainTabActivity implementation
+//            getFragmentManager().popBackStack();
         else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
@@ -164,6 +167,7 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_schedule:
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
+                flag = false;
                 mIsViewAtHome = true;
                 break;
             case R.id.nav_agenda:
