@@ -48,7 +48,9 @@ public class MainTabActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
-
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -137,7 +139,8 @@ public class MainTabActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(MainTabActivity.this, SettingsActivity.class));
+            Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
+            startActivity(settings);
         }
 
         return false;

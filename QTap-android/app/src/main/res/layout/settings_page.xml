@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="#cbcaca"
     android:paddingTop="@dimen/button_space"
-    android:id="@+id/list">
+    android:id="@+id/tableLayout">
+
 
     <TableRow>
 
