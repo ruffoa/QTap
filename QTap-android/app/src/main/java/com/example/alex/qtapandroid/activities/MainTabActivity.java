@@ -80,12 +80,34 @@ public class MainTabActivity extends AppCompatActivity
      * back closes drawer and sends user to calendar fragment (schedule).
      * If already on calendar, exits app.
      */
+
+    private String getCurrentFragmentName() {
+
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+
+        String fragmentName;
+
+        if (backStackEntryCount > 0) {
+            fragmentName = getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount - 1).getName();
+        } else {
+            fragmentName = "";
+        }
+
+        return fragmentName;
+    }
+
+
     @Override
     public void onBackPressed() {
         int count = getFragmentManager().getBackStackEntryCount();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        }
+        if (getCurrentFragmentName().equals("AgendaFragmentDateClick"))
+        {
+            displayView(R.id.nav_schedule); //display the calendar fragment
+
         }
         if (!mIsViewAtHome) { //if the current view is not the calendar fragment
             displayView(R.id.nav_schedule); //display the calendar fragment

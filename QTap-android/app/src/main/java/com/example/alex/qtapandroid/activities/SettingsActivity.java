@@ -20,12 +20,14 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.SqlStringStatements;
+
 import com.example.alex.qtapandroid.R;
 
 import java.util.List;
@@ -55,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("EXIT", true);
                 startActivity(intent);
+
             }
         });
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
