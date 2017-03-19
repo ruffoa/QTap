@@ -170,7 +170,7 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_schedule:
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
-                flag = false;
+                flag = false;       // set agendaFragment flag to false as you have returned to the homepage
                 mIsViewAtHome = true;
                 break;
             case R.id.nav_agenda:
