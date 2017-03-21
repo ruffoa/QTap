@@ -33,6 +33,8 @@ import com.example.alex.qtapandroid.common.database.SqlStringStatements;
 
 import com.example.alex.qtapandroid.R;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -93,9 +95,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
+        //String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         String userName = preferences.getString("UserName", "USERNAME");
         TextView netID = (TextView) findViewById(R.id.netID);
+        TextView date = (TextView) findViewById(R.id.login_date);
+        date.setText(currentDateTimeString);
         netID.setText(userName);
     }
 }
