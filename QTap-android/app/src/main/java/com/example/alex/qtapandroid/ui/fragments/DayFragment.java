@@ -7,6 +7,27 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.Manifest;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.alex.qtapandroid.R;
 
@@ -27,6 +48,8 @@ public class DayFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public RecyclerView mRecyclerView; //public to allow adapter to use the Recycler View
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,6 +78,10 @@ public class DayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO: Fill in the names of these empty courses with real database inputs of real courses
+        String[] courses = {"APSC 111","APSC 112","APSC 142","APSC 171", "APSC 172", "APSC 151", "APSC 100", "APSC 161"};
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,getContext().simple_list_item_1, courses);
+        //getListView().setAdapter(adapter);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

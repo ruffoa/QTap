@@ -3,7 +3,6 @@ package com.example.alex.qtapandroid.common.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -15,14 +14,14 @@ import com.crashlytics.android.Crashlytics;
 public class DbHelper extends SQLiteOpenHelper {
 
     //**NOTE** this must be incremented if you are trying to run changes to the database schema
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     //**NOTE** add your name, the database version and the reason it was changed to DBVersionLog.txt
     //when you make a change to the database version
 
     private static DbHelper mInstance = null;
 
     public DbHelper(Context context) {
-        super(context, SqlStringStatements.DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, SqlStringStatements.PHONE_DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     /**

@@ -13,7 +13,7 @@ import com.example.alex.qtapandroid.common.database.users.User;
  */
 public class SqlStringStatements {
 
-    public static final String DATABASE_NAME = "QTap.db";
+    public static final String PHONE_DATABASE_NAME = "QTAP_PHONE.db";
 
     //create table statements
     public static final String CREATE_COURSES = "CREATE TABLE " + Course.TABLE_NAME + "(" +

@@ -16,6 +16,7 @@ import java.util.Date;
 
 import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.activities.MainTabActivity;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
@@ -40,6 +41,7 @@ import java.util.TimeZone;
 public class CalendarFragment extends Fragment {
     //TODO replace literal strings with values from a Literals class
     private static final String TAG = StudentToolsFragment.class.getSimpleName();
+    private static final String TAG_FRAGMENT = "AgendaFrag";
 
     private OneClassManager mOneClassManager;
     private CourseManager mCourseManager;
@@ -67,7 +69,7 @@ public class CalendarFragment extends Fragment {
                 new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                        getData();
+                        getCalData();
                     }
                 }
         );
@@ -75,6 +77,24 @@ public class CalendarFragment extends Fragment {
         mDataInfo.setMovementMethod(new ScrollingMovementMethod());
         mDataInfo.setText(getString(R.string.init_database));
         getData();
+    }
+
+    public void getCalData(){
+        DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
+
+        AgendaFragment nextFrag= new AgendaFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("day", dateSel.getDayOfMonth());
+        bundle.putInt("month", dateSel.getMonth());
+        bundle.putInt("year", dateSel.getYear());
+        nextFrag.setArguments(bundle);
+
+        MainTabActivity.flag = true;
+
+        this.getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, nextFrag)
+                .addToBackStack("AgendaFragmentDateClick")
+                .commit();
     }
 
     public void getData() {                     // this function displays the data for the selected day in the green text vie
@@ -156,7 +176,7 @@ public class CalendarFragment extends Fragment {
 
                     Course course = new Course(name);
                     course.setID(mCourseManager.insertRow(course));
-                    Course.printCourses(mCourseManager.getTable());
+//                    Course.printCourses(mCourseManager.getTable());
 
                     OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                     one.setBuildingID(15);       // TODO delete later, this is temporary
@@ -233,6 +253,7 @@ public class CalendarFragment extends Fragment {
                         year = Integer.parseInt(sTime.substring(0, 4));
                     } else if (string.contains("DTEND")) {
                         eTime = string.replaceAll("[^0-9]", "");
+//                        Log.d(TAG, "time that's crashing: " + eTime);
                         hour = Integer.parseInt(eTime.substring(8, 10));
                         minute = Integer.parseInt(eTime.substring(10, 12));
 

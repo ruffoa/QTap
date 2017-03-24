@@ -1,87 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#cbcaca"
-    android:paddingTop="@dimen/button_space">
+    android:paddingTop="@dimen/button_space"
+    android:id="@+id/tableLayout">
 
-    <TextView
-        android:text="@string/account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:textColorLink="?attr/colorPrimaryDark"
-        android:textSize="18sp"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/button_space"/>
+
+    <TableRow>
 
     <TextView
         android:id="@+id/netID"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/grid_button_size"
         android:layout_marginTop="@dimen/button_space"
-        android:background="@android:color/white"
-        android:shadowColor="@android:color/background_light"
+        android:layout_marginLeft="@dimen/button_space"
+        android:background="@android:color/holo_orange_light"
         android:text="@string/netid"
         android:textSize="18sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/grid_button_size"
         android:paddingTop="@dimen/button_space"
-        android:paddingLeft="@dimen/button_space"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+/>
 
     <TextView
         android:id="@+id/login_date"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/grid_button_size"
+        android:layout_height="@dimen/grid_button_size"
         android:layout_marginTop="@dimen/button_space"
-        android:background="@android:color/white"
-        android:shadowColor="@android:color/background_light"
-        android:text="@string/login_date"
-        android:textSize="18sp"
-        android:layout_height="45dp"
+        android:background="@android:color/holo_orange_light"
         android:paddingTop="@dimen/button_space"
         android:paddingLeft="@dimen/button_space"
-        android:textColor="@android:color/black" />
+        android:text="@string/login_date"
+        android:textSize="18sp"
+        android:layout_marginLeft="@dimen/button_space"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+/>
+
+    </TableRow>
+
+    <TableRow>
+    <Button
+        android:id="@+id/faculty"
+        android:layout_width="@dimen/grid_button_size"
+        android:layout_marginTop="@dimen/button_space"
+        android:layout_marginLeft="@dimen/button_space"
+        android:background="@color/bg_screen3"
+        android:text="@string/faculty"
+        android:textSize="18sp"
+        android:layout_height="@dimen/grid_button_size"
+        android:paddingTop="@dimen/button_space"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+/>
+
+        <Button
+            android:id="@+id/about_settings"
+            android:layout_width="@dimen/grid_button_size"
+            android:layout_height="@dimen/grid_button_size"
+            android:layout_marginTop="@dimen/button_space"
+            android:background="@color/bg_screen3"
+            android:paddingTop="@dimen/button_space"
+            android:paddingLeft="@dimen/button_space"
+            android:text="@string/about"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
+            android:textAlignment="center"/>
+    </TableRow>
 
     <Button
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/button_space"
-        android:background="@android:color/background_light"
+        android:background="@android:color/holo_red_dark"
         android:shadowColor="@android:color/background_light"
         android:text="@string/logout"
-        android:textColor="@color/dot_dark_screen3"
+        android:textColor="@android:color/black"
         android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/button_space"/>
-    <TextView
-        android:text="@string/options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:textColorLink="?attr/colorPrimaryDark"
-        android:textSize="18sp"
-        android:paddingTop="@dimen/button_space"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/button_space"/>
-    <Button
-        android:id="@+id/faculty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/button_space"
-        android:background="@android:color/background_light"
-        android:shadowColor="@android:color/background_light"
-        android:text="@string/faculty"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/button_space"/>
-    <Button
-        android:id="@+id/about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/button_space"
-        android:background="@android:color/background_light"
-        android:shadowColor="@android:color/background_light"
-        android:text="@string/about"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/button_space"/>
+        android:paddingLeft="@dimen/button_space"
+        tools:gravity="center" />
 
 
-</LinearLayout>
+
+</TableLayout>
