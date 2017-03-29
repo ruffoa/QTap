@@ -11,6 +11,8 @@ It is accessed by the Agenda field on the navigation bar, or by selecting a date
 
 This fragment shows the user a calendar of the current month, and is what the user sees upon login, being the default page. From here the user can select a date and view their class schedule for that day in the Agenda fragment.
 
+This fragment also parses out meaningful data from the strings found by ParseICS in the ICS file. This is done manually, as the ICS file has standard notation that is consistent for all classes.
+
 ## Day Fragment
 
 This fragment is currently not in use, but is being created to hold a full day's class schedule on its own.
