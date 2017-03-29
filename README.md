@@ -29,31 +29,35 @@ These instructions will get you a copy of the project up and running on your loc
 
 ##### Ensure these values are in your android{} field in your app.gradle file
 
-`compileSdkVersion 24
-minSdkVersion 21
-targetSdkVersion 24`
+
+	compileSdkVersion 24
+	minSdkVersion 21
+	targetSdkVersion 24
+	
 
 ##### Ensure this is at the top of your app.gradle file
 
-`buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
+	
+	buildscript {
+		repositories {
+			maven { url 'https://maven.fabric.io/public' }
+		}
 
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
-apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+		dependencies {
+			classpath 'io.fabric.tools:gradle:1.+'
+		}
+	}
+	apply plugin: 'com.android.application'
+	apply plugin: 'io.fabric'
 
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}`
+	repositories {
+		maven { url 'https://maven.fabric.io/public' }
+	}
+	
 
 ##### Ensure these are in your dependencies in app.gradle file
 
-`compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
+	compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;
     }
     compile 'com.android.support:appcompat-v7:24.2.1'
@@ -61,14 +65,14 @@ repositories {
     compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.google.android.gms:play-services:10.0.1'
     compile 'com.android.support:support-v4:24.2.1'
-	compile 'com.android.support:recyclerview-v7:24.2.1'`
+	compile 'com.android.support:recyclerview-v7:24.2.1'
 
 ### Installing
 
 Ensure you have java downloaded from [here](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html) . Accept the license agreement and donwlaod the file associated with your operating system. Extract (if needed), run the .exe and follow the installation wizard.
 Now you should install an IDE. For Android development, Android Studio is the best IDE. To download/install, go [here](https://developer.android.com/studio/index.html) .
 
--sdk manager
+With Android Studio, comes an Android SDK Manager. This program allows you to see and manage the Android libraries and kits you have installed and what needs updates/installation. This program can be accessed through the update prompt links in Android Studio, as well as on its own.
 
 ## Running Tests
 
