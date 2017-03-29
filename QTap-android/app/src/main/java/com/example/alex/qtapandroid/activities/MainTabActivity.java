@@ -42,12 +42,15 @@ public class MainTabActivity extends AppCompatActivity
     private boolean mIsViewAtHome;
 
     private DrawerLayout mDrawer;
+    public static boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
-
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -78,19 +81,43 @@ public class MainTabActivity extends AppCompatActivity
      * back closes drawer and sends user to calendar fragment (schedule).
      * If already on calendar, exits app.
      */
+
+    private String getCurrentFragmentName() {   // if the backstack was actually created, this would get the name of the last fragment in the stack
+
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+
+        String fragmentName;
+
+        if (backStackEntryCount > 0) {
+            fragmentName = getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount - 1).getName();
+        } else {
+            fragmentName = "";
+        }
+
+        return fragmentName;
+    }
+
+
     @Override
-    public void onBackPressed() {
-        int count = getFragmentManager().getBackStackEntryCount();
+    public void onBackPressed() {       // Todo: implement a proper fragment stack
+//        int count = getFragmentManager().getBackStackEntryCount();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+        if (getCurrentFragmentName().equals("AgendaFragmentDateClick"))
+        {
+            displayView(R.id.nav_schedule); //display the calendar fragment
+        }
         if (!mIsViewAtHome) { //if the current view is not the calendar fragment
             displayView(R.id.nav_schedule); //display the calendar fragment
-
         }
-        else if (count > 0)
-            getFragmentManager().popBackStack();
+        else if (flag == true) {
+            flag = false;
+            displayView(R.id.nav_schedule); //display the calendar fragment
+        }
+//        else if (count > 0)       // does not work as the backstack is not populated with the current MainTabActivity implementation
+//            getFragmentManager().popBackStack();
         else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
         }
@@ -112,7 +139,8 @@ public class MainTabActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(MainTabActivity.this, SettingsActivity.class));
+            Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
+            startActivity(settings);
         }
 
         return false;
@@ -142,6 +170,7 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_schedule:
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
+                flag = false;       // set agendaFragment flag to false as you have returned to the homepage
                 mIsViewAtHome = true;
                 break;
             case R.id.nav_agenda:
