@@ -33,8 +33,12 @@ import com.example.alex.qtapandroid.common.database.users.UserManager;
 
 import com.example.alex.qtapandroid.ICS.DownloadICSFile;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A login screen that offers login via email/password.
@@ -54,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static String mIcsUrl = "";
     public static String mUserEmail = "";
 
+    private boolean isLoggedIn = false;
 
 
     //TODO document and remove literals
@@ -93,27 +98,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        final WebView browser = (WebView) findViewById(R.id.webView);
-        browser.getSettings().setJavaScriptEnabled(true); //TODO check if needed
-        browser.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-
-                browser.evaluateJavascript("(function() { return ('<html>'+document." +
-                                "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
-                        new ValueCallback<String>() {
-                            @Override
-                            public void onReceiveValue(String html) {
-                                tryProcessHtml(html);
-                            }
-                        });
-            }
-        });
-        browser.loadUrl("http://my.queensu.ca/software-centre");
-
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        UserManager mUserManager = new UserManager(this.getApplicationContext());
+        ArrayList<User> user = mUserManager.getTable();
+        if (!user.isEmpty())    // if the user has logged in already
+        {
+            if (user.get(0).getIcsURL() != "" && user.get(0).getIcsURL().contains(".ics"))
+            {
+                Log.d(TAG, "user is logged in");
+                isLoggedIn = true;
+                attemptLogin();
+            }
+        }
+        if (!isLoggedIn) {
+            final WebView browser = (WebView) findViewById(R.id.webView);
+            browser.getSettings().setJavaScriptEnabled(true); //TODO check if needed
+            browser.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+
+                    browser.evaluateJavascript("(function() { return ('<html>'+document." +
+                                    "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                            new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String html) {
+                                    tryProcessHtml(html);
+                                }
+                            });
+                }
+            });
+            browser.loadUrl("http://my.queensu.ca/software-centre");
+        }
     }
 
     /**
@@ -297,7 +314,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
             //TODO as of now just adding new users into database
             User userInDB = mUserManager.getRow(netid);
-            if (userInDB == null) {
+            if (userInDB == null && isLoggedIn == false) {
                 User newUser = new User(netid, "", "", "", mIcsUrl); //TODO ask for their name
                 mUserManager.insertRow(newUser);
             }
@@ -310,38 +327,72 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
 
             // Get the default SharedPreferences context
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
             if (success) {
 
-                // Allow for editing the preferences
-                SharedPreferences.Editor editor = preferences.edit();
-                // Create a string called "UserEmail" equal to mEmail
-                editor.putString("UserEmail", netid + "@queensu.ca");
-                editor.apply();
+                if (!isLoggedIn) {
+                    // Allow for editing the preferences
+                    SharedPreferences.Editor editor = preferences.edit();
+                    // Create a string called "UserEmail" equal to mEmail
 
-                // DO LOGIC FOR GENERATING ICS FILE HERE....
-                if (!mIcsUrl.equals("") && mIcsUrl.contains(".ics")) {
-                    editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+
+                    editor.putString("UserEmail", netid + "@queensu.ca");
                     editor.apply();
-                } else {
-                    editor.putString("mIcsUrl", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
-                    editor.apply();
-                }
 
-                if (!preferences.getString("DatabaseDate", "noData").equals("noData")) { // if the database is up to date
+                    // DO LOGIC FOR GENERATING ICS FILE HERE....
+                    if (!mIcsUrl.equals("") && mIcsUrl.contains(".ics")) {
+                        editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+                        editor.apply();
+                    } else {
+                        editor.putString("mIcsUrl", "Error, failed to download calendar!");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+                        editor.apply();
+                    }
+
+                    {
+                        final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                        String url = preferences.getString("mIcsUrl", "noURL");
+                        if (!url.equals("noURL")) {
+                            Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                            downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                            Log.d(TAG, "done!");
+
+                        }
+                    }
+                    startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
 
                 } else {
-                    final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                    String url = preferences.getString("mIcsUrl", "noURL");
-                    if (!url.equals("noURL")) {
-                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
-                        downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                        Log.d(TAG, "done!");
+                    UserManager mUserManager = new UserManager(getApplicationContext());
+                    ArrayList<User> user = mUserManager.getTable();
+
+
+                    if (!user.get(0).getDateInit().equals("")) { // if the database is up to date
+                        Calendar cal = Calendar.getInstance();
+                        Calendar lastWeek = Calendar.getInstance();
+                        lastWeek.add(Calendar.DAY_OF_YEAR, -7);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+
+                        try {
+                            cal.setTime(sdf.parse(user.get(0).getDateInit()));// all done
+                            if (cal.after(lastWeek)) {
+                                Log.d(TAG, "data is less than one week old");
+                                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                            }
+                        } catch (ParseException e) {
+
+                        }
 
                     }
+                        final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                        String url = preferences.getString("mIcsUrl", "noURL");
+                        if (!url.equals("noURL")) {
+                            Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                            downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                            Log.d(TAG, "done!");
+
+                        }
+                    startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
                 }
-                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             }
         }
 
