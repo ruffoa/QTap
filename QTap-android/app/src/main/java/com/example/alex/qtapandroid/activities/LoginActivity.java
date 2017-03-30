@@ -33,8 +33,12 @@ import com.example.alex.qtapandroid.common.database.users.UserManager;
 
 import com.example.alex.qtapandroid.ICS.DownloadICSFile;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A login screen that offers login via email/password.
@@ -108,25 +112,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         }
+        if (!isLoggedIn) {
+            final WebView browser = (WebView) findViewById(R.id.webView);
+            browser.getSettings().setJavaScriptEnabled(true); //TODO check if needed
+            browser.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
 
-        final WebView browser = (WebView) findViewById(R.id.webView);
-        browser.getSettings().setJavaScriptEnabled(true); //TODO check if needed
-        browser.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-
-                browser.evaluateJavascript("(function() { return ('<html>'+document." +
-                                "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
-                        new ValueCallback<String>() {
-                            @Override
-                            public void onReceiveValue(String html) {
-                                tryProcessHtml(html);
-                            }
-                        });
-            }
-        });
-        browser.loadUrl("http://my.queensu.ca/software-centre");
-
+                    browser.evaluateJavascript("(function() { return ('<html>'+document." +
+                                    "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                            new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String html) {
+                                    tryProcessHtml(html);
+                                }
+                            });
+                }
+            });
+            browser.loadUrl("http://my.queensu.ca/software-centre");
+        }
     }
 
     /**
@@ -323,7 +327,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
 
             // Get the default SharedPreferences context
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
             if (success) {
 
@@ -341,13 +345,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
                         editor.apply();
                     } else {
-                        editor.putString("mIcsUrl", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+                        editor.putString("mIcsUrl", "Error, failed to download calendar!");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
                         editor.apply();
                     }
 
-                    if (!preferences.getString("DatabaseDate", "noData").equals("noData")) { // if the database is up to date
-
-                    } else {
+                    {
                         final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
                         String url = preferences.getString("mIcsUrl", "noURL");
                         if (!url.equals("noURL")) {
@@ -357,9 +359,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                         }
                     }
+                    startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
 
+                } else {
+                    UserManager mUserManager = new UserManager(getApplicationContext());
+                    ArrayList<User> user = mUserManager.getTable();
+
+
+                    if (!user.get(0).getDateInit().equals("")) { // if the database is up to date
+                        Calendar cal = Calendar.getInstance();
+                        Calendar lastWeek = Calendar.getInstance();
+                        lastWeek.add(Calendar.DAY_OF_YEAR, -7);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+
+                        try {
+                            cal.setTime(sdf.parse(user.get(0).getDateInit()));// all done
+                            if (cal.after(lastWeek)) {
+                                Log.d(TAG, "data is less than one week old");
+                                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                            }
+                        } catch (ParseException e) {
+
+                        }
+
+                    }
+                        final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                        String url = preferences.getString("mIcsUrl", "noURL");
+                        if (!url.equals("noURL")) {
+                            Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                            downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                            Log.d(TAG, "done!");
+
+                        }
+                    startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
                 }
-                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             }
         }
 
