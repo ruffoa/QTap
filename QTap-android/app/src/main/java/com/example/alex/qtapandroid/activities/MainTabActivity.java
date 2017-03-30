@@ -27,6 +27,7 @@ import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.AgendaFragment;
 import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
+import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
 import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
@@ -184,6 +185,11 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_information:
                 fragment = new InformationFragment();
                 title = getString(R.string.information_fragment);
+                mIsViewAtHome = false;
+                break;
+            case R.id.nav_day:
+                fragment = new DayFragment();
+                title = getString(R.string.day_fragment);
                 mIsViewAtHome = false;
                 break;
             case R.id.nav_tools:

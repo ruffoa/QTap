@@ -8,6 +8,7 @@
     <string name="engsoc_fragment">Eng Soc</string>
     <string name="about_fragment">About</string>
     <string name="agenda_fragment">Agenda</string>
+    <string name="day_fragment">Day View</string>
 
     <!--sections for introduction screen -->
     <string name="slide_1_title">Welcome to QTap!</string>
