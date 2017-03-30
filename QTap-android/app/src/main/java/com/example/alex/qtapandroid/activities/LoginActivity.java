@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static String mIcsUrl = "";
     public static String mUserEmail = "";
 
+    private boolean isLoggedIn = false;
 
 
     //TODO document and remove literals
@@ -93,6 +94,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+
+        UserManager mUserManager = new UserManager(this.getApplicationContext());
+        ArrayList<User> user = mUserManager.getTable();
+        if (!user.isEmpty())    // if the user has logged in already
+        {
+            if (user.get(0).getIcsURL() != "" && user.get(0).getIcsURL().contains(".ics"))
+            {
+                Log.d(TAG, "user is logged in");
+                isLoggedIn = true;
+                attemptLogin();
+            }
+        }
 
         final WebView browser = (WebView) findViewById(R.id.webView);
         browser.getSettings().setJavaScriptEnabled(true); //TODO check if needed
@@ -112,8 +127,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
         browser.loadUrl("http://my.queensu.ca/software-centre");
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     /**
@@ -297,7 +310,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
             //TODO as of now just adding new users into database
             User userInDB = mUserManager.getRow(netid);
-            if (userInDB == null) {
+            if (userInDB == null && isLoggedIn == false) {
                 User newUser = new User(netid, "", "", "", mIcsUrl); //TODO ask for their name
                 mUserManager.insertRow(newUser);
             }
@@ -314,32 +327,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
 
-                // Allow for editing the preferences
-                SharedPreferences.Editor editor = preferences.edit();
-                // Create a string called "UserEmail" equal to mEmail
-                editor.putString("UserEmail", netid + "@queensu.ca");
-                editor.apply();
+                if (!isLoggedIn) {
+                    // Allow for editing the preferences
+                    SharedPreferences.Editor editor = preferences.edit();
+                    // Create a string called "UserEmail" equal to mEmail
 
-                // DO LOGIC FOR GENERATING ICS FILE HERE....
-                if (!mIcsUrl.equals("") && mIcsUrl.contains(".ics")) {
-                    editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+
+                    editor.putString("UserEmail", netid + "@queensu.ca");
                     editor.apply();
-                } else {
-                    editor.putString("mIcsUrl", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
-                    editor.apply();
-                }
 
-                if (!preferences.getString("DatabaseDate", "noData").equals("noData")) { // if the database is up to date
-
-                } else {
-                    final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                    String url = preferences.getString("mIcsUrl", "noURL");
-                    if (!url.equals("noURL")) {
-                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
-                        downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                        Log.d(TAG, "done!");
-
+                    // DO LOGIC FOR GENERATING ICS FILE HERE....
+                    if (!mIcsUrl.equals("") && mIcsUrl.contains(".ics")) {
+                        editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+                        editor.apply();
+                    } else {
+                        editor.putString("mIcsUrl", "https://mytimetable.queensu.ca/timetable/FU/14ar75-FUAWK2B34DKLKILZENGTK7DC7OFGY37RGCGSZVTWMNONMAPQ437Q.ics");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+                        editor.apply();
                     }
+
+                    if (!preferences.getString("DatabaseDate", "noData").equals("noData")) { // if the database is up to date
+
+                    } else {
+                        final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                        String url = preferences.getString("mIcsUrl", "noURL");
+                        if (!url.equals("noURL")) {
+                            Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                            downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                            Log.d(TAG, "done!");
+
+                        }
+                    }
+
                 }
                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             }
