@@ -34,7 +34,6 @@
             android:paddingLeft="@dimen/button_space"
             android:text="@string/resources"
             android:textColor="@color/colorPrimaryDark"
-            android:textColorLink="?attr/colorPrimaryDark"
             android:textSize="18sp"/>
 
         <Button
@@ -90,7 +89,7 @@
             android:paddingLeft="@dimen/button_space"
             android:text="@string/links"
             android:textColor="@color/colorPrimaryDark"
-            android:textColorLink="?attr/colorPrimaryDark"
+
             android:textSize="18sp"/>
 
         <Button
