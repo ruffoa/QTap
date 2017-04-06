@@ -53,7 +53,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
-        mDataInfo = (TextView) v.findViewById(R.id.calendarEvents);
+//        mDataInfo = (TextView) v.findViewById(R.id.calendarEvents);
         mDateSelection = (DatePicker) v.findViewById(R.id.datePicker);
         mOneClassManager = new OneClassManager(this.getContext());
         mCourseManager = new CourseManager(this.getContext());
@@ -74,8 +74,8 @@ public class CalendarFragment extends Fragment {
                 }
         );
 
-        mDataInfo.setMovementMethod(new ScrollingMovementMethod());
-        mDataInfo.setText(getString(R.string.init_database));
+//        mDataInfo.setMovementMethod(new ScrollingMovementMethod());
+//        mDataInfo.setText(getString(R.string.init_database));
         getData();
     }
 
@@ -100,7 +100,7 @@ public class CalendarFragment extends Fragment {
     public void getData() {                     // this function displays the data for the selected day in the green text vie
         ArrayList<OneClass> data = mOneClassManager.getTable();
 
-        mDataInfo.setText("Event Information for " + (mDateSelection.getMonth() + 1) + "/" + mDateSelection.getDayOfMonth());        // get the selected day
+//        mDataInfo.setText("Event Information for " + (mDateSelection.getMonth() + 1) + "/" + mDateSelection.getDayOfMonth());        // get the selected day
 
         int day, month, year;
         boolean isInfo = false;
@@ -113,14 +113,14 @@ public class CalendarFragment extends Fragment {
             if (year == mDateSelection.getYear() && month == (mDateSelection.getMonth() + 1)
                     && mDateSelection.getDayOfMonth() == day) {     // if the day matches add its info to mDataInfo
 
-                mDataInfo.append(System.getProperty("line.separator") + "Event Name: " + courseTitle +
-                        " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " +
-                        data.get(i).getEndTime());
+//                mDataInfo.append(System.getProperty("line.separator") + "Event Name: " + courseTitle +
+//                        " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " +
+//                        data.get(i).getEndTime());
                 isInfo = true;
             }
         }
         if (!isInfo) {
-            mDataInfo.setText("");
+//            mDataInfo.setText("");
         }
     }
 

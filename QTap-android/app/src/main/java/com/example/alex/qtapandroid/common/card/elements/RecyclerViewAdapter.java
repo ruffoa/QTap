@@ -87,6 +87,8 @@ public class RecyclerViewAdapter extends RecyclerView
         return mDataset.size();
     }
 
+    public DataObject getItem(int id){return mDataset.get(id); }
+
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }

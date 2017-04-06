@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:tools="http://schemas.android.com/tools"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:background="#cbcaca"
                   android:orientation="vertical"
                   android:paddingTop="@dimen/button_space">
 
-        <TextView
-            android:id="@+id/parsingTestText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:id="@+id/testEventDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/resources"
@@ -34,52 +23,90 @@
             android:paddingLeft="@dimen/button_space"
             android:text="@string/resources"
             android:textColor="@color/colorPrimaryDark"
-            android:textColorLink="?attr/colorPrimaryDark"
             android:textSize="18sp"/>
-
-        <Button
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="2dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                card_view:contentPadding="10dp">
+        <TextView
             android:id="@+id/emergency_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_space"
-            android:background="@android:color/background_light"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="@dimen/button_space"
-            android:shadowColor="@android:color/background_light"
-            android:text="@string/title_emergency_contacts"/>
 
-        <Button
-            android:id="@+id/first_year_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_space"
             android:background="@android:color/background_light"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
+            android:text="@string/title_emergency_contacts"/>
+</android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="2dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:elevation="10dp"
+                card_view:contentPadding="10dp">
+        <TextView
+            android:id="@+id/first_year_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
             android:shadowColor="@android:color/background_light"
             android:text="@string/title_first_year_contacts"/>
-
-        <Button
+    </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="2dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:elevation="10dp"
+                card_view:contentPadding="10dp">
+        <TextView
             android:id="@+id/counselling_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_space"
             android:background="@android:color/background_light"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
             android:shadowColor="@android:color/background_light"
             android:text="@string/counselling_services"/>
-
-        <Button
+    </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="2dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:elevation="10dp"
+                card_view:contentPadding="10dp">
+        <TextView
             android:id="@+id/careers_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_space"
             android:background="@android:color/background_light"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
             android:shadowColor="@android:color/background_light"
             android:text="@string/career_services"/>
+    </android.support.v7.widget.CardView>
 
         <TextView
             android:id="@+id/links"
@@ -90,41 +117,71 @@
             android:paddingLeft="@dimen/button_space"
             android:text="@string/links"
             android:textColor="@color/colorPrimaryDark"
-            android:textColorLink="?attr/colorPrimaryDark"
+
             android:textSize="18sp"/>
 
-        <Button
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="2dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:elevation="10dp"
+                card_view:contentPadding="10dp">
+        <TextView
             android:id="@+id/solus_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_space"
             android:background="@android:color/background_light"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
             android:shadowColor="@android:color/background_light"
             android:text="@string/solus"/>
-
-        <Button
+    </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="2dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:elevation="10dp"
+                card_view:contentPadding="10dp">
+        <TextView
             android:id="@+id/outlook_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_space"
             android:background="@android:color/background_light"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
             android:shadowColor="@android:color/background_light"
             android:text="@string/outlook365"/>
-
-        <Button
+    </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            card_view:cardCornerRadius="2dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:elevation="10dp"
+            card_view:contentPadding="10dp">
+        <TextView
             android:id="@+id/onq_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_space"
             android:background="@android:color/background_light"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/button_space"
+            android:textColor="@android:color/black"
             android:shadowColor="@android:color/background_light"
             android:text="@string/onq"/>
-
+    </android.support.v7.widget.CardView>
     </LinearLayout>
 </ScrollView>

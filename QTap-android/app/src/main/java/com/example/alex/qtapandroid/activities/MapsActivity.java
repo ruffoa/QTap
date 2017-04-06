@@ -110,6 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        googleMap.setMyLocationEnabled(true);
 
 
         // Add a marker in Sydney and move the camera
@@ -119,12 +120,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CameraPosition cameraPosition = new CameraPosition.Builder().target(
                 new LatLng(44.228185, -76.492447)).zoom(16).build();
 
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(44.224625, -76.497790)).title("Stirling Hall");
-        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-
+        // create markers
+        MarkerOptions marker1 = new MarkerOptions().position(new LatLng(44.2242736, -76.5007331)).title("Leonard Hall");
+        MarkerOptions marker2 = new MarkerOptions().position(new LatLng(44.224625, -76.497790)).title("Stirling Hall");
+        MarkerOptions marker3 = new MarkerOptions().position(new LatLng(44.229444, -76.494269)).title("ARC");
+        marker1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        marker2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        marker3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         // adding marker
-        mMap.addMarker(marker);
+        mMap.addMarker(marker1);
+        mMap.addMarker(marker2);
+        mMap.addMarker(marker3);
 
         boolean hasLoc = true;
 
