@@ -63,7 +63,7 @@ public class MainTabActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        displayView(R.id.nav_schedule); //start at calendar view
+        displayView(R.id.nav_day); //start at calendar view
 
         // Set Name and Email in nav header
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -111,7 +111,7 @@ public class MainTabActivity extends AppCompatActivity
             displayView(R.id.nav_schedule); //display the calendar fragment
         }
         if (!mIsViewAtHome) { //if the current view is not the calendar fragment
-            displayView(R.id.nav_schedule); //display the calendar fragment
+            displayView(R.id.nav_day); //display the calendar fragment
         }
         else if (flag == true) {
             flag = false;
@@ -172,7 +172,7 @@ public class MainTabActivity extends AppCompatActivity
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
                 flag = false;       // set agendaFragment flag to false as you have returned to the homepage
-                mIsViewAtHome = true;
+                mIsViewAtHome = false;
                 break;
             case R.id.nav_agenda:
                 fragment = new AgendaFragment();
@@ -190,7 +190,7 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_day:
                 fragment = new DayFragment();
                 title = getString(R.string.day_fragment);
-                mIsViewAtHome = false;
+                mIsViewAtHome = true;
                 break;
             case R.id.nav_tools:
                 fragment = new StudentToolsFragment();
