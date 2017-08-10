@@ -58,6 +58,6 @@ public class AboutActivity extends AppCompatActivity implements IQLOptionsMenuAc
 
     @Override
     public void inflateOptionsMenu(Menu menu) {
-        Util.inflateOptionsMenu(R.menu.settings_menu, menu, getMenuInflater());
+        Util.inflateOptionsMenu(R.menu.about_menu, menu, getMenuInflater());
     }
 }
