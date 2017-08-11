@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import engsoc.qlife.PrefManager;
+import engsoc.qlife.utility.PrefManager;
 import engsoc.qlife.R;
 
 import io.fabric.sdk.android.Fabric;

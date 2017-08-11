@@ -11,7 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
 import engsoc.qlife.R;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.database.local.DatabaseRow;
 import engsoc.qlife.database.local.contacts.emergency.EmergencyContact;
 import engsoc.qlife.database.local.contacts.emergency.EmergencyContactsManager;

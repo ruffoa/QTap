@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import engsoc.qlife.R;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.database.local.DatabaseAccessor;
 import engsoc.qlife.database.local.users.User;
 import engsoc.qlife.database.local.users.UserManager;

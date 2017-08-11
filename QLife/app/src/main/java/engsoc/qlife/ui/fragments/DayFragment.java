@@ -19,7 +19,9 @@ import android.widget.TextView;
 
 import engsoc.qlife.R;
 import engsoc.qlife.activities.MainTabActivity;
-import engsoc.qlife.Util;
+import engsoc.qlife.interfaces.OnHomePressedListener;
+import engsoc.qlife.utility.HomeButtonListener;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.ui.recyclerview.DataObject;
 import engsoc.qlife.ui.recyclerview.RecyclerViewAdapter;
 import engsoc.qlife.database.local.courses.OneClass.OneClass;
@@ -45,6 +47,7 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
     private static int mInstances = 0;
     private static SparseIntArray mArray = new SparseIntArray();
     private int mTotalDaysChange = 0;
+    private HomeButtonListener mHomeListener;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -63,6 +66,20 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
         mCalendar = Calendar.getInstance();
         inflateListView();
         onListItemChosen(null); //this is special case that doesn't need view - RecyclerView not ListView here
+
+        mHomeListener = new HomeButtonListener(getContext());
+        mHomeListener.setOnHomePressedListener(new OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                mArray.put(mInstances, 0);
+            }
+
+            @Override
+            public void onHomeLongPressed() {
+            }
+        });
+        mHomeListener.startListening();
+
         return mView;
     }
 
@@ -85,9 +102,10 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         mArray.delete(mInstances); //instance gone, don't need entry
         mInstances--;
-        super.onDestroy();
+        mHomeListener.stopListening();
     }
 
     @Override

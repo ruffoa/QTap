@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import engsoc.qlife.R;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.interfaces.IQLActionbarFragment;
 import engsoc.qlife.interfaces.IQLDrawerItem;
 

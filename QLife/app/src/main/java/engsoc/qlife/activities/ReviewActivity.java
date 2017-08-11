@@ -12,7 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import engsoc.qlife.R;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.interfaces.IQLOptionsMenuActivity;
 
 /**

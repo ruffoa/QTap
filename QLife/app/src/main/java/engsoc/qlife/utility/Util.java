@@ -1,4 +1,4 @@
-package engsoc.qlife;
+package engsoc.qlife.utility;
 
 import android.Manifest;
 import android.app.Activity;
@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import engsoc.qlife.R;
 import engsoc.qlife.activities.MapsActivity;
 import com.google.android.gms.maps.GoogleMap;
 

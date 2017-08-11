@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.database.local.DatabaseRow;
 import engsoc.qlife.database.local.buildings.Building;
 import engsoc.qlife.database.local.buildings.BuildingManager;

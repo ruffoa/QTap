@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import engsoc.qlife.ICS.icsToBuilding;
 import engsoc.qlife.R;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.activities.MapsActivity;
 import engsoc.qlife.interfaces.IQLActionbarFragment;
 import engsoc.qlife.interfaces.IQLDrawerItem;

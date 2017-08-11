@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import engsoc.qlife.PrefManager;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.PrefManager;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.database.local.DatabaseAccessor;
 import engsoc.qlife.database.local.users.User;
 import engsoc.qlife.database.local.SqlStringStatements;

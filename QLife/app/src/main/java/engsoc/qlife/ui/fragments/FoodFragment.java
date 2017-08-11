@@ -13,7 +13,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import engsoc.qlife.R;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.database.local.DatabaseRow;
 import engsoc.qlife.database.local.buildings.Building;
 import engsoc.qlife.database.local.buildings.BuildingManager;

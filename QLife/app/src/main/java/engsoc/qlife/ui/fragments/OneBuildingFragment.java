@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import engsoc.qlife.R;
 import engsoc.qlife.activities.MapsActivity;
-import engsoc.qlife.Util;
+import engsoc.qlife.utility.Util;
 import engsoc.qlife.database.local.buildings.Building;
 import engsoc.qlife.interfaces.IQLActionbarFragment;
 import engsoc.qlife.interfaces.IQLDrawerItem;

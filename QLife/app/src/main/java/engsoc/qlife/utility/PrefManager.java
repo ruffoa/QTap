@@ -1,4 +1,4 @@
-package engsoc.qlife;
+package engsoc.qlife.utility;
 
 /**
  * Created by Alex on 11/3/2016.
