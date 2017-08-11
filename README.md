@@ -1,14 +1,16 @@
-# QTap
-
-Note that within the app, the name QLife is used. This name was decided after the project was started, so there is a disconnect between project file names and the names within the app.
-
-This is an Android application for Queen's students (mainly engineers) that shows pertinent Queen's information. Currently, only class schedule is shown, however, for the future, other infomation such as building hours and ATM locations will be incorporated.
+# QLife
 
 The app currently supports API version 21 and newer. This unfortunately means that cool Java 8 features like default or static methods in interfaces are not possible.
 
+## Website
+
+There are files hosted at qtap.engsoc.queensu.ca in the top level of this project. Most of these files are used for general purposes that
+need to be accessible to the application, but outside of the application. For example, an HTML page and script that handle submitting
+suggestions to improve the app. There is also a privacy policy hosted here per Google Play Developer requirements.
+
 ## Cloud Database
 
-A cloud database is hosted with the Queen's Engineering Society's cloud system and made accessible by a public load balancer. A php script, get_database.php, is used to retrive the database in JSON form. On login, the app makes an HTTP get call to qtap.engsoc.queensu.ca/database/get_database.php to retrieve that JSON and then parse it and put into the phone's SQLITE database.
+A cloud database is hosted with the Queen's Engineering Society's cloud system and made accessible by a public load balancer. A php script, get\_database.php, is used to retrive the database in JSON form. On login, the app makes an HTTP get call to qtap.engsoc.queensu.ca/database/get\_database.php to retrieve that JSON and then parse it and put into the phone's SQLITE database.
 
 ## Getting Started
 
@@ -115,7 +117,6 @@ After the above is finished, you should be able to run the project in Android St
 
 The application can also be run by simply sending the .apk file to users. This is useful for alpha/beta testing where only a limited number of people will be given the app. To access the .apk, go to the app\build\outputs\apk directory. When an Android phone downloads this file, it will ask to install. You will be taken to a settings page where you can allow an installation from unsecure sources (only once). This must be clicked to install the app).
 
-
 ## Built With
 
 Google Services, Google Services Maps and Crashlytics are used.
@@ -124,41 +125,40 @@ Ensure your dependencies in the app build.gradle file are as described above.
 ### SQLite Database
 
 There is an SQLite database stored on the phone in order to hold user data - if they are logged in and their class schedule. This is secure because the database is held, by default, in memory only accessable by the app. The class schedule is obtained from the user logging into a Solus webview and downloading the ics file, which is then parsed for the information. The data also persists: the database is only deleted and data lost if rows/tables/the database is manually deleted, or the app is uninstalled/app data is deleted.
+
 To create the database, SQLite was used, with a class extending SQLiteOpenHelper to manage the database in memory. DatabaseAccessor establsihes a connection to the SQLite database, and ensures that only one instance of it/DbHelper is open at once. Each table has it's schema defined by a class, where String fields contain the column names, int fields contain the column number each field is in and an attribute contains the value of each column value. One instance of this class is one row in the table.
+
 For each schema class, there is also a manager class that handles queries for that table. This includes insertions, deletions, retrievals and updates. These operations can be done for single rows as well as the full table.
+
 For every table, a CREATE and DELETE SQL string need to be created in SqlStringStatements, and used in DbHelper. Otherwise, the tables will not be initialized, or be able to be deleted.
-For *ANY* change to the database schema to be reflected in the actual database, DATABASE_VERSION in DbHelper *MUST* be incremented. (Note it can also be decremented, although outside of testing purposes this should not be done). When changing the database version, please note the change in DBVersionLog.txt, in the common/database directory. Give the reason why it was changed - e.g. "BuildingHour column changed to BuildingHours".
+
+For *ANY* change to the database schema to be reflected in the actual database, DATABASE_VERSION in DbHelper *MUST* be incremented. (Note it can also be decremented, although outside of testing purposes this should not be done).
 
 ## Contributing
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
+3. Commit your changes: `git commit -am 'Added some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
 ## Versioning
 
-We use Semantic Versioning for versioning. For the versions available,see [the tags on this repo](https://github.com/EngSoc-IT-Team/QTap/tags).
-
-### Version History
-
-* 1.0.0 - Initial Work - Acquired and parsed ICS file to show individual's schedule in a crude textbox. Information stored using an SQLite database. Google Maps API used to have a map within the app.
-* 1.0.1 - Fixed Google Maps location - When Google Maps opened in app, the first area shown is on the Queen's campus and near the ILC.
-* 1.1.1 - Improved schedule UI/functionality - Created infinite scroll view for student schedule, made spacing for events based on time between them and jump to date in agenda when click on a calendar date.
+We use Semantic Versioning for versioning. For the versions available,see [the tags on this repo](https://github.com/QueensEngineeringSociety/QTap/tags).
 
 ## Authors
 
-Carson Cook - Database, Documentation, misc. - IT Team Manager
-Lachlan Devir - misc. app structure - QTap Team Lead
-Alex Ruffo - ICS File, misc. - QTap Team Member
-Michael Wang - XML creator - QTap Team Member
+Carson Cook - Cloud and phone database, code maintainance
+Lachlan Devir - Google Maps page, general basic page layout
+Alex Ruffo - ICS file download, parsing
+Michael Wang - Minor XML layout additions
 
 See also the list of [contributors](github link) who participated in this project.
 
 ## Acknowledgements
 
-Thank you to the Queens Engineering Society Director of IT, Robert Saunders. He has been a valuable source of information, connections and leadership for hte team.
+Thank you to the Queens Engineering Society Director of IT, Robert Saunders. He has been a valuable source of information, connections and leadership for the team.
+
 The Queens IT Services has been helpful answering questions on what information we are allowed to access and what is secure.
 Finally, acknowdledgements go out to Rony Besprozvanny and Zachary Yale for creating the initial iOS QTap that this application is built off of.
 
