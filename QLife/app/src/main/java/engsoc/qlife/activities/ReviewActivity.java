@@ -1,7 +1,10 @@
 package engsoc.qlife.activities;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +40,26 @@ public class ReviewActivity extends AppCompatActivity implements IQLOptionsMenuA
                 browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
                 browser.loadUrl(getString(R.string.suggestions_url));
                 browser.setVisibility(View.VISIBLE);
+            }
+        });
+
+        final Context context = this;
+        findViewById(R.id.review).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market back stack, after pressing back button,
+                // to taken back to our application, we need to add following flags
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
+                }
             }
         });
     }
