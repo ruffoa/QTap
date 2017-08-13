@@ -22,8 +22,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import engsoc.qlife.ICS.icsToBuilding;
 import engsoc.qlife.R;
+import engsoc.qlife.database.local.buildings.Building;
+import engsoc.qlife.database.local.buildings.BuildingManager;
 import engsoc.qlife.utility.HandlePermissions;
 import engsoc.qlife.utility.Util;
 import engsoc.qlife.activities.MapsActivity;
@@ -122,14 +123,16 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment,
                 } else {
                     mGoogleMap.setMyLocationEnabled(true);
                 }
-                String loc = mEventLoc.substring(mEventLoc.indexOf("at:") + 4, mEventLoc.length());
-                double[] address = icsToBuilding.getAddress(loc);
-                LatLng building = new LatLng(address[0], address[1]);
-                mGoogleMap.addMarker(new MarkerOptions().position(building).title(loc)).showInfoWindow();
+                String icsBuilding = mEventLoc.substring(mEventLoc.indexOf("at:") + 4, mEventLoc.length());
+                Building building = new BuildingManager(getContext()).getIcsBuilding(icsBuilding.substring(0, 4));
+                if (building != null) {
+                    LatLng pos = new LatLng(building.getLat(), building.getLon());
+                    mGoogleMap.addMarker(new MarkerOptions().position(pos).title(building.getName())).showInfoWindow();
 
-                //For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(building).zoom(16).build();
-                mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    //For zooming automatically to the location of the marker
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(pos).zoom(16).build();
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
             }
         });
     }
