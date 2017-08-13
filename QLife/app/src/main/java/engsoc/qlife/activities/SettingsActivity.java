@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import engsoc.qlife.R;
 import engsoc.qlife.database.local.DatabaseAccessor;
+import engsoc.qlife.database.local.DatabaseRow;
 import engsoc.qlife.database.local.SqlStringStatements;
 import engsoc.qlife.database.local.users.User;
 import engsoc.qlife.database.local.users.UserManager;
@@ -71,8 +72,8 @@ public class SettingsActivity extends AppCompatActivity implements IQLOptionsMen
      */
     private void setTextViews() {
         UserManager mUserManager = new UserManager(this.getApplicationContext());
-        ArrayList<User> users = mUserManager.getTable();
-        User user = users.get(0); //only ever one user in database
+        ArrayList<DatabaseRow> users = mUserManager.getTable();
+        User user = (User) users.get(0); //only ever one user in database
         TextView netID = (TextView) findViewById(R.id.netID);
         TextView date = (TextView) findViewById(R.id.login_date);
         date.setText(user.getDateInit());

@@ -23,12 +23,12 @@ public class SqlStringStatements {
             Course.ID + " INTEGER PRIMARY KEY," + Course.COLUMN_TITLE + " TEXT);";
 
     public static final String CREATE_USERS = "CREATE TABLE " + User.TABLE_NAME + "(" +
-            User._ID + " INTEGER PRIMARY KEY," + User.COLUMN_NETID + " TEXT," +
+            User.ID + " INTEGER PRIMARY KEY," + User.COLUMN_NETID + " TEXT," +
             User.COLUMN_FIRST_NAME + " TEXT," + User.COLUMN_LAST_NAME + " TEXT," +
             User.COLUMN_DATE_INIT + " TEXT," + User.COLUMN_ICS_URL + " TEXT);";
 
     public static final String CREATE_CLASSES = "CREATE TABLE " + OneClass.TABLE_NAME + "(" +
-            OneClass._ID + " INTEGER PRIMARY KEY," + OneClass.COLUMN_CLASS_TYPE + " TEXT," +
+            OneClass.ID + " INTEGER PRIMARY KEY," + OneClass.COLUMN_CLASS_TYPE + " TEXT," +
             OneClass.COLUMN_BUILDING_ID + " INT," + OneClass.COLUMN_ROOM_NUM + " TEXT," +
             OneClass.COLUMN_START_TIME + " TEXT," + OneClass.COLUMN_END_TIME + " TEXT," +
             OneClass.COLUMN_DAY + " TEXT," + OneClass.COLUMN_MONTH + " TEXT," + OneClass.COLUMN_YEAR +

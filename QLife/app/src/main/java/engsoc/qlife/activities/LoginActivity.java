@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Parses the html code to look for the ics file. Needed because
      * there are multiple web pages sent through this activity when logging in.
+     *
      * @param html String representation of the html code of a webpage.
      */
     public void tryProcessHtml(String html) {
@@ -187,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
         private void addUserSession() {
             SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
             String formattedDate = df.format(Calendar.getInstance().getTime());
-            User newUser = new User(mNetid, "", "", formattedDate, mIcsUrl);
+            User newUser = new User(1, mNetid, "", "", formattedDate, mIcsUrl); //ID of 1 as only ever 1 user logged in
             mUserManager = new UserManager(LoginActivity.this);
             mUserManager.insertRow(newUser);
         }

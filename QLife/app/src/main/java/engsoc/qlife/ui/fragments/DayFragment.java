@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import engsoc.qlife.R;
 import engsoc.qlife.activities.MainTabActivity;
+import engsoc.qlife.database.local.DatabaseRow;
 import engsoc.qlife.interfaces.OnHomePressedListener;
 import engsoc.qlife.utility.HomeButtonListener;
 import engsoc.qlife.utility.Util;
@@ -132,7 +133,7 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
         List<String> des = new ArrayList<>();
         ArrayList<DataObject> result = new ArrayList<DataObject>();
 
-        ArrayList<OneClass> data = oneClassManager.getTable();
+        ArrayList<DatabaseRow> data = oneClassManager.getTable();
 
         int day, month, year;
         boolean eventsToday = false;
@@ -146,18 +147,19 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
         mDateString = date.toString();
         mDateText.setText(date);
 
-        for (int i = 0; i < data.size(); i++) {             // look for the selected
-            // day in the events from the database
-            day = Integer.parseInt(data.get(i).getDay());
-            month = Integer.parseInt(data.get(i).getMonth());
-            year = Integer.parseInt(data.get(i).getYear());
+        //look for selected day of event in database
+        for (int i = 0; i < data.size(); i++) {
+            OneClass oneClass = (OneClass) data.get(i);
+            day = Integer.parseInt(oneClass.getDay());
+            month = Integer.parseInt(oneClass.getMonth());
+            year = Integer.parseInt(oneClass.getYear());
 
 
             if (year == calYear && month == calMon && calDay == day) { // if the day matches add the event
-                list.add(data.get(i).getType());
-                loc.add(data.get(i).getRoomNum());
-                time.add(data.get(i).getStartTime() + "-" + data.get(i).getEndTime());
-                des.add(data.get(i).getType());
+                list.add(oneClass.getType());
+                loc.add(oneClass.getRoomNum());
+                time.add(oneClass.getStartTime() + "-" + oneClass.getEndTime());
+                des.add(oneClass.getType());
 
                 eventsToday = true;
             }

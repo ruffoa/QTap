@@ -1,9 +1,6 @@
 package engsoc.qlife.database.local.courses.OneClass;
 
-import android.provider.BaseColumns;
-import android.util.Log;
-
-import java.util.ArrayList;
+import engsoc.qlife.database.local.DatabaseRow;
 
 /**
  * Created by Carson on 07/02/2017.
@@ -12,7 +9,7 @@ import java.util.ArrayList;
  * room number, day, month, year. Also references the Course table
  * so that each individual class is tied together to one course.
  */
-public class OneClass implements BaseColumns {
+public class OneClass extends DatabaseRow {
 
     public static final String TABLE_NAME = "oneClass";
     public static final String COLUMN_CLASS_TYPE = "classType";
@@ -26,7 +23,6 @@ public class OneClass implements BaseColumns {
     public static final String COLUMN_COURSE_ID = "courseID";
 
     //column number each field ends up in
-    public static final int ID_POS = 0;
     public static final int CLASS_TYPE_POS = 1;
     public static final int BUILDING_ID_POS = 2;
     public static final int ROOM_NUM_POS = 3;
@@ -38,7 +34,6 @@ public class OneClass implements BaseColumns {
     public static final int COURSE_ID_POS = 9;
 
     //fields in database
-    private long id;
     private String type;
     private long buildingID;
     private String roomNum;
@@ -49,7 +44,8 @@ public class OneClass implements BaseColumns {
     private String year;
     private long courseID;
 
-    public OneClass(String type, String roomNum, String startTime, String endTime, String day, String month, String year) {
+    public OneClass(int id, String type, String roomNum, String startTime, String endTime, String day, String month, String year) {
+        super(id);
         this.type = type;
         this.roomNum = roomNum;
         this.startTime = startTime;
@@ -57,18 +53,6 @@ public class OneClass implements BaseColumns {
         this.day = day;
         this.month = month;
         this.year = year;
-    }
-
-    public static void printClasses(ArrayList<OneClass> classes) {
-        String output = "";
-        for (int i = 0; i < classes.size(); i++) {
-            output += System.getProperty("line.separator") + "COURSE id:" + classes.get(i).getID() +
-                    " title: " + classes.get(i).getType() + " Location: " + classes.get(i).getRoomNum()
-                    + " Start Time: " + classes.get(i).getStartTime() + " End Time: " +
-                    classes.get(i).getEndTime() + " day: " + classes.get(i).getDay() + " month: " +
-                    classes.get(i).getMonth() + " year: " + classes.get(i).getYear();
-        }
-        Log.d("SQLITE", output);
     }
 
     //getters and setters
@@ -80,16 +64,8 @@ public class OneClass implements BaseColumns {
         this.courseID = courseID;
     }
 
-    public void setID(long id) {
-        this.id = id;
-    }
-
     public void setBuildingID(long buildingID) {
         this.buildingID = buildingID;
-    }
-
-    public long getID() {
-        return id;
     }
 
     public String getType() {

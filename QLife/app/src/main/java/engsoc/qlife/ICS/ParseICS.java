@@ -4,6 +4,15 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import engsoc.qlife.database.local.DatabaseRow;
+import engsoc.qlife.database.local.courses.Course.Course;
+import engsoc.qlife.database.local.courses.Course.CourseManager;
+import engsoc.qlife.database.local.courses.OneClass.OneClass;
+import engsoc.qlife.database.local.courses.OneClass.OneClassManager;
+import engsoc.qlife.database.local.users.User;
+import engsoc.qlife.database.local.users.UserManager;
+import engsoc.qlife.ui.fragments.StudentToolsFragment;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,13 +27,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
-
-import engsoc.qlife.database.local.courses.Course.CourseManager;
-import engsoc.qlife.database.local.courses.OneClass.OneClass;
-import engsoc.qlife.database.local.courses.OneClass.OneClassManager;
-import engsoc.qlife.database.local.users.User;
-import engsoc.qlife.database.local.users.UserManager;
-import engsoc.qlife.ui.fragments.StudentToolsFragment;
 
 /**
  * Created by Alex on 1/18/2017.
@@ -91,7 +93,7 @@ public class ParseICS {
 
     public void parseICSData() {
         UserManager mUserManager = new UserManager(this.mContext);
-        ArrayList<User> user = mUserManager.getTable();
+        ArrayList<DatabaseRow> userTable = mUserManager.getTable();
         mOneClassManager = new OneClassManager(mContext);
         mCourseManager = new CourseManager(mContext);
 
@@ -118,7 +120,7 @@ public class ParseICS {
         }*/
 
         if (mOneClassManager.getTable().isEmpty() || !isInit) {
-            mOneClassManager.deleteTable();
+            mOneClassManager.deleteTable(OneClass.TABLE_NAME);
 
             boolean isEvent = false;
             String sTime = "", eTime = "", loc = "", name = "", rTime = "";
@@ -141,12 +143,14 @@ public class ParseICS {
                     String tempTime = Integer.toString(shour) + ":" + Integer.toString(sminute);
                     String tempEndTime = Integer.toString(hour) + ":" + Integer.toString(minute);
 
-                    OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
+                    Course course = new Course(mCourseManager.getTable().size() + 1, name);
+                    mCourseManager.insertRow(course);
+
+                    OneClass one = new OneClass(mOneClassManager.getTable().size() + 1,
+                            name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                     one.setBuildingID(15);       // TODO delete later, this is temporary
                     one.setCourseID(test);
-                    one.setID(mOneClassManager.insertRow(one));
-
-                    //TODO set course ID as well: query Course table for entry with the same title, that is the ID to use
+                    mOneClassManager.insertRow(one);
 
                     if (repeatWeekly) {
                         // get the supported ids for GMT-08:00 (Pacific Standard Time)
@@ -182,10 +186,11 @@ public class ParseICS {
                             smonth = cal.get(Calendar.MONTH);
                             year = cal.get(Calendar.YEAR);
 
-                            one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
+                            one = new OneClass(mOneClassManager.getTable().size() + 1,
+                                    name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth + 1), Integer.toString(year));
                             one.setBuildingID(15);       // delete later, this is temporary
                             one.setCourseID(test);
-                            one.setID(mOneClassManager.insertRow(one));
+                            mOneClassManager.insertRow(one);
                             cal.add(Calendar.DATE, 7);
                             date1 = cal.getTime();
                         }
@@ -228,13 +233,14 @@ public class ParseICS {
             SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
             String formattedDate = df.format(Calendar.getInstance().getTime());
 
-            String uName = user.get(0).getFirstName();
-            String uLastName = user.get(0).getLastName();
-            String uNetID = user.get(0).getNetid();
-            String uURL = user.get(0).getIcsURL();
+            User user = (User) userTable.get(0); //only ever 1 user
+            String uName = user.getFirstName();
+            String uLastName = user.getLastName();
+            String uNetID = user.getNetid();
+            String uURL = user.getIcsURL();
 
-            User nUser = new User(uNetID, uName, uLastName, formattedDate, uURL);
-            mUserManager.updateRow(user.get(0), nUser);
+            User nUser = new User(1, uNetID, uName, uLastName, formattedDate, uURL); //only one user ever logged in, so ID is 1
+            mUserManager.updateRow(user, nUser);
         }
     }
 }
