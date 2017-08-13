@@ -2,7 +2,7 @@
 
 The app currently supports API version 21 and newer. This unfortunately means that cool Java 8 features like default or static methods in interfaces are not possible.
 
-Each subfolder src\java subfolder has a readme explaining the contents and each java file is documented per Javadoc standards.
+Each java package has a readme explaining the contents and each java file is documented per Javadoc standards.
 
 ## Website
 
