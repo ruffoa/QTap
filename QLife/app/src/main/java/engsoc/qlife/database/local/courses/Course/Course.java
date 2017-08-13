@@ -1,9 +1,6 @@
 package engsoc.qlife.database.local.courses.Course;
 
-import android.provider.BaseColumns;
-import android.util.Log;
-
-import java.util.ArrayList;
+import engsoc.qlife.database.local.DatabaseRow;
 
 /**
  * Created by Carson on 19/01/2017.
@@ -11,13 +8,12 @@ import java.util.ArrayList;
  * room number, class time and ID.
  * **Note** Each lecture/lab/studio needs an entry, so 'Course' is a misnomer.
  */
-public class Course implements BaseColumns {
+public class Course extends DatabaseRow {
     //table schema
     public static final String TABLE_NAME = "courses";
     public static final String COLUMN_TITLE = "title";
 
     //column number each field ends up in
-    public static final int ID_POS = 0;
     public static final int TITLE_POS = 1;
     public static final int ROOM_NUM_POS = 2;
     public static final int STIME_POS = 3;
@@ -27,34 +23,11 @@ public class Course implements BaseColumns {
     public static final int YEAR_POS = 7;
 
     //fields in database
-    private long id;
     private String title;
 
-    public Course(String title) {
+    public Course(int id, String title) {
+        super(id);
         this.title = title;
-    }
-
-    /**
-     * Prints out course information.
-     *
-     * @param courses ArrayList of courses to print out.
-     */
-    public static void printCourses(ArrayList<Course> courses) {
-        String output = "COURSES:\n";
-        for (int i = 0; i < courses.size(); i++) {
-            output += System.getProperty("line.separator") + "COURSE id:" +
-                    courses.get(i).getID() + " title: " + courses.get(i).getTitle();
-        }
-        Log.d("SQLITE",output);
-    }
-
-    //getters and setters for fields
-    public long getID() {
-        return id;
-    }
-
-    public void setID(long id) {
-        this.id = id;
     }
 
     public String getTitle() {

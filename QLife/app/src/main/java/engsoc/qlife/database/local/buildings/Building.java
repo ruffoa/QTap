@@ -54,16 +54,8 @@ public class Building extends DatabaseRow {
         return purpose;
     }
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
     public boolean getBookRooms() {
         return bookRooms;
-    }
-
-    public void setBookRooms(boolean bookRooms) {
-        this.bookRooms = bookRooms;
     }
 
     public boolean getFood() {
@@ -78,23 +70,11 @@ public class Building extends DatabaseRow {
         return atm;
     }
 
-    public void setAtm(boolean atm) {
-        this.atm = atm;
-    }
-
     public double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
     public double getLon() {
         return lon;
-    }
-
-    public void setLon(double lon) {
-        this.lon = lon;
     }
 }

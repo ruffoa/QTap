@@ -4,14 +4,6 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import engsoc.qlife.database.local.courses.Course.Course;
-import engsoc.qlife.database.local.courses.Course.CourseManager;
-import engsoc.qlife.database.local.courses.OneClass.OneClass;
-import engsoc.qlife.database.local.courses.OneClass.OneClassManager;
-import engsoc.qlife.database.local.users.User;
-import engsoc.qlife.database.local.users.UserManager;
-import engsoc.qlife.ui.fragments.StudentToolsFragment;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +18,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
+
+import engsoc.qlife.database.local.courses.Course.CourseManager;
+import engsoc.qlife.database.local.courses.OneClass.OneClass;
+import engsoc.qlife.database.local.courses.OneClass.OneClassManager;
+import engsoc.qlife.database.local.users.User;
+import engsoc.qlife.database.local.users.UserManager;
+import engsoc.qlife.ui.fragments.StudentToolsFragment;
 
 /**
  * Created by Alex on 1/18/2017.
@@ -141,10 +140,6 @@ public class ParseICS {
 
                     String tempTime = Integer.toString(shour) + ":" + Integer.toString(sminute);
                     String tempEndTime = Integer.toString(hour) + ":" + Integer.toString(minute);
-
-                    Course course = new Course(name);
-                    course.setID(mCourseManager.insertRow(course));
-//                    Course.printCourses(mCourseManager.getTable());
 
                     OneClass one = new OneClass(name, loc, tempTime, tempEndTime, Integer.toString(sday), Integer.toString(smonth), Integer.toString(year));
                     one.setBuildingID(15);       // TODO delete later, this is temporary
