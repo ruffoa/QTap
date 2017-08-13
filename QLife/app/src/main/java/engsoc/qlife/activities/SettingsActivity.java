@@ -13,17 +13,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import engsoc.qlife.utility.PrefManager;
-import engsoc.qlife.utility.Util;
-import engsoc.qlife.database.local.DatabaseAccessor;
-import engsoc.qlife.database.local.users.User;
-import engsoc.qlife.database.local.SqlStringStatements;
+import java.util.ArrayList;
 
 import engsoc.qlife.R;
+import engsoc.qlife.database.local.DatabaseAccessor;
+import engsoc.qlife.database.local.SqlStringStatements;
+import engsoc.qlife.database.local.users.User;
 import engsoc.qlife.database.local.users.UserManager;
 import engsoc.qlife.interfaces.IQLOptionsMenuActivity;
-
-import java.util.ArrayList;
+import engsoc.qlife.utility.Util;
 
 /**
  * Activity for the settings. Can see NetID, time since calendar was last synced and can logout here
@@ -50,8 +48,6 @@ public class SettingsActivity extends AppCompatActivity implements IQLOptionsMen
         logout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 clearData(v);
-                PrefManager mPrefManager = new PrefManager(getApplicationContext());
-                mPrefManager.setFirstTimeLaunch(true);
                 Toast.makeText(SettingsActivity.this, getString(R.string.logged_out), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(SettingsActivity.this, StartupActivity.class);
                 startActivity(intent);

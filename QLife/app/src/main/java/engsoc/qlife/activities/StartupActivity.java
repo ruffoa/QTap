@@ -1,13 +1,13 @@
 package engsoc.qlife.activities;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import engsoc.qlife.utility.PrefManager;
-import engsoc.qlife.R;
 
+import engsoc.qlife.R;
+import engsoc.qlife.database.local.users.UserManager;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -30,24 +30,19 @@ import io.fabric.sdk.android.Fabric;
  * If it is, shows some introduction pages.
  */
 public class StartupActivity extends AppCompatActivity {
-
-    //TODO move shared pref info to database
-
     private ViewPager mViewPager;
     private LinearLayout mDotsLayout;
     private int[] mLayouts;
     private Button mButtonSkip, mButtonNext;
-    private PrefManager mPrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
 
-        // Checking for first time launch - before calling setContentView()
-        mPrefManager = new PrefManager(this);
-        if (!mPrefManager.isFirstTimeLaunch()) {
-            launchHomeScreen();
+        //Check user already logged in, don't need startup screens
+        if (!new UserManager(this).getTable().isEmpty()) {
+            launchLogin();
             finish();
         }
 
@@ -82,7 +77,7 @@ public class StartupActivity extends AppCompatActivity {
         mButtonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen();
+                launchLogin();
             }
         });
 
@@ -95,7 +90,7 @@ public class StartupActivity extends AppCompatActivity {
                     // move to next screen
                     mViewPager.setCurrentItem(current);
                 } else {
-                    launchHomeScreen();
+                    launchLogin();
                 }
             }
         });
@@ -132,11 +127,9 @@ public class StartupActivity extends AppCompatActivity {
     }
 
     /**
-     * Method that launches the home screen. Starts another activity and finishes this one.
-     * Also logs that the user has opened the app before, so this won't be shown again.
+     * Method that sends the user to the login screen.
      */
-    private void launchHomeScreen() {
-        mPrefManager.setFirstTimeLaunch(false);
+    private void launchLogin() {
         startActivity(new Intent(StartupActivity.this, LoginActivity.class));
         finish();
     }
