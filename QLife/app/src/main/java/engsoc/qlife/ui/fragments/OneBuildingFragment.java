@@ -13,14 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import engsoc.qlife.R;
-import engsoc.qlife.activities.MapsActivity;
-import engsoc.qlife.utility.Util;
-import engsoc.qlife.database.local.buildings.Building;
-import engsoc.qlife.interfaces.IQLActionbarFragment;
-import engsoc.qlife.interfaces.IQLDrawerItem;
-import engsoc.qlife.interfaces.IQLListItemDetailsFragment;
-import engsoc.qlife.interfaces.IQLMapView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -31,6 +23,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+
+import engsoc.qlife.R;
+import engsoc.qlife.activities.MapsActivity;
+import engsoc.qlife.database.local.buildings.Building;
+import engsoc.qlife.interfaces.IQLActionbarFragment;
+import engsoc.qlife.interfaces.IQLDrawerItem;
+import engsoc.qlife.interfaces.IQLListItemDetailsFragment;
+import engsoc.qlife.interfaces.IQLMapView;
+import engsoc.qlife.utility.HandlePermissions;
+import engsoc.qlife.utility.Util;
 
 /**
  * Created by Carson on 25/07/2017.
@@ -144,11 +146,11 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
 
     @Override
     public void requestLocationPermissions() {
-        Util.requestLocationPermissions(getActivity());
+        HandlePermissions.requestLocationPermissions(getActivity());
     }
 
     @Override
     public void onRequestLocationPermissionsResult() {
-        Util.onLocationPermissionsGiven(getContext(), mGoogleMap);
+        HandlePermissions.onLocationPermissionsGiven(getContext(), mGoogleMap);
     }
 }

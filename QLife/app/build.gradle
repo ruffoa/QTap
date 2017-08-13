@@ -22,7 +22,7 @@ android {
         applicationId "engsoc.qlife"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 2
+        versionCode 3
         versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

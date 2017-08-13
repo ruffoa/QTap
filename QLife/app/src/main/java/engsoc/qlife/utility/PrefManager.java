@@ -30,7 +30,7 @@ public class PrefManager {
     public PrefManager(Context context) {
         this.mContext = context;
         mPref = mContext.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        mEditor = mPref.edit(); //TODO why is edit called here?
+        mEditor = mPref.edit();
     }
 
     /**

@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import engsoc.qlife.ICS.icsToBuilding;
 import engsoc.qlife.R;
+import engsoc.qlife.utility.HandlePermissions;
 import engsoc.qlife.utility.Util;
 import engsoc.qlife.activities.MapsActivity;
 import engsoc.qlife.interfaces.IQLActionbarFragment;
@@ -135,15 +136,12 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment,
 
     @Override
     public void requestLocationPermissions() {
-        Util.requestLocationPermissions(getActivity());
+        HandlePermissions.requestLocationPermissions(getActivity());
     }
 
     @Override
     public void onRequestLocationPermissionsResult() {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mGoogleMap.setMyLocationEnabled(true);
-        }
+        HandlePermissions.onLocationPermissionsGiven(getContext(), mGoogleMap);
     }
 
     @Override

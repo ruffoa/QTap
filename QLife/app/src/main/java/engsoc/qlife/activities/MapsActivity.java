@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import engsoc.qlife.utility.HandlePermissions;
 import engsoc.qlife.utility.Util;
 import engsoc.qlife.database.local.DatabaseRow;
 import engsoc.qlife.database.local.buildings.Building;
@@ -54,12 +55,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void requestLocationPermissions() {
-        Util.requestLocationPermissions(this);
+        HandlePermissions.requestLocationPermissions(this);
     }
 
     @Override
     public void onRequestLocationPermissionsResult() {
-        Util.onLocationPermissionsGiven(this, mMap);
+        HandlePermissions.onLocationPermissionsGiven(this, mMap);
     }
 
     @Override
