@@ -34,15 +34,9 @@ public class EmergencyContactsManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                EmergencyContact.ID,
-                EmergencyContact.COLUMN_NAME,
-                EmergencyContact.COLUMN_PHONE_NUMBER,
-                EmergencyContact.COLUMN_DESCRIPTION,
-        };
         ArrayList<DatabaseRow> contacts = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(EmergencyContact.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(EmergencyContact.TABLE_NAME, null, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 EmergencyContact contact = getRow(cursor.getInt(EmergencyContact.ID_POS));
                 contacts.add(contact);
@@ -54,20 +48,15 @@ public class EmergencyContactsManager extends DatabaseManager {
 
     @Override
     public EmergencyContact getRow(long id) {
-        String[] projection = {
-                EmergencyContact.ID,
-                EmergencyContact.COLUMN_NAME,
-                EmergencyContact.COLUMN_PHONE_NUMBER,
-                EmergencyContact.COLUMN_DESCRIPTION,
-        };
-        EmergencyContact contact;
         String selection = EmergencyContact.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(EmergencyContact.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            contact = new EmergencyContact(cursor.getInt(EmergencyContact.ID_POS), cursor.getString(EmergencyContact.NAME_POS), cursor.getString(EmergencyContact.PHONE_NUMBER_POS),
-                    cursor.getString(EmergencyContact.DESCRIPTION_POS));
-            cursor.close();
+        try (Cursor cursor = getDatabase().query(EmergencyContact.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            EmergencyContact contact = null;
+            if (cursor.moveToNext()) {
+                contact = new EmergencyContact(cursor.getInt(EmergencyContact.ID_POS), cursor.getString(EmergencyContact.NAME_POS), cursor.getString(EmergencyContact.PHONE_NUMBER_POS),
+                        cursor.getString(EmergencyContact.DESCRIPTION_POS));
+                cursor.close();
+            }
             return contact; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
         }

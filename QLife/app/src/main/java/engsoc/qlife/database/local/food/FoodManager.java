@@ -51,32 +51,10 @@ public class FoodManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                Food.ID,
-                Food.COLUMN_NAME,
-                Food.COLUMN_MEAL_PLAN,
-                Food.COLUMN_CARD,
-                Food.COLUMN_INFORMATION,
-                Food.COLUMN_BUILDING_ID,
-                Food.COLUMN_MON_START_HOURS,
-                Food.COLUMN_MON_STOP_HOURS,
-                Food.COLUMN_TUE_START_HOURS,
-                Food.COLUMN_TUE_STOP_HOURS,
-                Food.COLUMN_WED_START_HOURS,
-                Food.COLUMN_WED_STOP_HOURS,
-                Food.COLUMN_THUR_START_HOURS,
-                Food.COLUMN_THUR_STOP_HOURS,
-                Food.COLUMN_FRI_START_HOURS,
-                Food.COLUMN_FRI_STOP_HOURS,
-                Food.COLUMN_SAT_START_HOURS,
-                Food.COLUMN_SAT_STOP_HOURS,
-                Food.COLUMN_SUN_START_HOURS,
-                Food.COLUMN_SUN_STOP_HOURS
-        };
         ArrayList<DatabaseRow> food = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
         //order table by name, ascending
-        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, null, null, null, null, Food.COLUMN_NAME + " ASC")) {
+        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, null, null, null, null, null, Food.COLUMN_NAME + " ASC")) {
             while (cursor.moveToNext()) {
                 Food oneFood = getRow(cursor.getInt(Food.ID_POS));
                 food.add(oneFood);
@@ -88,42 +66,21 @@ public class FoodManager extends DatabaseManager {
 
     @Override
     public Food getRow(long id) {
-        String[] projection = {
-                Food.ID,
-                Food.COLUMN_NAME,
-                Food.COLUMN_MEAL_PLAN,
-                Food.COLUMN_CARD,
-                Food.COLUMN_INFORMATION,
-                Food.COLUMN_BUILDING_ID,
-                Food.COLUMN_MON_START_HOURS,
-                Food.COLUMN_MON_STOP_HOURS,
-                Food.COLUMN_TUE_START_HOURS,
-                Food.COLUMN_TUE_STOP_HOURS,
-                Food.COLUMN_WED_START_HOURS,
-                Food.COLUMN_WED_STOP_HOURS,
-                Food.COLUMN_THUR_START_HOURS,
-                Food.COLUMN_THUR_STOP_HOURS,
-                Food.COLUMN_FRI_START_HOURS,
-                Food.COLUMN_FRI_STOP_HOURS,
-                Food.COLUMN_SAT_START_HOURS,
-                Food.COLUMN_SAT_STOP_HOURS,
-                Food.COLUMN_SUN_START_HOURS,
-                Food.COLUMN_SUN_STOP_HOURS
-        };
-        Food food;
         String selection = Food.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false
-            food = new Food(cursor.getInt(Food.ID_POS), cursor.getString(Food.POS_NAME), cursor.getInt(Food.POS_BUILDING_ID),
-                    cursor.getString(Food.POS_INFORMATION), cursor.getInt(Food.POS_MEAL_PLAN) > 0, cursor.getInt(Food.POS_CARD) > 0,
-                    cursor.getDouble(Food.POS_MON_START_HOURS), cursor.getDouble(Food.POS_MON_STOP_HOURS), cursor.getDouble(Food.POS_TUE_START_HOURS),
-                    cursor.getDouble(Food.POS_TUE_STOP_HOURS), cursor.getDouble(Food.POS_WED_START_HOURS), cursor.getDouble(Food.POS_WED_STOP_HOURS),
-                    cursor.getDouble(Food.POS_THUR_START_HOURS), cursor.getDouble(Food.POS_THUR_STOP_HOURS), cursor.getDouble(Food.POS_FRI_START_HOURS),
-                    cursor.getDouble(Food.POS_FRI_STOP_HOURS), cursor.getDouble(Food.POS_SAT_START_HOURS),
-                    cursor.getDouble(Food.POS_SAT_STOP_HOURS), cursor.getDouble(Food.POS_SUN_START_HOURS), cursor.getDouble(Food.POS_SUN_STOP_HOURS));
-            cursor.close();
+        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            Food food = null;
+            if (cursor != null && cursor.moveToNext()) {
+                //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false
+                food = new Food(cursor.getInt(Food.ID_POS), cursor.getString(Food.POS_NAME), cursor.getInt(Food.POS_BUILDING_ID),
+                        cursor.getString(Food.POS_INFORMATION), cursor.getInt(Food.POS_MEAL_PLAN) > 0, cursor.getInt(Food.POS_CARD) > 0,
+                        cursor.getDouble(Food.POS_MON_START_HOURS), cursor.getDouble(Food.POS_MON_STOP_HOURS), cursor.getDouble(Food.POS_TUE_START_HOURS),
+                        cursor.getDouble(Food.POS_TUE_STOP_HOURS), cursor.getDouble(Food.POS_WED_START_HOURS), cursor.getDouble(Food.POS_WED_STOP_HOURS),
+                        cursor.getDouble(Food.POS_THUR_START_HOURS), cursor.getDouble(Food.POS_THUR_STOP_HOURS), cursor.getDouble(Food.POS_FRI_START_HOURS),
+                        cursor.getDouble(Food.POS_FRI_STOP_HOURS), cursor.getDouble(Food.POS_SAT_START_HOURS),
+                        cursor.getDouble(Food.POS_SAT_STOP_HOURS), cursor.getDouble(Food.POS_SUN_START_HOURS), cursor.getDouble(Food.POS_SUN_STOP_HOURS));
+                cursor.close();
+            }
             return food; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
         }

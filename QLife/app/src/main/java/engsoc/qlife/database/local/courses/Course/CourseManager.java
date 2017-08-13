@@ -32,13 +32,9 @@ public class CourseManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                Course.ID,
-                Course.COLUMN_TITLE
-        };
         ArrayList<DatabaseRow> courses = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(Course.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(Course.TABLE_NAME, null, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 Course course = new Course(cursor.getInt(Course.ID_POS), cursor.getString(Course.TITLE_POS));
                 courses.add(course);
@@ -50,22 +46,15 @@ public class CourseManager extends DatabaseManager {
 
     @Override
     public Course getRow(long id) {
-        String[] projection = {
-                Course.ID,
-                Course.COLUMN_TITLE
-        };
-        Course course;
         String selection = Course.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(Course.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(Course.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            Course course = null;
             if (cursor != null && cursor.moveToNext()) {
                 course = new Course(cursor.getInt(Course.ID_POS), cursor.getString(Course.TITLE_POS));
                 cursor.close();
-                return course; //return only when the cursor has been closed.
-                //Return statement never missed, try block always finishes this.
-            } else {
-                return null;
             }
+            return course;
         }
     }
 

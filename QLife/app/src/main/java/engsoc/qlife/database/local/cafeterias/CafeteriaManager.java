@@ -1,4 +1,5 @@
 package engsoc.qlife.database.local.cafeterias;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -55,39 +56,10 @@ public class CafeteriaManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                Cafeteria.ID,
-                Cafeteria.COLUMN_NAME,
-                Cafeteria.COLUMN_BUILDING_ID,
-                Cafeteria.COLUMN_WEEK_BREAKFAST_START,
-                Cafeteria.COLUMN_WEEK_BREAKFAST_STOP,
-                Cafeteria.COLUMN_FRI_BREAKFAST_START,
-                Cafeteria.COLUMN_FRI_BREAKFAST_STOP,
-                Cafeteria.COLUMN_SAT_BREAKFAST_START,
-                Cafeteria.COLUMN_SAT_BREAKFAST_STOP,
-                Cafeteria.COLUMN_SUN_BREAKFAST_START,
-                Cafeteria.COLUMN_SUN_BREAKFAST_STOP,
-                Cafeteria.COLUMN_WEEK_LUNCH_START,
-                Cafeteria.COLUMN_WEEK_LUNCH_STOP,
-                Cafeteria.COLUMN_FRI_LUNCH_START,
-                Cafeteria.COLUMN_FRI_LUNCH_STOP,
-                Cafeteria.COLUMN_SAT_LUNCH_START,
-                Cafeteria.COLUMN_SAT_LUNCH_STOP,
-                Cafeteria.COLUMN_SUN_LUNCH_START,
-                Cafeteria.COLUMN_SUN_LUNCH_STOP,
-                Cafeteria.COLUMN_WEEK_DINNER_START,
-                Cafeteria.COLUMN_WEEK_DINNER_STOP,
-                Cafeteria.COLUMN_FRI_DINNER_START,
-                Cafeteria.COLUMN_FRI_DINNER_STOP,
-                Cafeteria.COLUMN_SAT_DINNER_START,
-                Cafeteria.COLUMN_SAT_DINNER_STOP,
-                Cafeteria.COLUMN_SUN_DINNER_START,
-                Cafeteria.COLUMN_SUN_DINNER_STOP
-        };
         ArrayList<DatabaseRow> cafs = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
         //order table by name, ascending
-        try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, projection, null, null, null, null, Cafeteria.COLUMN_NAME + " ASC")) {
+        try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, null, null, null, null, null, Cafeteria.COLUMN_NAME + " ASC")) {
             while (cursor.moveToNext()) {
                 Cafeteria caf = getRow(cursor.getInt(Cafeteria.ID_POS));
                 cafs.add(caf);
@@ -99,50 +71,22 @@ public class CafeteriaManager extends DatabaseManager {
 
     @Override
     public Cafeteria getRow(long id) {
-        String[] projection = {
-                Cafeteria.ID,
-                Cafeteria.COLUMN_NAME,
-                Cafeteria.COLUMN_BUILDING_ID,
-                Cafeteria.COLUMN_WEEK_BREAKFAST_START,
-                Cafeteria.COLUMN_WEEK_BREAKFAST_STOP,
-                Cafeteria.COLUMN_FRI_BREAKFAST_START,
-                Cafeteria.COLUMN_FRI_BREAKFAST_STOP,
-                Cafeteria.COLUMN_SAT_BREAKFAST_START,
-                Cafeteria.COLUMN_SAT_BREAKFAST_STOP,
-                Cafeteria.COLUMN_SUN_BREAKFAST_START,
-                Cafeteria.COLUMN_SUN_BREAKFAST_STOP,
-                Cafeteria.COLUMN_WEEK_LUNCH_START,
-                Cafeteria.COLUMN_WEEK_LUNCH_STOP,
-                Cafeteria.COLUMN_FRI_LUNCH_START,
-                Cafeteria.COLUMN_FRI_LUNCH_STOP,
-                Cafeteria.COLUMN_SAT_LUNCH_START,
-                Cafeteria.COLUMN_SAT_LUNCH_STOP,
-                Cafeteria.COLUMN_SUN_LUNCH_START,
-                Cafeteria.COLUMN_SUN_LUNCH_STOP,
-                Cafeteria.COLUMN_WEEK_DINNER_START,
-                Cafeteria.COLUMN_WEEK_DINNER_STOP,
-                Cafeteria.COLUMN_FRI_DINNER_START,
-                Cafeteria.COLUMN_FRI_DINNER_STOP,
-                Cafeteria.COLUMN_SAT_DINNER_START,
-                Cafeteria.COLUMN_SAT_DINNER_STOP,
-                Cafeteria.COLUMN_SUN_DINNER_START,
-                Cafeteria.COLUMN_SUN_DINNER_STOP
-        };
-        Cafeteria caf;
         String selection = Cafeteria.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            caf = new Cafeteria(cursor.getInt(Cafeteria.ID_POS), cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
-                    cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_START),
-                    cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_STOP),
-                    cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_WEEK_LUNCH_START),
-                    cursor.getDouble(Cafeteria.POS_WEEK_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_FRI_LUNCH_START), cursor.getDouble(Cafeteria.POS_FRI_LUNCH_STOP),
-                    cursor.getDouble(Cafeteria.POS_SAT_LUNCH_START), cursor.getDouble(Cafeteria.POS_SAT_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_SUN_LUNCH_START),
-                    cursor.getDouble(Cafeteria.POS_SUN_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_START), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_STOP),
-                    cursor.getDouble(Cafeteria.POS_FRI_DINNER_START), cursor.getDouble(Cafeteria.POS_FRI_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SAT_DINNER_START),
-                    cursor.getDouble(Cafeteria.POS_SAT_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SUN_DINNER_START), cursor.getDouble(Cafeteria.POS_SUN_DINNER_STOP));
-            cursor.close();
+        try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            Cafeteria caf = null;
+            if (cursor != null && cursor.moveToNext()) {
+                caf = new Cafeteria(cursor.getInt(Cafeteria.ID_POS), cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
+                        cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_START),
+                        cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_STOP),
+                        cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_WEEK_LUNCH_START),
+                        cursor.getDouble(Cafeteria.POS_WEEK_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_FRI_LUNCH_START), cursor.getDouble(Cafeteria.POS_FRI_LUNCH_STOP),
+                        cursor.getDouble(Cafeteria.POS_SAT_LUNCH_START), cursor.getDouble(Cafeteria.POS_SAT_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_SUN_LUNCH_START),
+                        cursor.getDouble(Cafeteria.POS_SUN_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_START), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_STOP),
+                        cursor.getDouble(Cafeteria.POS_FRI_DINNER_START), cursor.getDouble(Cafeteria.POS_FRI_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SAT_DINNER_START),
+                        cursor.getDouble(Cafeteria.POS_SAT_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SUN_DINNER_START), cursor.getDouble(Cafeteria.POS_SUN_DINNER_STOP));
+                cursor.close();
+            }
             return caf; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
         }

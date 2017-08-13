@@ -38,22 +38,9 @@ public class OneClassManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                OneClass.ID,
-                OneClass.COLUMN_CLASS_TYPE,
-                OneClass.COLUMN_BUILDING_ID,
-                OneClass.COLUMN_ROOM_NUM,
-                OneClass.COLUMN_START_TIME,
-                OneClass.COLUMN_END_TIME,
-                OneClass.COLUMN_DAY,
-                OneClass.COLUMN_MONTH,
-                OneClass.COLUMN_YEAR,
-                OneClass.COLUMN_COURSE_ID
-        };
-
         ArrayList<DatabaseRow> classes = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(OneClass.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(OneClass.TABLE_NAME, null, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 OneClass oneClass = new OneClass(cursor.getInt(OneClass.ID_POS), cursor.getString(OneClass.CLASS_TYPE_POS),
                         cursor.getString(OneClass.ROOM_NUM_POS), cursor.getString(OneClass.STIME_POS),
@@ -71,22 +58,10 @@ public class OneClassManager extends DatabaseManager {
 
     @Override
     public OneClass getRow(long id) {
-        String[] projection = {
-                OneClass.ID,
-                OneClass.COLUMN_CLASS_TYPE,
-                OneClass.COLUMN_BUILDING_ID,
-                OneClass.COLUMN_ROOM_NUM,
-                OneClass.COLUMN_START_TIME,
-                OneClass.COLUMN_END_TIME,
-                OneClass.COLUMN_DAY,
-                OneClass.COLUMN_MONTH,
-                OneClass.COLUMN_YEAR,
-                OneClass.COLUMN_COURSE_ID
-        };
-        OneClass oneClass;
         String selection = OneClass.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(OneClass.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(OneClass.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            OneClass oneClass = null;
             if (cursor != null && cursor.moveToNext()) {
                 oneClass = new OneClass(cursor.getInt(OneClass.ID_POS), cursor.getString(OneClass.CLASS_TYPE_POS),
                         cursor.getString(OneClass.ROOM_NUM_POS), cursor.getString(OneClass.STIME_POS),
@@ -96,11 +71,8 @@ public class OneClassManager extends DatabaseManager {
                 oneClass.setBuildingID(cursor.getInt(OneClass.BUILDING_ID_POS));
                 oneClass.setCourseID(cursor.getInt(OneClass.COURSE_ID_POS));
                 cursor.close();
-                return oneClass; //return only when the cursor has been closed.
-                //Return statement never missed, try block always finishes this.
-            } else {
-                return null;
             }
+            return oneClass;
         }
     }
 

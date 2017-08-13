@@ -35,17 +35,9 @@ public class UserManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                User.ID,
-                User.COLUMN_NETID,
-                User.COLUMN_FIRST_NAME,
-                User.COLUMN_LAST_NAME,
-                User.COLUMN_DATE_INIT,
-                User.COLUMN_ICS_URL
-        };
         ArrayList<DatabaseRow> users = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(User.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(User.TABLE_NAME, null, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 User user = getRow(cursor.getInt(User.ID_POS));
                 users.add(user);
@@ -63,27 +55,16 @@ public class UserManager extends DatabaseManager {
      * @return User class obtained from the table. Contains all information held in that row.
      */
     public User getRow(String netid) {
-        String[] projection = {
-                User.ID,
-                User.COLUMN_NETID,
-                User.COLUMN_FIRST_NAME,
-                User.COLUMN_LAST_NAME,
-                User.COLUMN_DATE_INIT,
-                User.COLUMN_ICS_URL
-        };
-        User user;
         String selection = User.COLUMN_NETID + " LIKE ?";
         String[] selectionArgs = {netid};
-        try (Cursor cursor = getDatabase().query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(User.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            User user = null;
             if (cursor != null && cursor.moveToNext()) {
                 user = new User(cursor.getInt(User.ID_POS), cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
                         cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS));
                 cursor.close();
-                return user; //return only when the cursor has been closed.
-                //Return statement never missed, try block always finishes this.
-            } else {
-                return null;
             }
+            return user;
         }
     }
 

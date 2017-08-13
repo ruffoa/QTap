@@ -37,20 +37,10 @@ public class BuildingManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                Building.ID,
-                Building.COLUMN_NAME,
-                Building.COLUMN_PURPOSE,
-                Building.COLUMN_BOOK_ROOMS,
-                Building.COLUMN_FOOD,
-                Building.COLUMN_ATM,
-                Building.COLUMN_LAT,
-                Building.COLUMN_LON
-        };
         ArrayList<DatabaseRow> buildings = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
         //order by building name
-        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, null, null, null, null, Building.COLUMN_NAME + " ASC")) {
+        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, null, null, null, null, null, Building.COLUMN_NAME + " ASC")) {
             while (cursor.moveToNext()) {
                 Building building = getRow(cursor.getInt(Building.ID_POS));
                 buildings.add(building);
@@ -62,25 +52,17 @@ public class BuildingManager extends DatabaseManager {
 
     @Override
     public Building getRow(long id) {
-        String[] projection = {
-                Building.ID,
-                Building.COLUMN_NAME,
-                Building.COLUMN_PURPOSE,
-                Building.COLUMN_BOOK_ROOMS,
-                Building.COLUMN_FOOD,
-                Building.COLUMN_ATM,
-                Building.COLUMN_LAT,
-                Building.COLUMN_LON
-        };
         String selection = Building.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false
-            Building building = new Building(cursor.getInt(Building.ID_POS), cursor.getString(Building.NAME_POS), cursor.getString(Building.PURPOSE_POS),
-                    cursor.getInt(Building.BOOK_ROOKS_POS) > 0, cursor.getInt(Building.FOOD_POS) > 0, cursor.getInt(Building.ATM_POS) > 0,
-                    cursor.getDouble(Building.LAT_POS), cursor.getDouble(Building.LON_POST));
-            cursor.close();
+        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            Building building = null;
+            if (cursor != null && cursor.moveToNext()) {
+                //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false
+                building = new Building(cursor.getInt(Building.ID_POS), cursor.getString(Building.NAME_POS), cursor.getString(Building.PURPOSE_POS),
+                        cursor.getInt(Building.BOOK_ROOKS_POS) > 0, cursor.getInt(Building.FOOD_POS) > 0, cursor.getInt(Building.ATM_POS) > 0,
+                        cursor.getDouble(Building.LAT_POS), cursor.getDouble(Building.LON_POST));
+                cursor.close();
+            }
             return building; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
         }
@@ -98,7 +80,7 @@ public class BuildingManager extends DatabaseManager {
      * @return The Building object corresponding to the ICS file name.
      */
     public Building getIcsBuilding(String icsName) {
-        try (Cursor cursor = getDatabase().rawQuery("SELECT * FROM Buildings GROUP BY Name HAVING Name LIKE '%"+ icsName + "%'", null)) {
+        try (Cursor cursor = getDatabase().rawQuery("SELECT * FROM Buildings GROUP BY Name HAVING Name LIKE '%" + icsName + "%'", null)) {
             Building building = null;
             if (cursor.moveToNext()) {
                 //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false

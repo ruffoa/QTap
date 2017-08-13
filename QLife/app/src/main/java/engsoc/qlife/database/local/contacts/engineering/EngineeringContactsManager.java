@@ -34,16 +34,9 @@ public class EngineeringContactsManager extends DatabaseManager {
 
     @Override
     public ArrayList<DatabaseRow> getTable() {
-        String[] projection = {
-                EngineeringContact.ID,
-                EngineeringContact.COLUMN_NAME,
-                EngineeringContact.COLUMN_EMAIL,
-                EngineeringContact.COLUMN_POSITION,
-                EngineeringContact.COLUMN_DESCRIPTION
-        };
         ArrayList<DatabaseRow> contacts = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(EngineeringContact.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(EngineeringContact.TABLE_NAME, null, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 EngineeringContact contact = getRow(cursor.getInt(EngineeringContact.ID_POS));
                 contacts.add(contact);
@@ -55,21 +48,15 @@ public class EngineeringContactsManager extends DatabaseManager {
 
     @Override
     public EngineeringContact getRow(long id) {
-        String[] projection = {
-                EngineeringContact.ID,
-                EngineeringContact.COLUMN_NAME,
-                EngineeringContact.COLUMN_EMAIL,
-                EngineeringContact.COLUMN_POSITION,
-                EngineeringContact.COLUMN_DESCRIPTION
-        };
-        EngineeringContact contact;
         String selection = EngineeringContact.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(EngineeringContact.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            contact = new EngineeringContact(cursor.getInt(EngineeringContact.ID_POS), cursor.getString(EngineeringContact.NAME_POS), cursor.getString(EngineeringContact.EMAIL_POS),
-                    cursor.getString(EngineeringContact.POSITION_POS), cursor.getString(EngineeringContact.DESCRIPTION_POS));
-            cursor.close();
+        try (Cursor cursor = getDatabase().query(EngineeringContact.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            EngineeringContact contact = null;
+            if (cursor != null && cursor.moveToNext()) {
+                contact = new EngineeringContact(cursor.getInt(EngineeringContact.ID_POS), cursor.getString(EngineeringContact.NAME_POS), cursor.getString(EngineeringContact.EMAIL_POS),
+                        cursor.getString(EngineeringContact.POSITION_POS), cursor.getString(EngineeringContact.DESCRIPTION_POS));
+                cursor.close();
+            }
             return contact; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
         }
